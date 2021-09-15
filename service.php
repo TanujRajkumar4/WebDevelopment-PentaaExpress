@@ -30,26 +30,67 @@ include('./admin/database.php');
         <span class="bg-text"> Service Areas </span>
         <div class="theme-container container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-3">
                     <div class="about-us pt-10">
-                        
                         <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" style="padding-left: 30%; text-transform: uppercase; font-weight: bold;color: #009746;">
                             <?php
-                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A'");
+                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A' ORDER BY `b_id` ASC limit 0 , 6");
                             foreach ($row as $row1) :
                             ?>
-                                <div class="col-md-2">
                                 <img class="" alt="" src="assets/img/icons/marker-1.png" />
                                 <?php echo $row1['bname']; ?>
-                                </div>
-                                
+                                <br> <br>
                             <?php endforeach; ?>
                         </p>
                     </div>
                 </div>
-                <!-- <div class="col-md-4 text-center">
+                
+                <div class="col-md-3">
+                    <div class="about-us pt-10">
+                        <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" style="padding-left: 30%; text-transform: uppercase; font-weight: bold;color: #009746;">
+                            <?php
+                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A' ORDER BY `b_id` ASC limit 6 , 6");
+                            foreach ($row as $row1) :
+                            ?>
+                                <img class="" alt="" src="assets/img/icons/marker-1.png" />
+                                <?php echo $row1['bname']; ?>
+                                <br> <br>
+                            <?php endforeach; ?>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="about-us pt-10">
+                        <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" style="padding-left: 30%; text-transform: uppercase; font-weight: bold;color: #009746;">
+                            <?php
+                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A' ORDER BY `b_id` ASC limit 12,6");
+                            foreach ($row as $row1) :
+                            ?>
+                                <img class="" alt="" src="assets/img/icons/marker-1.png" />
+                                <?php echo $row1['bname']; ?>
+                                <br> <br>
+                            <?php endforeach; ?>
+                        </p>
+                    </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="about-us pt-10">
+                        <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" style="padding-left: 30%; text-transform: uppercase; font-weight: bold;color: #009746;">
+                            <?php
+                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A' ORDER BY `b_id` ASC limit 18,7");
+                            foreach ($row as $row1) :
+                            ?>
+                                <img class="" alt="" src="assets/img/icons/marker-1.png" />
+                                <?php echo $row1['bname']; ?>
+                                <br> <br>
+                            <?php endforeach; ?>
+                        </p>
+                    </div>
+                </div>
+                <!--div class="col-md-4 text-center">
                     <img alt="" src="assets/img/block/about-img.png" class="effect animated fadeInRight" />
-                </div> -->
+                </div-->
             </div>
         </div>
     </section>
