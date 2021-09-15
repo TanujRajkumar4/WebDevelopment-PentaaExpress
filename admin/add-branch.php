@@ -321,7 +321,7 @@ if($_GET['ty'] == "add")
 
 																<div class="col-xs-12 col-sm-9">
 																	<div class="clearfix">
-																		<input type="email" name="timing" id="timing" class="col-xs-12 col-sm-5 " required />
+																		<input type="text" name="timing" id="timing" class="col-xs-12 col-sm-5 " required />
 																	</div>
 																</div>
 															</div>
@@ -331,7 +331,7 @@ if($_GET['ty'] == "add")
 
 																<div class="col-xs-12 col-sm-9">
 																	<div class="clearfix">
-																		<input type="email" name="conper" id="conper" class="col-xs-12 col-sm-5 " required />
+																		<input type="text" name="conper" id="conper" class="col-xs-12 col-sm-5 " required />
 																	</div>
 																</div>
 															</div>

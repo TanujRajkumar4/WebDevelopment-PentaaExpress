@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2021 at 07:11 AM
+-- Generation Time: Sep 15, 2021 at 08:39 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -104,7 +104,8 @@ INSERT INTO `city` (`b_id`, `bname`, `status`) VALUES
 (24, 'Housur', 'A'),
 (25, 'Krishnagiri', 'A'),
 (26, 'Thanjavur', 'A'),
-(27, 'Chengalpet', 'A');
+(27, 'Chengalpet', 'A'),
+(28, 'Coimbatore', 'A');
 
 -- --------------------------------------------------------
 
@@ -362,8 +363,8 @@ CREATE TABLE `tbl_offices` (
 
 INSERT INTO `tbl_offices` (`id`, `off_name`, `address`, `city`, `ph_no`, `office_time`, `contact_person`, `status`) VALUES
 (1, 'PLX Center- Tiruppur', 'No. 15, Govindarajulu Street,\r\nNear Hotel Sri Saravana Bhavan,\r\nAvinashi Road, Tirupur-641 602,\r\nTamil Nadu', '1', '8667480670', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
-(2, 'PLX Center- Vaniyambadi', 'D. No.9, M.R.K. Commercial Complex,\r\nNear Raja Indian Oil Petrol Bunk,\r\nBypass Road,\r\nVaniyambadi- 635 751,\r\nTamil Nadu', '2', '6379535687', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
-(3, 'PLX Center- Chennai', 'D. No.5, East Mada Street, Koyambedu,\r\nChennai-600 107,\r\nTamil Nadu', '3', '6379535687', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A');
+(4, 'PLX Center - Coimbatore', '2/42E Seryampalayam, kadhir engineering collage road, \r\nCoimbatore-641048', '28', '6379541406', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
+(3, 'PLX Center- Chennai', 'no-89, krishna nagar, near Jk Mahal\r\npuzhal, chennai-600066', '12', '9003054079', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A');
 
 -- --------------------------------------------------------
 
@@ -490,12 +491,6 @@ ALTER TABLE `book_status`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `city`
---
-ALTER TABLE `city`
-  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
 -- AUTO_INCREMENT for table `cust_trans`
 --
 ALTER TABLE `cust_trans`
@@ -553,7 +548,7 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_offices`
 --
 ALTER TABLE `tbl_offices`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `toi`

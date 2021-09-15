@@ -11,7 +11,7 @@ include('./admin/database.php');
                 <div class="col-sm-8 pull-left">
                     <div class="title-wrap">
                         <h2 class="section-title no-margin">Service Areas </h2>
-                        <!-- <p class="fs-16 no-margin">Know about us more </p> -->
+                        <!-- <p class="fs-16 no-margin">Know Service Areas more </p> -->
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -25,26 +25,25 @@ include('./admin/database.php');
     </section>
     <!-- /.Breadcrumb -->
 
-    <!-- About Us -->
+    <!-- Service Areas -->
     <section class="pad-50 about-wrap">
         <span class="bg-text"> Service Areas </span>
         <div class="theme-container container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="about-us pt-10">
-                        
-                        <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" style="padding-left: 30%; text-transform: uppercase; font-weight: bold;color: #009746;">
+                        <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s">
                             <?php
-                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A'");
+                            $row = mysqli_query($dbConn, "SELECT * FROM city WHERE status='A' ORDER BY 'bname'");
                             foreach ($row as $row1) :
                             ?>
-                                <div class="col-md-2">
-                                <img class="" alt="" src="assets/img/icons/marker-1.png" />
-                                <?php echo $row1['bname']; ?>
-                                </div>
-                                
-                            <?php endforeach; ?>
-                        </p>
+                        <div class="col-md-2" style="padding-bottom:25px; text-transform: uppercase; font-weight: bold;color: #009746;">
+                            <img class="" alt="" src="assets/img/icons/marker-1.png" style="height:30px; width:20px" />
+                            <span style="padding-left:5px"></span>
+                            <?php echo $row1['bname']; ?>
+                        </div>
+                    <?php endforeach; ?>
+                    </p>
                     </div>
                 </div>
                 <!-- <div class="col-md-4 text-center">
@@ -53,9 +52,6 @@ include('./admin/database.php');
             </div>
         </div>
     </section>
-
 </article>
 <!-- /.Content Wrapper -->
-
-
 <?php include('./footer.php'); ?>

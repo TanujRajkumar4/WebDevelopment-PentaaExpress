@@ -356,11 +356,13 @@ include("header.php");
                                      <p class="wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s">Get in touch with us easily </p>
                                  </div>
                                  <ul class="contact-detail title-2">
-                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>COIMBATORE Head Office: </span>  <p class="gray-clr"> +91 63795 41406</p>  </li> 
-									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Tiruppur Branch: </span>  <p class="gray-clr"> +91 86674 80670</p>  </li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Head Office: </span></li> 
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>COIMBATORE </span>  <p class="gray-clr">+91 63795 41406</p>  </li> 
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Branches: </span></li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Tiruppur</span>  <p class="gray-clr"> +91 86674 80670</p>  </li>
                                      <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".20s">  <span>SALEM: </span>  <p class="gray-clr"> +91 63795 35687 </p>  </li>
-									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>MADURAI: </span>  <p class="gray-clr"> +91 63795 35687</p>  </li>
-									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 95434 81612</p>  </li>                                     
+									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>MADURAI: </span>  <p class="gray-clr"> +91 95434 81612 / +91 95853 89003</p>  </li>
+									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 90030 54079</p>  </li>                                     
                                      <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s">  <span>Email address: </span>  <p class="gray-clr"> customercare.penta@gmail.com </p>  </li>
                                  </ul>
                              </div>                        
