@@ -46,7 +46,7 @@
                                 Coimbatore: <br>
                                 2/42E Seryampalayam, kadhir engineering college road,<br>
                                 Coimbatore-641048<br>
-                                Mobile: 63795 41406
+                                Mobile: 63795 41406<br>
                                 email: customercare.penta@gmail.com
                             </p>
                         </li>
