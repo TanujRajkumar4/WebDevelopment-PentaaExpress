@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2021 at 08:39 AM
+-- Generation Time: Sep 15, 2021 at 12:43 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -282,8 +282,10 @@ CREATE TABLE `tbl_courier_officers` (
 
 INSERT INTO `tbl_courier_officers` (`office`, `officer_name`, `off_pwd`, `off_id`, `email`, `ph_no`, `reg_date`, `status`) VALUES
 (1, 'PLXTUP', '456123', '1', 'pentaatrpops@gmail.com', '9944277555', '2011-01-30 09:25:21', 'A'),
-(2, 'PLXVYI', '123456', '2', 'pentaavyiops@gmail.com', '6379535687', '2011-01-30 09:40:42', 'A'),
-(3, 'PLXCHE', '123456', '3', 'pentaachennaiops@gmail.com', '6379535687', '2011-01-30 17:50:34', 'A');
+(3, 'PLXCHE', '123456', '3', 'pentaachennaiops@gmail.com', '9003054079', '2011-01-30 17:50:34', 'A'),
+(7, 'PLXMDU', '456123', '5', 'customercare.penta@gmail.com', '9543481612', '2021-09-15 16:01:10', 'A'),
+(8, 'PLXSA', '456123', '6', 'customercare.penta@gmail.com', '9876543210', '2021-09-15 16:02:04', 'A'),
+(9, 'PLXCBE', '456123', '4', 'customercare.penta@gmail.com', '6379541406', '2021-09-15 16:03:20', 'A');
 
 -- --------------------------------------------------------
 
@@ -364,7 +366,9 @@ CREATE TABLE `tbl_offices` (
 INSERT INTO `tbl_offices` (`id`, `off_name`, `address`, `city`, `ph_no`, `office_time`, `contact_person`, `status`) VALUES
 (1, 'PLX Center- Tiruppur', 'No. 15, Govindarajulu Street,\r\nNear Hotel Sri Saravana Bhavan,\r\nAvinashi Road, Tirupur-641 602,\r\nTamil Nadu', '1', '8667480670', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
 (4, 'PLX Center - Coimbatore', '2/42E Seryampalayam, kadhir engineering collage road, \r\nCoimbatore-641048', '28', '6379541406', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
-(3, 'PLX Center- Chennai', 'no-89, krishna nagar, near Jk Mahal\r\npuzhal, chennai-600066', '12', '9003054079', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A');
+(5, 'PLX Center - Madurai', 'No-161- Siddco Industrial Estate\r\nKappalur, Madurai-625008', '4', '9543481612', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
+(3, 'PLX Center- Chennai', 'no-89, krishna nagar, near Jk Mahal\r\npuzhal, chennai-600066', '12', '9003054079', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
+(6, 'PLX Center - Salem', 'NA', '3', '9876543210', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A');
 
 -- --------------------------------------------------------
 
@@ -530,7 +534,7 @@ ALTER TABLE `tbl_courier`
 -- AUTO_INCREMENT for table `tbl_courier_officers`
 --
 ALTER TABLE `tbl_courier_officers`
-  MODIFY `office` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `office` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_courier_track`
@@ -548,7 +552,7 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_offices`
 --
 ALTER TABLE `tbl_offices`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `toi`
