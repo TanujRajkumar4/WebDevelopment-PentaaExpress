@@ -319,7 +319,8 @@ img{
     letter-spacing: 2px;
 }
 .section-title, .title-1, .title-2, .title-3, .post-title, .widget-title, .font2-title1 {
-    color: #222222;  
+    color: #0f0f0f;  
+    /* color: #ffffff; */
     text-transform: uppercase;  
     letter-spacing: 1px;
 }
@@ -347,19 +348,19 @@ img{
     margin: auto
 }
 .white-clr, .white-clr .section-title, .white-clr .title-1, .white-clr .title-2, .white-clr .title-3, .white-clr p, .white-clr a {
-    color: #666;
+    color: rgb(24, 24, 24);
 }
 .black-clr, .black-clr a {
     color: #222222;
 }
 .light-black {
-    color: #333;
+    color: rgb(34, 34, 34);
 }
-.gray-clr{ color: #9f9f9f; }
+.gray-clr{ color: #5d5d5d; }
 .green-clr{ color: #33be61; }
 .red-clr{ color: #ff0000;}
 .blue-clr, a.blue-clr{color: #00ca3d;}
-.main-clr{ color: #acacac;}
+.main-clr{ color: #4e4e4e;}
 .block-inline{
     display: inline-block;
     width: 100%;
@@ -467,7 +468,7 @@ img{
 /*--------------------------- 1.4 Typography (section title, links, page dividers) Starts -------------------------- */
 
 a, .btn{
-    color:#666666;
+    color:#252525;
     text-decoration: none;
 
     transition: all 0.4s ease-in-out;    
@@ -731,7 +732,7 @@ textarea:focus:-ms-input-placeholder {
 /**-- Color-1 Light --**/
 .theme-clr, .hvr-clr:hover, .hvr-clr:focus, a:focus, a:hover, .theme-menu > li:hover > a::after, .theme-menu > li.active > a,
 .list-items li.active a, .header-main .theme-menu .dropdown-menu > li > a:hover, .header-main  .theme-menu .dropdown-menu > li > a:focus {
-    color: #009746; 
+    color: #00c742; 
 }
 .small, .theme-clr-bg, .btn-1, .btn-round:hover, .btn-round:focus, .owl-nav div:hover, .owl-nav div:focus, .theme-menu > li > a::after,
 .header-style3 .menu-bar, .pagintn > li a:hover, .pagintn > li a:focus, .widget-wrap.tag-cloud a:hover, .widget-wrap.tag-cloud a:focus {
@@ -853,6 +854,7 @@ textarea:focus:-ms-input-placeholder {
 .fs-36 { font-size: 36px; }
 .fs-48 { font-size: 48px; }
 .fs-50 { font-size: 50px; }
+.fs-65 { font-size: 65px; }
 
 .fs-96 { font-size: 96px; }
 
@@ -2773,6 +2775,13 @@ textarea:focus:-ms-input-placeholder {
 }
 
 
+
 /*********************************************** 
     8 - Responsive ENDS 
 ************************************************/
+
+.color-white{
+    font-weight: bold;
+    color: #ffffff;
+    
+}

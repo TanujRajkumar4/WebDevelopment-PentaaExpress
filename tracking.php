@@ -31,7 +31,7 @@ include("./header1.php");
                      <div class="theme-container container ">  
                          <div class="row pad-10">
                              <div class="col-md-8 col-md-offset-2 tracking-form wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">     
-                                 <h2 class="title-1"> track your shipment  </h2>  <span class="font2-light fs-12"> Now you can track your shipment easily </span>
+                                 <h2 class="title-1"> track your shipment  </h2>  <span class="font2-light fs-12" style="color: #000000;"> Now you can track your shipment easily </span>
                                  <div class="row">
                                      <form class="" action="tracking.php?ac=track" method="POST">
                                          <div class="col-md-7 col-sm-7">

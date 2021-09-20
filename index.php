@@ -2,74 +2,76 @@
 include("header.php");
 ?>
 
-             <!-- Content Wrapper -->
-             <article> 
-                 <!-- Banner -->
-                 <section class="banner banner-style2 mask-overlay pt-150 white-clr">
-                     <div class="pad-50 hidden-xs"></div>
-                     <div class="container theme-container rel-div">
-                         <img class="pt-10 effect animated fadeInLeft" alt="" src="assets/img/icons/icon-6.png" />
-                         <ul class="list-items fw-600 effect animated wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s">   
-                             <li><a href="#" style="color: #ffff;">fast </a></li>
-                             <li><a href="#" style="color: #ffff;">reliable </a></li>
-                             <li><a href="#"  style="color: #ffff;">secured </a></li>
-                         </ul>
-                         <h2 class="section-title fs-48 effect animated wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s"> <span class="theme-clr">PENTA LOGISTICS (XPRESS CARGO)</span> for  <br />  <span class="theme-clr"> logisticts  </span> &  <span class="theme-clr"> delivery  </span> services  </h2>
-                         <div class="pad-30"></div>
-                         <div class="col-md-8 col-md-offset-2 tracking-form text-left effect animated fadeInUp">     
-                             <h2 class="title-1"> track your shipment  </h2>  <span class="font2-light fs-12">Now you can track your shipment easily </span>
-                             <div class="row">
-                                 <form class="" action="tracking.php?ac=track" method="POST">
-                                     <div class="col-md-7 col-sm-7">
-                                         <div class="form-group">
-                                             <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" />
-                                         </div>
-                                     </div>
-                                     <div class="col-md-5 col-sm-5">
-                                         <div class="form-group">
-                                             <button class="btn-1">track your shipment </button>
-                                         </div>
-                                     </div>
-                                 </form>
-                             </div>
-                             <div class="pad-10"></div>
-                         </div>
-                     </div>                    
-                 </section>
-                 <!-- /.Banner -->
+<!-- Content Wrapper -->
+<article>
+    <!-- Banner -->
+    <section class="banner banner-style2 mask-overlay pt-150 white-clr">
+        <div class="pad-50 hidden-xs"></div>
+        <div class="container theme-container rel-div">
+            <img class="pt-10 effect animated fadeInLeft" alt="" src="assets/img/icons/icon-6.png" />
+            <ul class="list-items fw-600 effect animated wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s">
+                <li><a href="#" style="color: #ffff;">fast </a></li>
+                <li><a href="#" style="color: #ffff;">reliable </a></li>
+                <li><a href="#" style="color: #ffff;">secured </a></li>
+            </ul>
+            <h1 class="section-title fs-65 effect animated wow fadeInUp color-white" data-wow-offset="50" data-wow-delay=".20s" style="color: #ffffff;"> <span class="theme-clr">PENTA LOGISTICS</span> </h1>
+            <h3 class="section-title fs-36 effect animated wow fadeInUp color-white" data-wow-offset="50" data-wow-delay=".20s" style="color: #ffffff;">(XPRESS CARGO)</h2>
+            <div class="pad-30"></div>
+            <div class="col-md-8 col-md-offset-2 tracking-form text-left effect animated fadeInUp color-white">
+                <h2 class="color-white title-1" style="color: #ffffff;"> track your shipment </h2> <span class="font2-light fs-12">Now you can track your shipment easily </span>
+                <div class="row">
+                    <form class="" action="tracking.php?ac=track" method="POST">
+                        <div class="col-md-7 col-sm-7">
+                            <div class="form-group">
+                                <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" />
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <div class="form-group">
+                                <button class="btn-1">track your shipment </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pad-10"></div>
+            </div>
 
-                 <!-- Feature-2 -->
-                 <section class="pad-50 feature feature-2 clrbg-before">                    
-                     <div class="theme-container container">  
-                         <div class="row">
-                             <div class="col-sm-4">
-                                 <img alt="" src="assets/img/icons/icon-2.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" /> 
-                                 <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s"> 
-                                     <h2 class="title-1">Fast delivery </h2> 
-                                     <p>We make your delivery on time </p>                                            
-                                 </div>  
-                             </div>
-							    <div class="col-sm-4">
-                                 <img alt="" src="assets/img/icons/icon-4.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" /> 
-                                 <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s"> 
-                                     <h2 class="title-1">reliable service </h2> 
-                                     <p>We make convenient reliable service for all. </p>                                            
-                                 </div>  
-                             </div>
-                             <div class="col-sm-4">
-                                 <img alt="" src="assets/img/icons/icon-3.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" /> 
-                                 <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s"> 
-                                     <h2 class="title-1">secured service </h2> 
-                                     <p>We assure for your product safety</p>                                            
-                                 </div>  
-                             </div>
-                          
-                         </div>
-                     </div>
-                 </section>
-                 <!-- /.Feature-2 -->
+        </div>
+    </section>
+    <!-- /.Banner -->
 
-                 <!-- About Us --
+    <!-- Feature-2 -->
+    <section class="pad-50 feature feature-2 clrbg-before">
+        <div class="theme-container container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img alt="" src="assets/img/icons/icon-2.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" />
+                    <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s">
+                        <h2 class="title-1">Fast delivery </h2>
+                        <p>We make your delivery on time </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <img alt="" src="assets/img/icons/icon-4.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" />
+                    <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s">
+                        <h2 class="title-1">reliable service </h2>
+                        <p>We make convenient reliable service for all. </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <img alt="" src="assets/img/icons/icon-3.png" class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s" />
+                    <div class="feature-content wow rotateInDownRight" data-wow-offset="50" data-wow-delay=".30s">
+                        <h2 class="title-1">secured service </h2>
+                        <p>We assure for your product safety</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- /.Feature-2 -->
+
+    <!-- About Us --
                  <section class="pad-120 about-wrap about-2 clrbg-before">
                      <span class="bg-text wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s"> About  </span>
                      <div class="theme-container container">               
@@ -92,7 +94,7 @@ include("header.php");
                  </section>
                  <!-- /.About Us -->
 
-                 <!-- Steps
+    <!-- Steps
                  <section class="steps-wrap mask-overlay pad-80">                
                      <div class="theme-container container">               
                          <div class="row">
@@ -124,7 +126,7 @@ include("header.php");
                  <!-- /.Steps -->
 
 
-                 <!-- Calculate Your Cost 
+    <!-- Calculate Your Cost 
                  <section class="calculate pt-100">
                      <div class="theme-container container">  
                          <span class="bg-text right wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s"> calculate  </span>
@@ -192,7 +194,7 @@ include("header.php");
                  </section>
                  <!-- /.Calculate Your Cost -->
 
-                 <!-- Testimonial -
+    <!-- Testimonial -
                  <section class="testimonial mask-overlay">
                      <div class="theme-container container">               
                          <div class="testimonial-slider no-pagination pad-120">
@@ -243,7 +245,7 @@ include("header.php");
                  </section>
                  <!-- /.Testimonial -->
 
-                 <!-- Product Delivery 
+    <!-- Product Delivery 
                  <section class="prod-delivery pad-120">
                      <div class="theme-container container">               
                          <div class="row">
@@ -266,7 +268,7 @@ include("header.php");
                  </section>
                  <!-- /.Product Delivery -->
 
-                 <!-- Pricing & Plans
+    <!-- Pricing & Plans
                  <section class="pricing-wrap  pricing-2">                
                      <div class="theme-container container">    
                          <span class="bg-text center wow fadeInUp" data-wow-offset="50" data-wow-delay=".20s"> Pricing  </span>
@@ -345,35 +347,86 @@ include("header.php");
                  </section>
                  <!-- /.Pricing & Plans -->
 
-                 <!-- Contact us -->
-                 <section class="contact-wrap contact-2 pad-120">   
-                     <span class="bg-text center wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s"> Contact  </span>
-                     <div class="theme-container container">               
-                         <div class="row">
-                             <div class="col-md-6 col-sm-8 col-sm-offset-2 col-md-offset-3">
-                                 <div class="title-wrap text-center">
-                                     <h2 class="section-title wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s">contact us </h2>
-                                     <p class="wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s">Get in touch with us easily </p>
-                                 </div>
-                                 <ul class="contact-detail title-2">
-                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Head Office: </span></li> 
-                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>COIMBATORE </span>  <p class="gray-clr">+91 63795 41406</p>  </li> 
-                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Branches: </span></li>
-                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Tiruppur</span>  <p class="gray-clr"> +91 86674 80670</p>  </li>
-                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".20s">  <span>SALEM: </span>  <p class="gray-clr"> +91 63795 35687 </p>  </li>
-									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>MADURAI: </span>  <p class="gray-clr"> +91 95434 81612 / +91 95853 89003</p>  </li>
-									 <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 90030 54079</p>  </li>                                     
-                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s">  <span>Email address: </span>  <p class="gray-clr"> customercare.penta@gmail.com </p>  </li>
-                                 </ul>
-                             </div>                        
-                         </div>
-                     </div>               
-                 </section>
-                 <!-- /.Contact us -->
-             </article>
-             <!-- /.Content Wrapper -->
+    <!-- Contact us -->
+    <section class="contact-wrap contact-2 pad-120">
+        <div class="theme-container container">
+            <div class="row">
+                <!-- <div class="col-md-6 col-sm-8 col-sm-offset-2 col-md-offset-3">                                
+                            </div>  
+                             -->
 
-            <?php
-			include("footer.php");
-			?>
- 
+                <section class="contact-page pad-30">
+                    <span class="bg-text center wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s"> Contact US </span>
+                    <div class="theme-container container">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-md-offset-1">
+
+                                <div class="title-wrap text-center">
+                                    <h2 class="section-title wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s">contact us </h2>
+                                    <p class="wow fadeInLeft" data-wow-offset="50" data-wow-delay=".20s">Get in touch with us easily </p>
+                                </div>
+                                <ul class="contact-detail title-2">
+                                    <!-- <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Head Office: </span></li>  -->
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s"> <span>Phone Number: </span>
+                                        <p class="gray-clr">+91 63795 41406</p>
+                                    </li>
+                                    <!-- <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Branches: </span></li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>Tiruppur</span>  <p class="gray-clr"> +91 86674 80670</p>  </li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".20s">  <span>SALEM: </span>  <p class="gray-clr"> +91 63795 35687 </p>  </li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>MADURAI: </span>  <p class="gray-clr"> +91 95434 81612 / +91 95853 89003</p>  </li>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 90030 54079</p>  </li>                                      -->
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>Email address: </span>
+                                        <p class="gray-clr"> customercare.penta@gmail.com </p>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-md-offset-1 contact-form">
+                                <div class="calculate-form ">
+                                    <h3 class="section-title no-margin"> Send your Enquiry </h3><br>
+                                    <form class="row" id="contact-form" method="post" action="sendmail.php">
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Name: </label></div>
+                                            <div class="col-sm-9"> <input type="text" name="Name" id="Name" required="" placeholder="" class="form-control" /> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Email: </label></div>
+                                            <div class="col-sm-9"> <input type="text" name="Email" id="Email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="" class="form-control" /> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Phone: </label></div>
+                                            <div class="col-sm-9"> <input type="text" name="Phone" id="Phone" placeholder="" class="form-control" /> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-3"> <label class="title-2"> Message: </label></div>
+                                            <div class="col-sm-9"> <textarea class="form-control" name="Message" id="Message" required="" cols="25" rows="3"></textarea> </div>
+                                        </div>
+                                        <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
+                                            <div class="col-sm-9 col-xs-12 pull-right">
+                                                <button name="submit" id="submit_btn" class="btn-1"> send message </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </section>
+    <!-- /.Contact us -->
+</article>
+<!-- /.Content Wrapper -->
+
+<?php
+include("footer.php");
+?>
