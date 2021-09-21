@@ -377,7 +377,7 @@ include("header.php");
                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 90030 54079</p>  </li>                                      -->
                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>Email address: </span>
                                         <p class="gray-clr"> customercare.penta@gmail.com </p>
-                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>Address: </span>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>H.O. Address: </span>
                                         <p class="gray-clr" style="text-transform: capitalize;">
                                             <!-- NEW H.O. ADDRESS -->
                                             Penta Logistics,<br>
