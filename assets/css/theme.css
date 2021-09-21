@@ -2792,3 +2792,10 @@ textarea:focus:-ms-input-placeholder {
 p{
        color: #000000 !important;
 }
+
+.black-text{
+    color: #000000  !important;
+}
+.white-text{
+    color: #FFFFFF  !important;
+}
