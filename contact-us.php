@@ -61,7 +61,7 @@
                         </li>
                         <li class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".50s"> <span> </span>
                             <p class="gray-clr">
-                                <!-- COPIED FROM OLD VERSION OF SITE  -->
+                                <!-- COPIED FROM OLD SITE VERSION -->
                                 TIRUPUR:<br>
                                 No. 15, Govindarajulu Street,<br />
                                 Near Hotel Sri Saravana Bhavan,<br />
@@ -97,23 +97,23 @@
                         <form class="row" id="contact-form" method="post" action="sendmail.php">
                             <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                 <div class="col-sm-3"> <label class="title-2"> Name: </label></div>
-                                <div class="col-sm-9"> <input type="text" name="Name" id="Name" required="" placeholder="" class="form-control" style="color: #000000;" /> </div>
+                                <div class="col-sm-9"> <input type="text" name="Con_name" id="Name" required="" placeholder="" class="form-control" /> </div>
                             </div>
                             <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                 <div class="col-sm-3"> <label class="title-2"> Email: </label></div>
-                                <div class="col-sm-9"> <input type="text" name="Email" id="Email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="" class="form-control" style="color: #000000;"/> </div>
+                                <div class="col-sm-9"> <input type="text" name="Con_email" id="Email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="" class="form-control" /> </div>
                             </div>
                             <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                 <div class="col-sm-3"> <label class="title-2"> Phone: </label></div>
-                                <div class="col-sm-9"> <input type="text" name="Phone" id="Phone" placeholder="" class="form-control" style="color: #000000;"/> </div>
+                                <div class="col-sm-9"> <input type="text" name="Con_ph" id="Phone" placeholder="" class="form-control" /> </div>
                             </div>
                             <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                 <div class="col-sm-3"> <label class="title-2"> Message: </label></div>
-                                <div class="col-sm-9"> <textarea class="form-control" name="Message" id="Message" required="" cols="25" rows="3" style="color: #000000;"></textarea> </div>
+                                <div class="col-sm-9"> <textarea class="form-control" name="Con_msg" id="Message" required="" cols="25" rows="3"></textarea> </div>
                             </div>
                             <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                 <div class="col-sm-9 col-xs-12 pull-right">
-                                    <button name="submit" id="submit_btn" class="btn-1"> send message </button>
+                                    <button name="sendmail" id="submit_btn" class="btn-1"> send message </button>
                                 </div>
                             </div>
                         </form>
