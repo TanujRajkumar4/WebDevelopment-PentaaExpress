@@ -2469,6 +2469,7 @@ textarea:focus:-ms-input-placeholder {
     .bg-text { font-size: 50px; } 
 
     .fs-16 { font-size: 14px; }
+    .fs-18 { font-size: 18px; }
     .fs-20 { font-size: 16px; }
     .fs-26 { font-size: 20px; }
     .fs-36 { font-size: 30px; }
@@ -2784,4 +2785,10 @@ textarea:focus:-ms-input-placeholder {
     font-weight: bold;
     color: #ffffff;
     
+}
+
+
+
+p{
+       color: #000000 !important;
 }

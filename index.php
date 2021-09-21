@@ -16,25 +16,25 @@ include("header.php");
             </ul>
             <h1 class="section-title fs-65 effect animated wow fadeInUp color-white" data-wow-offset="50" data-wow-delay=".20s" style="color: #ffffff;"> <span class="theme-clr">PENTA LOGISTICS</span> </h1>
             <h3 class="section-title fs-36 effect animated wow fadeInUp color-white" data-wow-offset="50" data-wow-delay=".20s" style="color: #ffffff;">(XPRESS CARGO)</h2>
-            <div class="pad-30"></div>
-            <div class="col-md-8 col-md-offset-2 tracking-form text-left effect animated fadeInUp color-white">
-                <h2 class="color-white title-1" style="color: #ffffff;"> track your shipment </h2> <span class="font2-light fs-12">Now you can track your shipment easily </span>
-                <div class="row">
-                    <form class="" action="tracking.php?ac=track" method="POST">
-                        <div class="col-md-7 col-sm-7">
-                            <div class="form-group">
-                                <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" />
+                <div class="pad-30"></div>
+                <div class="col-md-8 col-md-offset-2 tracking-form text-left effect animated fadeInUp color-white">
+                    <h2 class="color-white title-1" style="color: #ffffff;"> track your shipment </h2> <span class="font2-light fs-12">Now you can track your shipment easily </span>
+                    <div class="row">
+                        <form class="" action="tracking.php?ac=track" method="POST">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="form-group">
+                                    <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-5 col-sm-5">
-                            <div class="form-group">
-                                <button class="btn-1">track your shipment </button>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <button class="btn-1">track your shipment </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="pad-10"></div>
                 </div>
-                <div class="pad-10"></div>
-            </div>
 
         </div>
     </section>
@@ -377,6 +377,16 @@ include("header.php");
                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".25s">  <span>CHENNAI: </span>  <p class="gray-clr"> +91 90030 54079</p>  </li>                                      -->
                                     <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>Email address: </span>
                                         <p class="gray-clr"> customercare.penta@gmail.com </p>
+                                    <li class="wow slideInUp" data-wow-offset="50" data-wow-delay=".30s"> <span>Address: </span>
+                                        <p class="gray-clr" style="text-transform: capitalize;">
+                                            <!-- NEW H.O. ADDRESS -->
+                                            Penta Logistics,<br>
+                                            Flat No. 2-D, No. - 1741<br>
+                                            Haven Radhakrishna Enclave,<br>
+                                            Ramanathapuram, Trichy Road,<br>
+                                            Coimbatore-641045.<br>
+
+                                        </p>
                                     </li>
                                 </ul>
 

@@ -33,8 +33,8 @@ include("header1.php");
                      <div class="theme-container container">               
                          <div class="row">
                              <div class="col-md-6">
-                                 <div class="about-us pt-10">
-                                     <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s">
+                                 <div class="about-us pt-10" style="color: #000000">
+                                     <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s" >
                                        <?php
                                       $result=mysqli_query($dbConn, "select * from pages where status='A' and page_id=1 ");
                                       $row=mysqli_fetch_array($result);

@@ -43,7 +43,7 @@
                             </span>
                             <!-- NEW ADDRESS -->
                             <p class="gray-clr">
-                                Coimbatore: <br>
+                                <b>COIMBATORE: </b><br>
                                 2/42E Seryampalayam, kadhir engineering college road,<br>
                                 Coimbatore-641048<br>
                                 Mobile: 63795 41406<br>
@@ -53,7 +53,7 @@
                         <li class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".50s"> <span> </span>
                             <p class="gray-clr">
                                 <!-- NEW -->
-                                Chennai:<br>
+                                CHENNAI:<br>
                                 No-89, Krishna Nagar, near JK Mahal<br>
                                 Puzhal, Chennai-600066<br>
                                 Mobile: +91 90030 54079<br>
@@ -62,7 +62,7 @@
                         <li class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".50s"> <span> </span>
                             <p class="gray-clr">
                                 <!-- COPIED FROM OLD SITE VERSION -->
-                                Tirupur:<br>
+                                TIRUPUR:<br>
                                 No. 15, Govindarajulu Street,<br />
                                 Near Hotel Sri Saravana Bhavan,<br />
                                 Avinashi Road, Tirupur-641 602,<br />
@@ -74,7 +74,7 @@
                         <li class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".50s"> <span> </span>
                             <p class="gray-clr">
                                 <!-- ADDRESS DATA MISSING -->
-                                Salem:<br>
+                                SALEM:<br>
 
 
                             </p>
@@ -82,7 +82,7 @@
 
                         <li class="wow fadeInUp" data-wow-offset="50" data-wow-delay=".50s"> <span> </span>
                             <p class="gray-clr">
-                                Madurai:<br>
+                                MADURAI:<br>
                                 No-161- Siddco Industrial Estate<br>
                                 Kappalur, Madurai-625008<br>
                                 Mobile: +91 95434 81612 / +91 95853 89003<br>
