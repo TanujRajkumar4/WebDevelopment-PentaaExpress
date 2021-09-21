@@ -30,7 +30,7 @@ include('./admin/database.php');
         <span class="bg-text"> Service Areas </span>
         <div class="theme-container container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="about-us pt-10">
                         <p class="fs-16 wow fadeInUp" data-wow-offset="50" data-wow-delay=".25s">
                             <?php

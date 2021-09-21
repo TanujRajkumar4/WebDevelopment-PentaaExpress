@@ -16,7 +16,8 @@
          <link rel="stylesheet" type="text/css" href="assets/plugins/font-elegant/elegant.css" />
          <!-- OwlCarousel2 Slider Css -->
          <link rel="stylesheet" type="text/css" href="assets/plugins/owl.carousel.2/assets/owl.carousel.css" />
-
+         
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
          <!-- Animate Css -->       
          <link rel="stylesheet" type="text/css" href="assets/css/animate.css" />

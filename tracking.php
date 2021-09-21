@@ -36,7 +36,7 @@ include("./header1.php");
                                      <form class="" action="tracking.php?ac=track" method="POST">
                                          <div class="col-md-7 col-sm-7">
                                              <div class="form-group">
-                                                 <input type="text" placeholder="Enter your waybill no" required="" name="waybill" id="waybill" class="form-control box-shadow" />
+                                                 <input type="text" placeholder="Enter your waybill no" required="" name="waybill" id="waybill" class="form-control box-shadow" style="color: #000000;" />
                                              </div>
                                          </div>
                                          <div class="col-md-5 col-sm-5">

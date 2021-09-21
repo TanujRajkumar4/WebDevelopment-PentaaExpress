@@ -23,7 +23,7 @@ include("header.php");
                         <form class="" action="tracking.php?ac=track" method="POST">
                             <div class="col-md-7 col-sm-7">
                                 <div class="form-group">
-                                    <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" />
+                                    <input type="text" class="form-control box-shadow" required="" placeholder="Enter your waybill no" name="waybill" id="waybill" style="color: #FFFFFF;" />
                                 </div>
                             </div>
                             <div class="col-md-5 col-sm-5">
@@ -392,25 +392,25 @@ include("header.php");
 
                             </div>
 
-                            <div class="col-md-4 col-sm-6 col-md-offset-1 contact-form">
+                            <div class="col-md-4 col-sm-6 col-md-offset-1 contact-form" >
                                 <div class="calculate-form ">
                                     <h3 class="section-title no-margin"> Send your Enquiry </h3><br>
                                     <form class="row" id="contact-form" method="post" action="sendmail.php">
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Name: </label></div>
-                                            <div class="col-sm-9"> <input type="text" name="Name" id="Name" required="" placeholder="" class="form-control" /> </div>
+                                            <div class="col-sm-9"> <input type="text" name="Name" id="Name" required="" placeholder="" class="form-control" style="color: #000000;"/> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Email: </label></div>
-                                            <div class="col-sm-9"> <input type="text" name="Email" id="Email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="" class="form-control" /> </div>
+                                            <div class="col-sm-9"> <input type="text" name="Email" id="Email" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="" class="form-control" style="color: #000000;" /> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Phone: </label></div>
-                                            <div class="col-sm-9"> <input type="text" name="Phone" id="Phone" placeholder="" class="form-control" /> </div>
+                                            <div class="col-sm-9"> <input type="text" name="Phone" id="Phone" placeholder="" class="form-control" style="color: #000000;"/> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-3"> <label class="title-2"> Message: </label></div>
-                                            <div class="col-sm-9"> <textarea class="form-control" name="Message" id="Message" required="" cols="25" rows="3"></textarea> </div>
+                                            <div class="col-sm-9"> <textarea class="form-control" name="Message" id="Message" required="" cols="25" rows="3" style="color: #000000;"></textarea> </div>
                                         </div>
                                         <div class="form-group wow fadeInUp" data-wow-offset="50" data-wow-delay=".30s">
                                             <div class="col-sm-9 col-xs-12 pull-right">
