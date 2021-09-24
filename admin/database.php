@@ -3,8 +3,8 @@
 
 // database connection config
 $dbHost = 'localhost';
-$dbUser = 'pentaaxp_logistic';
-$dbPass = 'u_nz(oit48s^';
+$dbUser = 'root';
+$dbPass = '';
 $dbName = 'pentaaxpress_logkar';
 
 $dbConn = mysqli_connect ($dbHost, $dbUser, $dbPass) or die ('MySQL connect failed. ' . mysqli_error($dbConn));

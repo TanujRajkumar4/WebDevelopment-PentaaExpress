@@ -117,7 +117,13 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 
 				<!-- /.sidebar-shortcuts -->
 				<?php 
-				include("sidebar.php");
+					
+					if ($id=="10"){
+						include("sidebar.php");
+					}
+					else{
+						include("sidebar_user.php");
+					}
 				?>
 				<!-- /.nav-list -->
 
