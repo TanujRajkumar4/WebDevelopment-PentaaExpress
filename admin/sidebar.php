@@ -12,6 +12,7 @@
 
 						<b class="arrow"></b>
 					</li>
+					<?php if (($type== 1)) { ?>
 					<li class="">
 						<a href="page.php">
 							<i class="menu-icon fa fa-tachometer"></i>
@@ -103,7 +104,7 @@
 							</li>
 							</ul>
 					</li>
-					<?php if (($type== 0)) { ?>
+					<?php } ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
@@ -141,7 +142,7 @@
 							</li>
 							</ul>
 					</li>
-					<?php } ?>
+					<?php if (($type== 1)) { ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -212,7 +213,7 @@
 
 						<b class="arrow"></b>
 					</li>
-					<?php if($type==0){ ?>
+					<?php } ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-picture-o"></i>
@@ -246,5 +247,4 @@
 							</li>
 							</ul>
 					</li> 
-					<?php } ?>
 					</ul>	
