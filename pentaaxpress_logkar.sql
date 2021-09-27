@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2021 at 11:05 AM
+-- Generation Time: Sep 27, 2021 at 07:39 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -371,7 +371,7 @@ INSERT INTO `tbl_offices` (`id`, `off_name`, `address`, `city`, `ph_no`, `office
 (5, 'PLX Center - Madurai', 'No-161- Siddco Industrial Estate\r\nKappalur, Madurai-625008', '4', '9543481612', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
 (3, 'PLX Center- Chennai', 'no-89, krishna nagar, near Jk Mahal\r\npuzhal, chennai-600066', '12', '9003054079', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
 (6, 'PLX Center - Salem', 'NA', '3', '9876543210', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A'),
-(10, 'PLX Head Office', 'NA', 'NA', 'NA', 'NA', 'NA', 'A');
+(10, 'PLX Head Office', 'FLAT NO2-D, N0-1741 HAVEN RADHAKRISHNA ENCLAVE, RAMANATHAPURAM,TRICHY ROAD, COIMBATORE-641045', '28', '6379541406', '10.00 am - 9.00 pm', 'Karthik Prabhu', 'A');
 
 -- --------------------------------------------------------
 
