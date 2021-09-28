@@ -146,6 +146,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 	</head>
 
 	<body class="skin-3">
+		<?php if($_SESSION['type']==1){?>
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
@@ -432,7 +433,11 @@ if($_GET['ac'] == "edt")
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
 				
-							<?php
+	</body>	<?php
 	}
-}
-	?>		
+	// redirecting to dashboard  
+	else{
+		header("Refresh: 5; url= dashboard.php");
+		echo "<h1>You don't have access to this page, you'll be redirected to dashboard in 5 seconds</h1>";
+	}
+	} } ?> 
