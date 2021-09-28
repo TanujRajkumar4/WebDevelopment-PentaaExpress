@@ -58,6 +58,7 @@ function printpage()
   window.print()
   }
 </script>
+<?php if($_SESSION['type']==1) {?>
 	<body class="skin-3">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
@@ -269,6 +270,12 @@ function printpage()
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
+											</body>
 	<?php
 }
-	?>
+// redirecting to dashboard  
+else{
+	header("Refresh: 5; url= dashboard.php");
+	echo "<h1>You don't have access to this page, you'll be redirected to dashboard in 5 seconds</h1>";
+}
+}?>
