@@ -71,7 +71,7 @@ include("./header1.php");
                                          <li>  <span class="title-2" style="color:white;">Delivery Address: </span>  <span class="fs-16"><?php echo $sql['consignee_add'];?> </span>  </li>
                                      </ul>
                                  </div>
-                             </div> -->
+                             </div> --> 
                              <div class="col-md-12 pad-30 wow fadeInLeft" data-wow-offset="50" data-wow-delay=".30s" > 
                              <center><div class="prod-info white-clr" style="color:white;">
                                      <ul>
