@@ -2088,6 +2088,13 @@ textarea:focus:-ms-input-placeholder {
     width: 37%;
     margin-right: 25px;
 }
+/* progress bar to represent delivered */
+.border-full{
+    border-bottom: 5px dotted #969393;
+    position: absolute;
+    width: 98%;    
+    margin-left: 1.5%;
+}
 .border-left {
     border-top: 5px dotted #d5d5d5;
     margin-left: 25px;
@@ -2106,8 +2113,12 @@ textarea:focus:-ms-input-placeholder {
     background-color: #222222;
 }
 .dot-right {
-    background-color: #efefef;  
+    background-color: #222222;  
     right: 0;  
+}
+/* to set the dot to delivered */
+.dot-delivered{
+    right:0;
 }
 .progress-wrap .themeclr-border {
     border-radius: 50%;
