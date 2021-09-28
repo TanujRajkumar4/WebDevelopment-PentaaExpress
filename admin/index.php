@@ -20,7 +20,7 @@ if(isset($_POST['login']))
 				$_SESSION['uid']=$row["office"];
 				$_SESSION['mailid']=$row["email"];	
 				$_SESSION['orgid']=$row["office"];	
-				$_SESSION['type']=$row["type"];
+				$_SESSION['type']=$row["user_type"];
 				echo "<script>window.location.href = 'dashboard.php';</script>";	
 			} 			
 	}
