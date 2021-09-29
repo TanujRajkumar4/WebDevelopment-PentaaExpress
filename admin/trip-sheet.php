@@ -58,7 +58,7 @@ function printpage()
   window.print()
   }
 </script>
-<?php if($_SESSION['type']==1) {?>
+<?php if($_SESSION['type']=="HO") {?>
 	<body class="skin-3">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">

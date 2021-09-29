@@ -1,17 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< Updated upstream
--- Generation Time: Sep 27, 2021 at 07:39 PM
+-- Generation Time: Sep 28, 2021 at 08:32 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
-=======
--- Generation Time: Sep 29, 2021 at 09:39 AM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
->>>>>>> Stashed changes
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +22,7 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+ 
 --
 -- Table structure for table `book_meth`
 --
@@ -65,7 +59,7 @@ CREATE TABLE `book_status` (
 INSERT INTO `book_status` (`b_id`, `bname`, `status`) VALUES
 (1, 'Booked', 'A'),
 (2, 'Intransit', 'A'),
-(3, 'Deliverd\r\n', 'A');
+(3, 'Delivered', 'A');
 
 -- --------------------------------------------------------
 
@@ -280,30 +274,20 @@ CREATE TABLE `tbl_courier_officers` (
   `ph_no` varchar(12) NOT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(10) NOT NULL DEFAULT 'A',
-  `type` int(1) DEFAULT NULL
+  `user_type` varchar(6) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_courier_officers`
 --
 
-<<<<<<< Updated upstream
-INSERT INTO `tbl_courier_officers` (`office`, `officer_name`, `off_pwd`, `off_id`, `email`, `ph_no`, `reg_date`, `status`, `type`) VALUES
-(1, 'PLXTUP', '456123', '1', 'pentaatrpops@gmail.com', '9944277555', '2011-01-30 09:25:21', 'A', 0),
-(3, 'PLXCHE', '123456', '3', 'pentaachennaiops@gmail.com', '9003054079', '2011-01-30 17:50:34', 'A', 0),
-(7, 'PLXMDU', '456123', '5', 'customercare.penta@gmail.com', '9543481612', '2021-09-15 16:01:10', 'A', 0),
-(8, 'PLXSA', '456123', '6', 'customercare.penta@gmail.com', '9876543210', '2021-09-15 16:02:04', 'A', 0),
-(9, 'PLXCBE', '456123', '4', 'customercare.penta@gmail.com', '6379541406', '2021-09-15 16:03:20', 'A', 0),
-(10, 'ADMIN', '456123', '10', 'NA', 'NA', '2021-09-25 13:27:58', 'A', 1);
-=======
 INSERT INTO `tbl_courier_officers` (`office`, `officer_name`, `off_pwd`, `off_id`, `email`, `ph_no`, `reg_date`, `status`, `user_type`) VALUES
 (1, 'PLXTUP', '456123', '1', 'pentaatrpops@gmail.com', '9944277555', '2011-01-30 09:25:21', 'A', 'Branch'),
 (3, 'PLXCHE', '123456', '3', 'pentaachennaiops@gmail.com', '9003054079', '2011-01-30 17:50:34', 'A', 'Branch'),
 (7, 'PLXMDU', '456123', '5', 'customercare.penta@gmail.com', '9543481612', '2021-09-15 16:01:10', 'A', 'Branch'),
 (8, 'PLXSA', '456123', '6', 'customercare.penta@gmail.com', '9876543210', '2021-09-15 16:02:04', 'A', 'Branch'),
 (9, 'PLXCBE', '456123', '4', 'customercare.penta@gmail.com', '6379541406', '2021-09-15 16:03:20', 'A', 'Branch'),
-(10, 'PLXHO-CBE', '456123', '10', 'customercare.penta@gmail.com', '6379541406', '2021-09-25 13:27:58', 'A', 'HO');
->>>>>>> Stashed changes
+(10, 'HOCBE', '456123', '10', 'customercare.penta@gmail.com', '6379541406', '2021-09-25 13:27:58', 'A', 'HO');
 
 -- --------------------------------------------------------
 

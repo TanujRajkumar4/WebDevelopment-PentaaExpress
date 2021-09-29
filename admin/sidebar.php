@@ -1,3 +1,8 @@
+<?php
+	require_once('database.php');
+	$type=$_SESSION['type'];
+?>
+
 <ul class="nav nav-list">
 					<li class="">
 						<a href="dashboard.php">
@@ -7,6 +12,7 @@
 
 						<b class="arrow"></b>
 					</li>
+					<?php if (($type== "HO")) { ?>
 					<li class="">
 						<a href="page.php">
 							<i class="menu-icon fa fa-tachometer"></i>
@@ -98,7 +104,7 @@
 							</li>
 							</ul>
 					</li>
-					
+					<?php } ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
@@ -136,6 +142,7 @@
 							</li>
 							</ul>
 					</li>
+					<?php if (($type== "HO")) { ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -206,6 +213,7 @@
 
 						<b class="arrow"></b>
 					</li>
+					<?php } ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-picture-o"></i>
@@ -238,6 +246,5 @@
 
 							</li>
 							</ul>
-					</li>
-
-					</ul>
+					</li> 
+					</ul>	
