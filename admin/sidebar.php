@@ -142,7 +142,6 @@
 							</li>
 							</ul>
 					</li>
-					<?php if (($type== "HO")) { ?>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -178,6 +177,7 @@
 							</li>
 							</ul>
 					</li>
+					<?php if (($type== "HO")) { ?>
 						<li class="">
 					<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-picture-o"></i>

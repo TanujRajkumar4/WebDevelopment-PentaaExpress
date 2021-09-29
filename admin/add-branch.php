@@ -4,6 +4,15 @@ include("database.php");
 if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
 {
 	$id=$_SESSION['uid'];
+	$user_type=$_SESSION['type'];
+	if ($user_type == "Branch") {
+		echo '<script>		
+			alert("You do not have access to this page, you will be redirected to the dashboard...");			
+			  </script>';
+		header("Refresh: 0; url= dashboard.php");
+
+		exit();
+	}	
 	
 	if(isset($_GET['ty']))
 	{
@@ -135,7 +144,6 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<![endif]-->
 	</head>
 	<body class="skin-3">
-		<?php if($_SESSION['type']=="HO"){ ?>
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
@@ -1167,10 +1175,4 @@ $('#balance').val(tot.toFixed(2));
 		</script> </body>
 		<?php
 	}
-	// redirecting to dashboard  
-	else{
-		header("Refresh: 5; url= dashboard.php");
-		echo "<h1>You don't have access to this page, you'll be redirected to dashboard in 5 seconds</h1>";
-	}
-}
 }?>		
