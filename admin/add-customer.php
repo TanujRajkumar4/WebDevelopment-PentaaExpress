@@ -175,6 +175,12 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 		</head>
+		<script>
+			function printpage()
+			{
+			window.print()
+			}
+		</script>
 
 		<body class="skin-3">
 
@@ -543,6 +549,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<div class="clearfix">
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
+																<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage();" >Print</a>
 															</div>
 														</div>
 

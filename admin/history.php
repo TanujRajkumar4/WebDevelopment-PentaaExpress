@@ -4,6 +4,15 @@ include("database.php");
 if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
 {
 	$id=$_SESSION['uid'];
+	$user_type=$_SESSION['type'];
+	if ($user_type == "Branch") {
+		echo '<script>		
+			alert("You do not have access to this page, you will be redirected to the dashboard...");			
+			  </script>';
+		header("Refresh: 0; url= dashboard.php");
+
+		exit();
+	}	
 	if(isset($_POST['export_data']))
 				{
 					// --------------------------------------------------------------------------- start export excel --------------------------------------------------------------------------------
@@ -106,6 +115,12 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
+		<script>
+			function printpage()
+			{
+			window.print()
+			}
+		</script>
 	<body class="skin-3">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
@@ -222,7 +237,9 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 										<div class="clearfix">
 											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 											<button class="btn btn-success btn-next" type="Submit" name="export_data" id="export_data">Export to Excel</button>
+											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage();" >Print</a>
 										</div>
+										
 									</div>
 											
 										</div>
