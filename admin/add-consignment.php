@@ -423,7 +423,7 @@ if($_GET['ty'] == "add")
 
 																<div class="col-xs-12 col-sm-9">
 																	<div class="clearfix">
-																		<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" />
+																		<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" onload="this.focus();" />
 																	</div>
 															</div>
 															</div>
