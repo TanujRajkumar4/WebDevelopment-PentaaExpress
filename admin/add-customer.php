@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); 
 include("database.php");
 if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 	$id = $_SESSION['uid'];
