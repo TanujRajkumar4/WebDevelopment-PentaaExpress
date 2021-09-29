@@ -4,6 +4,15 @@ include("database.php");
 if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
 {
 	$id=$_SESSION['uid'];
+	$user_type=$_SESSION['type'];
+	if ($user_type == "Branch") {
+		echo '<script>		
+			alert("You do not have access to this page, you will be redirected to the dashboard...");			
+			  </script>';
+		header("Refresh: 0; url= dashboard.php");
+
+		exit();
+	}	
 	
 	if(isset($_GET['ty']))
 	{
