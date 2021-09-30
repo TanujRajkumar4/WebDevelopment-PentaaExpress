@@ -1,20 +1,14 @@
 <?php
-session_start(); 
+session_start();
 include("database.php");
 if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 	$id = $_SESSION['uid'];
 	$user_type = $_SESSION['type'];
-	if ($user_type == "Branch") {
-		echo '<script>		
-			alert("You do not have access to this page, you will be redirected to the dashboard...");			
-			  </script>';
-		header("Refresh: 0; url= dashboard.php");
-
-		exit();
-	}
 
 	if (isset($_GET['ty'])) {
 		if ($_GET['ty'] == 'add') {
+
+
 			$mobile = "";
 			$title = "Add Customer";
 			if (isset($_POST['search'])) {
@@ -51,9 +45,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						$i++;
 					}
 				}
-
-
-
 				$file = "customerdetails.xls";
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
@@ -69,6 +60,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			}
 		} elseif ($_GET['ty'] == 'edit') {
 			$title = "Edit Customer";
+			$Cust_ID = $_GET['editid'];
 		} elseif ($_GET['ty'] == 'repay') {
 			$title = "Customer Repayments";
 		}
@@ -76,17 +68,23 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		if (isset($_GET['ac'])) {
 			if ($_GET['ac'] == "ins") {
 				$today = date("Y-m-d");
-				$qry = "INSERT INTO `tbl_customer`(`cid`,`custID`,`consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`,`boxrate`, `waych`,`insch`, `othch`, `odach`, `topaych`,`bala`,`cre_dt`,`status`) VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['consignor'] . "','" . $_POST['gstincon'] . "','" . $_POST['phone'] . "','" . $_POST['cusAddrs'] . "','" . $_POST['freight'] . "','" . $_POST['boxrate'] . "','" . $_POST['waybillch'] . "','" . $_POST['insurch'] . "','" . $_POST['otherch'] . "','" . $_POST['oda'] . "','" . $_POST['topay'] . "','','" . $today . "','A')";
+
+				// ADD NEW CUSTOMER INTO TBL_CUSTOMER
+				$qry = "INSERT INTO `tbl_customer`(`cid`,`custID`,`consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`,`boxrate`, `waych`,`insch`, `othch`, `odach`, `topaych`,`bala`,`cre_dt`,`status`,`Type`,`User_Access`) VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['consignor'] . "','" . $_POST['gstincon'] . "','" . $_POST['phone'] . "','" . $_POST['cusAddrs'] . "','" . $_POST['freight'] . "','" . $_POST['boxrate'] . "','" . $_POST['waybillch'] . "','" . $_POST['insurch'] . "','" . $_POST['otherch'] . "','" . $_POST['oda'] . "','" . $_POST['topay'] . "','','" . $today . "','A','" . $_POST['Cust_Type'] .  "','" . $user_type . "')";
 				$sql = mysqli_query($dbConn, $qry);
 				echo $qry;
+
 				if ($sql) {
 					echo "<script>alert('Inserted Successfully');window.location.href = 'add-customer.php?ty=$_GET[ty]';</script>";
 				} else {
-					echo "<script>alert('Not Inserted');window.location.href = 'add-customer.php?ty=$_GET[ty]';</script>";
+					echo "<script>alert('Not Inserted');</script>";
 				}
+				// window.location.href = 'add-customer.php?ty=$_GET[ty]';
 			}
 			if ($_GET['ac'] == "upd") {
-				$sql = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `custID`='" . $_POST['custID'] . "',`consignor_name`='" . $_POST['consignor'] . "',`consignor_gst`='" . $_POST['gstincon'] . "', `consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`freight`='" . $_POST['freight'] . "',`boxrate`='" . $_POST['boxrate'] . "', `waych`='" . $_POST['waybillch'] . "',`insch`='" . $_POST['insurch'] . "', `othch`='" . $_POST['otherch'] . "', `odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
+				$sql = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `custID`='" . $_POST['custID'] . "',`consignor_name`='" . $_POST['consignor'] . "',`Type`='" . $_POST['Cust_Type_Edit'] . "',`consignor_gst`='" . $_POST['gstincon'] . "', `consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`freight`='" . $_POST['freight'] . "',`boxrate`='" . $_POST['boxrate'] . "', `waych`='" . $_POST['waybillch'] . "',`insch`='" . $_POST['insurch'] . "', `othch`='" . $_POST['otherch'] . "', `odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
+
+				// $sql = mysqli_query($dbConn, "UPDATE 'tbl_customer' SET 'custID'='" . $_POST['custID'] . "','consignor_name'='" . $_POST['consignor'] . "','consignor_gst'='" . $_POST['gstincon'] . "', 'consignor_phone'='" . $_POST['phone'] . "','consignor_add'='" . $_POST['cusAddrs'] . "','freight'='" . $_POST['freight'] . "','boxrate'='" . $_POST['boxrate'] . "', 'waych'='" . $_POST['waybillch'] . "','insch'='" . $_POST['insurch'] . "', 'othch'='" . $_POST['otherch'] . "', 'odach'='" . $_POST['oda'] . "','topaych'='" . $_POST['topay'] . "' WHERE 'cid'='" . $_GET['editid'] . "' and 'status'='A'");
 				echo $sql;
 				if ($sql) {
 					echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
@@ -96,9 +94,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			}
 			if ($_GET['ac'] == "repay") {
 				$today = date("Y-m-d");
-				$ins = mysqli_query($dbConn, "INSERT INTO `cust_trans`(`tid`, `cust_id`, `repaid`, `outstanding`, `repaydt`, `status`) VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['payment'] . "','" . $_POST['balance'] . "','" . $today . "','A')");
+				$ins = mysqli_query($dbConn, "INSERT INTO 'cust_trans'('tid', 'cust_id', 'repaid', 'outstanding', 'repaydt', 'status') VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['payment'] . "','" . $_POST['balance'] . "','" . $today . "','A')");
 				if ($ins) {
-					$sql = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $_POST['balance'] . "' WHERE `custID`='" . $_POST['custID'] . "' and `cid`='" . $_GET['editid'] . "' and `status`='A'");
+					$sql = mysqli_query($dbConn, "UPDATE 'tbl_customer' SET 'bala'='" . $_POST['balance'] . "' WHERE 'custID'='" . $_POST['custID'] . "' and 'cid'='" . $_GET['editid'] . "' and 'status'='A'");
 					echo $sql;
 					if ($sql) {
 						echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
@@ -175,12 +173,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 		</head>
-		<script>
-			function printpage()
-			{
-			window.print()
-			}
-		</script>
 
 		<body class="skin-3">
 
@@ -276,6 +268,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 							<!-- /.nav-search -->
 						</div>
+						<!-- BEGINNING OF TYPE ADD CUSTOMER -->
 						<?php
 						if ($_GET['ty'] == "add") {
 						?> <div class="page-content">
@@ -316,6 +309,34 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		</div>
 																	</div>
 																	<div class="space-2"></div>
+																	<!-- CUSTOMER TYPE DROP DOWN LIST START-->
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
+																				<select class="col-xs-12 col-sm-3" id="Cust_Type" name="Cust_Type">
+																					<?php
+																					if ($user_type == "Branch") {
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
+																					} else {
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+																					}
+																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																					?>
+																						<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																					<?php
+																					}
+																					?>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="space-2"></div>
+																	<!-- CUSTOMER TYPE DROP DOWN LIST END-->
+
+
 																	<div class="form-group">
 																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Customer's Name:</label>
 
@@ -479,7 +500,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								</div>
 								<div class="row">
 									<div class="col-xs-12">
-										<h3 class="lighter block green">Customer Details</h3>
+										<h3 class="lighter block green" id="CD">Customer Details</h3>
 										<div class="hr hr-dotted"></div>
 										<?php
 										$exportdt = "";
@@ -490,6 +511,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										$exportdt .= "<tr><th>SNo</th>
 													<th>Customer Id</th>
 													<th>Customer Name</th>
+													<th>Type</th>
 													<th>GSTIN No.</th>
 													<th>Phone No.</th>
 													<th>Address</th>
@@ -508,12 +530,30 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 											<tr>";
 										$i = 0;
-										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile");
+										// PAGINATION - START
+										if (!isset($_GET['page'])) {
+											$page = 1;
+										} else {
+											$page = $_GET['page'];
+										}
+										$results_per_page = 10;
+										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
+										$Cust_Count = mysqli_num_rows($msql);
+										$page_first_result = ($page - 1) * $results_per_page;
+										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
+										$number_of_page = ceil($Cust_Count / $results_per_page);
+
+										// PAGINATION - END
+
+
+										//START OF WHILE - CUSTOMER DETAILS
 										while ($row = mysqli_fetch_array($msql)) {
 											$i = $i + 1;
 											$exportdt .= "	<td class='center'>  $i</td>";
 											$exportdt .= "<td>" . $row['custID'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
+											$C_Type = $row['Type'];
+											$exportdt .= "<td>" . $C_Type  . "</td>";
 											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
@@ -525,18 +565,37 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$exportdt .= "<td>" . $row['odach'] . "</td>";
 											$exportdt .= "<td>" . $row['topaych'] . "</td>";
 											$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
-											$exportdt .= "<td class='hidden-480'><a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													<a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a><a href='add-customer.php?ty=del&delid=$row[0]'>
-														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
-										}
+											//START of IF - BRANCH ACCESS											
+											if ($user_type == "Branch") {
+												$exportdt .= "<td class='hidden-480'>
+													 <a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+													 <a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
+													
+													</td>
+													</tr>";
+											} //END of IF - BRANCH ACCESS
+											else { //START of ELSE - HO ACCESS
+												$exportdt .= "<td class='hidden-480'>
+													<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+													<a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
+													<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>
+													</td>
+													</tr>";
+											} //END of ELSE - HO ACCESS
 
-										$exportdt .= "</tbody>
+
+										} //END OF WHILE - CUSTOMER DETAILS
+
+										$exportdt .= '</tbody>
+											
+
+
 										</table>
 									</div><!-- /.span -->
-								</div><!-- /.row -->";
-
+								</div><!-- /.row -->';
 
 										?>
+
 										<form class="form-horizontal" method="POST" action="add-customer.php?ty=add">
 
 											<div class="form-group">
@@ -549,7 +608,33 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<div class="clearfix">
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
-																<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage();" >Print</a>
+																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
+																<form>
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+
+																				<select class="col-xs-12 col-sm-3" id="Cust_Type_Edit" name="Cust_Type_Edit">
+																					<?php
+
+																					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+
+																					?>
+
+																					<?php
+																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																					?>
+																						<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																					<?php
+																					}
+																					?>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																</form>
 															</div>
 														</div>
 
@@ -561,6 +646,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											</div>
 
 										</form>
+
 
 										<!-- PAGE CONTENT BEGINS
 
@@ -620,6 +706,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												</tr>
 												<?php
 											}
+
 												?>
 											</tbody>
 										</table>
@@ -627,11 +714,51 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								</div><!-- /.row -->
 										<?php echo $exportdt; ?>
 
+										<div class="modal-footer no-margin-top">
+											<!-- <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+													<i class="ace-icon fa fa-times"></i>
+													Close
+												</button> -->
 
+
+
+											<ul class="pagination pull-right no-margin">
+												<li class="prev disabled">
+													<a href="#">
+														<i class="ace-icon fa fa-angle-double-left"></i>
+													</a>
+												</li>
+												<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
+													<li id="<?php echo 'PageNo' . $page; ?>">
+														<?php echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '#CD' . '">' . $page . ' </a>'; ?>
+													</li>
+
+												<?php } ?>
+												<script>
+													function SetActivePage(page) {
+
+														for (var i = 0; i < 3; i++) {
+															var PageNum = "PageNo" + page;
+															document.getElementById(PageNum).className = "active";
+
+														}
+
+
+													}
+												</script>
+
+												<li class="next">
+													<a href="#">
+														<i class="ace-icon fa fa-angle-double-right"></i>
+													</a>
+												</li>
+											</ul>
+										</div>
 
 									</div>
 								</div>
 							</div>
+							<!-- END OF TYPE ADD CUSTOMER -->
 						<?php
 						}
 						?>
@@ -723,6 +850,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						?>
 						<?php
 						if (isset($_GET['ty'])) {
+							// EDIT DETAILS OF CUSTOMER - START
 							if ($_GET['ty'] == "edit") {
 								$sqlms = mysqli_query($dbConn, "Select * from tbl_customer where cid = '" . $_GET['editid'] . "'");
 								$rowms = mysqli_fetch_array($sqlms);
@@ -760,6 +888,36 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														</div>
 													</div>
 												</div>
+
+												<!-- CUSTOMER TYPE DROP DOWN LIST START-->
+												<div class="form-group">
+													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+
+													<div class="col-xs-12 col-sm-9">
+														<div class="clearfix">
+															<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
+															<select class="col-xs-12 col-sm-3" id="Cust_Type_Edit" name="Cust_Type_Edit">
+																<?php
+																if ($user_type == "Branch") {
+																	$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
+																} else {
+																	$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+																}
+																?>
+																<option value="<?php echo $rowms['Type']; ?>"><?php echo $rowms['Type']; ?></option>
+																<?php
+																while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																?>
+																	<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																<?php
+																}
+																?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="space-2"></div>
+												<!-- CUSTOMER TYPE DROP DOWN LIST END-->
 
 												<div class="space-2"></div>
 
@@ -903,6 +1061,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<?php
 							}
 						}
+						//  EDIT CUSTOMER DETAILS - END
 						?>
 					</div>
 				</div>

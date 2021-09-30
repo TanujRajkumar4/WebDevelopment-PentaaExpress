@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2021 at 08:32 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.8
+-- Generation Time: Sep 30, 2021 at 08:35 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -58,7 +58,7 @@ CREATE TABLE `book_status` (
 
 INSERT INTO `book_status` (`b_id`, `bname`, `status`) VALUES
 (1, 'Booked', 'A'),
-(2, 'Intransit', 'A'),
+(2, 'In Transit', 'A'),
 (3, 'Delivered', 'A');
 
 -- --------------------------------------------------------
@@ -167,17 +167,18 @@ INSERT INTO `pages` (`page_id`, `page_name`, `page_content`, `status`) VALUES
 CREATE TABLE `pay_meth` (
   `b_id` int(11) NOT NULL,
   `bname` varchar(100) NOT NULL,
-  `status` varchar(100) NOT NULL DEFAULT 'A'
+  `status` varchar(100) NOT NULL DEFAULT 'A',
+  `User_Access` varchar(6) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pay_meth`
 --
 
-INSERT INTO `pay_meth` (`b_id`, `bname`, `status`) VALUES
-(1, 'To pay', 'A'),
-(2, 'credit\r\n', 'A'),
-(3, 'Paid', 'A');
+INSERT INTO `pay_meth` (`b_id`, `bname`, `status`, `User_Access`) VALUES
+(1, 'To Pay', 'A', 'Branch'),
+(2, 'Credit\r\n', 'A', 'HO'),
+(3, 'Pre-Paid', 'A', 'Branch');
 
 -- --------------------------------------------------------
 
@@ -257,7 +258,8 @@ CREATE TABLE `tbl_courier` (
 --
 
 INSERT INTO `tbl_courier` (`cid`, `waybillno`, `consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`, `bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`, `org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`, `cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES
-(10, '000006', 'crystal knitters private ltd', '33AABCC5572D1Z1', '822 001 3199', 'no-19, new no 41 Nehru street, Tirupur-641601', 'Rikab Agencies', '33AAIPM4051B1Z9', '044-24525562', '600041', 'no-3 l.b road, 1st floor, b-wing\r\ntiruvanmiyur, chennai', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '4', '35', 4, '1', '819-100899', '81194', 'knitted garments', '3', '22/10/2018 6:00:00 PM', '3', '1', 720, '0.00', '0.00', '0.00', '0.00', '0.00', '720.00', '0.00', '0.00', '720.00', '', '1', 'A', '2018-10-22');
+(10, '000006', 'crystal knitters private ltd', '33AABCC5572D1Z1', '822 001 3199', 'no-19, new no 41 Nehru street, Tirupur-641601', 'Rikab Agencies', '33AAIPM4051B1Z9', '044-24525562', '600041', 'no-3 l.b road, 1st floor, b-wing\r\ntiruvanmiyur, chennai', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '4', '35', 4, '1', '819-100899', '81194', 'knitted garments', '3', '22/10/2018 6:00:00 PM', '3', '1', 720, '0.00', '0.00', '0.00', '0.00', '0.00', '720.00', '0.00', '0.00', '720.00', '', '1', 'A', '2018-10-22'),
+(12, '', '', '', '', '', '', '', '', '', '', '', 0, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '0.00', 0, '', '', '', '', '', '', '', '10', 0, '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '9', '9', '0.00', '', '1', 'A', '2021-09-30');
 
 -- --------------------------------------------------------
 
@@ -274,7 +276,7 @@ CREATE TABLE `tbl_courier_officers` (
   `ph_no` varchar(12) NOT NULL,
   `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(10) NOT NULL DEFAULT 'A',
-  `user_type` varchar(6) DEFAULT NULL
+  `user_type` varchar(6) DEFAULT 'Branch'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -287,7 +289,7 @@ INSERT INTO `tbl_courier_officers` (`office`, `officer_name`, `off_pwd`, `off_id
 (7, 'PLXMDU', '456123', '5', 'customercare.penta@gmail.com', '9543481612', '2021-09-15 16:01:10', 'A', 'Branch'),
 (8, 'PLXSA', '456123', '6', 'customercare.penta@gmail.com', '9876543210', '2021-09-15 16:02:04', 'A', 'Branch'),
 (9, 'PLXCBE', '456123', '4', 'customercare.penta@gmail.com', '6379541406', '2021-09-15 16:03:20', 'A', 'Branch'),
-(10, 'HOCBE', '456123', '10', 'customercare.penta@gmail.com', '6379541406', '2021-09-25 13:27:58', 'A', 'HO');
+(10, 'PLXHO-CBE', '456123', '10', 'customercare.penta@gmail.com', '6379541406', '2021-09-25 13:27:58', 'A', 'HO');
 
 -- --------------------------------------------------------
 
@@ -310,7 +312,9 @@ CREATE TABLE `tbl_courier_track` (
 --
 
 INSERT INTO `tbl_courier_track` (`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`, `status`) VALUES
-(4, '000006', '1', '3', '', '2019-02-13', 'A');
+(4, '000006', '10', '3', '', '2021-09-30', 'A'),
+(5, '', '10', '1', '', '2021-09-29', 'A'),
+(6, '', '10', '1', '', '2021-09-30', 'A');
 
 -- --------------------------------------------------------
 
@@ -322,6 +326,7 @@ CREATE TABLE `tbl_customer` (
   `cid` int(10) NOT NULL,
   `custID` varchar(100) NOT NULL,
   `consignor_name` varchar(100) NOT NULL,
+  `Type` varchar(10) NOT NULL,
   `consignor_gst` varchar(50) NOT NULL,
   `consignor_phone` varchar(12) NOT NULL,
   `consignor_add` varchar(200) NOT NULL,
@@ -334,15 +339,117 @@ CREATE TABLE `tbl_customer` (
   `topaych` varchar(100) NOT NULL,
   `bala` varchar(100) NOT NULL,
   `cre_dt` date NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `User_Access` varchar(10) NOT NULL DEFAULT 'Branch'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_customer`
 --
 
-INSERT INTO `tbl_customer` (`cid`, `custID`, `consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`, `boxrate`, `waych`, `insch`, `othch`, `odach`, `topaych`, `bala`, `cre_dt`, `status`) VALUES
-(3, 'PLX 000002', 'Go Fashion India  pvt  ltd', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '5.00', '0.00', '50.00', '0.00', '0.00', '0.00', '0.00', '', '2018-11-29', 'A');
+INSERT INTO `tbl_customer` (`cid`, `custID`, `consignor_name`, `Type`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`, `boxrate`, `waych`, `insch`, `othch`, `odach`, `topaych`, `bala`, `cre_dt`, `status`, `User_Access`) VALUES
+(3, 'PLX 000002', 'Go Fashion India  Pvt  Ltd', 'Credit\r\n', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '5.00', '0.00', '50.00', '0.00', '0.00', '0.00', '0.00', '', '2018-11-29', 'A', 'Branch'),
+(53, 'PLX 000052', 'TEST 50', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(52, 'PLX 000051', 'TEST 49', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(51, 'PLX 000050', 'TEST 48', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(50, 'PLX 000049', 'TEST 47', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(49, 'PLX 000048', 'TEST 46', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(48, 'PLX 000047', 'TEST 45', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(47, 'PLX 000046', 'TEST 44', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(46, 'PLX 000045', 'TEST 43', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(45, 'PLX 000044', 'TEST 42', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(44, 'PLX 000043', 'TEST 41', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(43, 'PLX 000042', 'TEST 40', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(42, 'PLX 000041', 'TEST 39', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(41, 'PLX 000040', 'TEST 38', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(40, 'PLX 000039', 'TEST 37', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(39, 'PLX 000038', 'TEST 36', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(38, 'PLX 000037', 'TEST 35', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(37, 'PLX 000036', 'TEST 34', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(36, 'PLX 000035', 'TEST 33', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(35, 'PLX 000034', 'TEST 32', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(34, 'PLX 000033', 'TEST 31', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(33, 'PLX 000032', 'TEST 30', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(32, 'PLX 000031', 'TEST 29', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(31, 'PLX 000030', 'TEST 28', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(30, 'PLX 000029', 'TEST 27', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(29, 'PLX 000028', 'TEST 26', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(28, 'PLX 000027', 'TEST 25', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(27, 'PLX 000026', 'TEST 24', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(26, 'PLX 000025', 'TEST 23', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(25, 'PLX 000024', 'TEST 22', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(24, 'PLX 000023', 'TEST 21', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(23, 'PLX 000022', 'TEST 20', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(22, 'PLX 000021', 'TEST 19', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(21, 'PLX 000020', 'TEST 18', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(20, 'PLX 000019', 'TEST 17', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(19, 'PLX 000018', 'TEST 16', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(18, 'PLX 000017', 'TEST 15', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(17, 'PLX 000016', 'TEST 14', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(16, 'PLX 000015', 'TEST 13', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(15, 'PLX 000014', 'TEST 12', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(14, 'PLX 000013', 'TEST 11', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(13, 'PLX 000012', 'TEST 10', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(12, 'PLX 000011', 'TEST 9', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(11, 'PLX 000010', 'TEST 8', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(10, 'PLX 000009', 'TEST 7', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(9, 'PLX 000008', 'TEST 6', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(8, 'PLX 000007', 'TEST 5', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(7, 'PLX 000006', 'TEST 4', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(6, 'PLX 000005', 'TEST 3', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(5, 'PLX 000004', 'TEST 2', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(4, 'PLX 000003', 'TEST 1', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(54, 'PLX 000053', 'TEST 51', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(55, 'PLX 000054', 'TEST 52', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(56, 'PLX 000055', 'TEST 53', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(57, 'PLX 000056', 'TEST 54', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(58, 'PLX 000057', 'TEST 55', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(59, 'PLX 000058', 'TEST 56', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(60, 'PLX 000059', 'TEST 57', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(61, 'PLX 000060', 'TEST 58', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(62, 'PLX 000061', 'TEST 59', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(63, 'PLX 000062', 'TEST 60', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(64, 'PLX 000063', 'TEST 61', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(65, 'PLX 000064', 'TEST 62', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(66, 'PLX 000065', 'TEST 63', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(67, 'PLX 000066', 'TEST 64', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(68, 'PLX 000067', 'TEST 65', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(69, 'PLX 000068', 'TEST 66', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(70, 'PLX 000069', 'TEST 67', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(71, 'PLX 000070', 'TEST 68', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(72, 'PLX 000071', 'TEST 69', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(73, 'PLX 000072', 'TEST 70', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(74, 'PLX 000073', 'TEST 71', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(75, 'PLX 000074', 'TEST 72', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(76, 'PLX 000075', 'TEST 73', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(77, 'PLX 000076', 'TEST 74', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(78, 'PLX 000077', 'TEST 75', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(79, 'PLX 000078', 'TEST 76', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(80, 'PLX 000079', 'TEST 77', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(81, 'PLX 000080', 'TEST 78', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(82, 'PLX 000081', 'TEST 79', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(83, 'PLX 000082', 'TEST 80', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(84, 'PLX 000083', 'TEST 81', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(85, 'PLX 000084', 'TEST 82', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(86, 'PLX 000085', 'TEST 83', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(87, 'PLX 000086', 'TEST 84', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(88, 'PLX 000087', 'TEST 85', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(89, 'PLX 000088', 'TEST 86', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(90, 'PLX 000089', 'TEST 87', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(91, 'PLX 000090', 'TEST 88', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(92, 'PLX 000091', 'TEST 89', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(93, 'PLX 000092', 'TEST 90', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(94, 'PLX 000093', 'TEST 91', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(95, 'PLX 000094', 'TEST 92', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(96, 'PLX 000095', 'TEST 93', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(97, 'PLX 000096', 'TEST 94', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(98, 'PLX 000097', 'TEST 95', 'To Pay', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(99, 'PLX 000098', 'TEST 96', 'Pre-Paid', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(100, 'PLX 000099', 'TEST 97', 'Credit', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', 'A', 'Branch'),
+(101, '', '', 'To Pay', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '2021-09-30', 'A', 'HO'),
+(102, '', '', 'To Pay', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '2021-09-30', 'A', 'HO'),
+(103, '', '', 'To Pay', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '2021-09-30', 'A', 'HO'),
+(104, '', '', 'To Pay', '', '', '', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '', '2021-09-30', 'A', 'HO');
 
 -- --------------------------------------------------------
 
@@ -531,7 +638,7 @@ ALTER TABLE `pincode`
 -- AUTO_INCREMENT for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_courier_officers`
@@ -543,13 +650,13 @@ ALTER TABLE `tbl_courier_officers`
 -- AUTO_INCREMENT for table `tbl_courier_track`
 --
 ALTER TABLE `tbl_courier_track`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `tbl_offices`
