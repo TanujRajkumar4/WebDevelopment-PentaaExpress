@@ -530,20 +530,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 											<tr>";
 										$i = 0;
-										// PAGINATION - START
-										if (!isset($_GET['page'])) {
-											$page = 1;
-										} else {
-											$page = $_GET['page'];
-										}
-										$results_per_page = 10;
-										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
-										$Cust_Count = mysqli_num_rows($msql);
-										$page_first_result = ($page - 1) * $results_per_page;
-										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
-										$number_of_page = ceil($Cust_Count / $results_per_page);
-
-										// PAGINATION - END
+										
 
 
 										//START OF WHILE - CUSTOMER DETAILS
@@ -609,7 +596,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
-																<form>
+																<form>  
 																	<div class="form-group">
 																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
 
@@ -622,7 +609,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
 
 																					?>
-
+																					<option value="All">All</option>
 																					<?php
 																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																					?>
