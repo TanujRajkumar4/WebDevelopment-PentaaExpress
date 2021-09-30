@@ -530,7 +530,20 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 											<tr>";
 										$i = 0;
-										
+										// PAGINATION - START
+										if (!isset($_GET['page'])) {
+											$page = 1;
+										} else {
+											$page = $_GET['page'];
+										}
+										$results_per_page = 10;
+										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
+										$Cust_Count = mysqli_num_rows($msql);
+										$page_first_result = ($page - 1) * $results_per_page;
+										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
+										$number_of_page = ceil($Cust_Count / $results_per_page);
+
+										// PAGINATION - END
 
 
 										//START OF WHILE - CUSTOMER DETAILS
