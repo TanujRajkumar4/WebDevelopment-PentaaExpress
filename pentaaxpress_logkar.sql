@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2021 at 08:35 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Oct 01, 2021 at 11:51 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -191,6 +191,27 @@ CREATE TABLE `pincode` (
   `bname` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL DEFAULT 'A'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tariff`
+--
+
+CREATE TABLE `tariff` (
+  `branch_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `Kg` int(5) DEFAULT NULL,
+  `Box` int(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tariff`
+--
+
+INSERT INTO `tariff` (`branch_id`, `city_id`, `Kg`, `Box`) VALUES
+(1, 3, 4, 5),
+(5, 1, 4, 4);
 
 -- --------------------------------------------------------
 
