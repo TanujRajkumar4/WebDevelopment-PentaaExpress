@@ -609,7 +609,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
-																<form>
+																<form>  
 																	<div class="form-group">
 																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
 
@@ -622,7 +622,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
 
 																					?>
-
+																					<option value="All">All</option>
 																					<?php
 																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																					?>
