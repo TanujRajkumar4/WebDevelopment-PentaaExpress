@@ -552,8 +552,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$exportdt .= "	<td class='center'>  $i</td>";
 											$exportdt .= "<td>" . $row['custID'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
-											$C_Type = $row['Type'];
-											$exportdt .= "<td>" . $C_Type  . "</td>";
+											$exportdt .= "<td>" . $row['Type']  . "</td>";
 											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
