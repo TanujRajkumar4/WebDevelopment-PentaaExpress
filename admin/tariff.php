@@ -389,6 +389,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 							$row1 = mysqli_fetch_array($sql1);
 							$sql2 = mysqli_query($dbConn, "Select * from city where b_id= '".$_GET['c_id']."'");
 							$row2 = mysqli_fetch_array($sql2);
+							$sql3 = mysqli_query($dbConn,"Select * from tariff");
+							$row3 = mysqli_fetch_array($sql3);
 						?> <div class="page-content">
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
@@ -431,7 +433,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Price per Kg:</label>
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
-														<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required />
+														<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" value="<?php echo $row3['Kg']; ?>" required />
 													</div>
 												</div>
 											</div>
@@ -444,7 +446,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
 
-														<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" required />
+														<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" value="<?php echo $row3['Box']; ?>" required />
 													</div>
 												</div>
 											</div>
