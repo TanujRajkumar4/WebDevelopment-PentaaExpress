@@ -75,11 +75,10 @@ include("./header1.php");
                              <div class="col-md-12 pad-30 wow fadeInLeft" data-wow-offset="50" data-wow-delay=".30s" > 
                              <center><div class="prod-info white-clr" style="color:white;">
                                      <ul>
-                                        <li>  <span class="title-2" style="color:white;">Waybill Number: </span>  <span class="fs-16"><?php echo $sql['waybillno'];?> </span>  </li>
-                                        <li>  <span class="title-2" style="color:white;">Booked date: </span>  <span class="fs-16"><?php echo $sql['book_date'];?> </span>  </li>
-                                         <li>  <span class="title-2" style="color:white;">Booking status: </span>  <span class="fs-16 theme-clr"><?php 
+                                        <li>  <span class="title-2" style="color:white;">Waybill Number: <span class="fs-6"><?php echo $sql['waybillno'];?> </span> </span>  <span class="title-2" style="color:white;">Booked date: <span class="fs-6"><?php echo $sql['book_date'];?> </span> </span>  </li>
+                                         <!-- <li>  <span class="title-2" style="color:white;">Booking status: </span>  <span class="fs-16 theme-clr"><?php 
 										 $stsql=mysqli_fetch_array(mysqli_query($dbConn,"select * from `tbl_courier_track`,book_status where tbl_courier_track.cons_no='".$_POST['waybill']."' and book_status.b_id=tbl_courier_track.bk_status"));
-										 echo $stsql['bname'];?> </span>  </li>
+										 echo $stsql['bname'];?> </span>  </li> -->
                                          <!-- <li>  <span class="title-2" style="color:white;">weight (kg): </span>  <span class="fs-16"><?php if($sql['actwgt'] !='0' and $sql['actwgt'] !=""){echo $sql['actwgt'];} else {echo $sql['bxpkg']."Kg Per Box";}?> </span>  </li> -->
                                          <!-- <li>  <span class="title-2" style="color:white;">No of Qty: </span>  <span class="fs-16"><?php echo $sql['qty'];?></span>  </li> -->
                                      </ul>
@@ -88,8 +87,8 @@ include("./header1.php");
                          </div>
                          <div class="progress-wrap">
                              <div class="progress-status">
-                                 <!-- changes to progress bar based the delivery status -->
-                                 <?php if($stsql['bname']=="Intransit"){ ?>
+                                 <!-- changes to progress bar based on the delivery status -->
+                                 <?php if($stsql['bname']=="In Transit"){ ?>
                                     <!-- If consignment is in transit -->
                                     <span class="border-left"></span>
                                     <span class="border-right"></span>
@@ -109,6 +108,9 @@ include("./header1.php");
 
                                     else{ ?>
                                         <!--if consignment is about to start-->
+                                        <span class="border-full"></span>
+                                        <span class="dot dot-left wow fadeIn" data-wow-offset="50" data-wow-delay=".40s"></span>
+                                        <span class="dot dot-right wow fadeIn" data-wow-offset="50" data-wow-delay=".60s"></span>
                                         <div class="col-md-8 col-xs-8 col-sm-4 text-center " style="left: 200px; top: 30px">
                                         <h2 class="title-1 no-margin "> <?php echo "Shipment will start shortly.";?> </h2> 
                                         </div>
@@ -128,7 +130,7 @@ include("./header1.php");
                                  <!-- <div class="col-md-2 col-xs-8 col-sm-3">
                                      <p class="fs-12 no-margin"> [  <b class="black-clr"><?php echo 'Booked On: '.$sql['book_date'];?> </b> ]  </p>                                
                                  </div> -->
-                                 <?php if($stsql['bname']=="Intransit"){ ?>
+                                 <?php if($stsql['bname']=="In Transit"){ ?>
                                  <div class="col-md-8 col-xs-8 col-sm-4 text-center">
                                      <p class="fs-12 no-margin"> currently in  </p>
                                      <h2 class="title-1 no-margin">
