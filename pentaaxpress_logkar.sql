@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2021 at 10:26 AM
+-- Generation Time: Oct 03, 2021 at 06:59 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -106,6 +106,22 @@ INSERT INTO `city` (`b_id`, `bname`, `status`) VALUES
 (26, 'Thanjavur', 'A'),
 (27, 'Chengalpet', 'A'),
 (28, 'Coimbatore', 'A');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_tariff`
+--
+
+CREATE TABLE `customer_tariff` (
+  `CT_ID` int(11) NOT NULL,
+  `Cust_ID` int(11) NOT NULL COMMENT 'Customer ID from tbl_customer',
+  `Branch_ID` int(11) DEFAULT NULL COMMENT 'Pickup City ID',
+  `City_ID` int(11) DEFAULT NULL COMMENT 'Destination City ID',
+  `Price_KG` int(5) DEFAULT NULL,
+  `Price_Box` int(5) DEFAULT NULL,
+  `Status` varchar(1) NOT NULL DEFAULT 'A'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -332,7 +348,7 @@ CREATE TABLE `tbl_courier_track` (
 --
 
 INSERT INTO `tbl_courier_track` (`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`, `status`) VALUES
-(4, '000006', '10', '1', '', '2021-10-02', 'A');
+(4, '000006', '9', '2', '', '2021-10-02', 'A');
 
 -- --------------------------------------------------------
 
@@ -541,6 +557,12 @@ ALTER TABLE `city`
   ADD PRIMARY KEY (`b_id`);
 
 --
+-- Indexes for table `customer_tariff`
+--
+ALTER TABLE `customer_tariff`
+  ADD PRIMARY KEY (`CT_ID`);
+
+--
 -- Indexes for table `cust_trans`
 --
 ALTER TABLE `cust_trans`
@@ -621,6 +643,12 @@ ALTER TABLE `book_meth`
 --
 ALTER TABLE `book_status`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `customer_tariff`
+--
+ALTER TABLE `customer_tariff`
+  MODIFY `CT_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `cust_trans`
