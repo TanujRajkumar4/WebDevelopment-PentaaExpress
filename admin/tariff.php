@@ -359,10 +359,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$rowbranch=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_offices where id=$row[branch_id]"));
 											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id='$row[city_id]'"));?>
 													<td class='center'>  <?php echo $i;?></td>
-													<td><?php $rowbranch['off_name']; ?></td>
-													<td><?php $dsql['bname']; ?></td>
-													<td><?php $row['Kg'];?></td>
-													<td><?php $row['Box'];?></td>
+													<td><?php echo $rowbranch['off_name']; ?></td>
+													<td><?php echo $dsql['bname']; ?></td>
+													<td><?php echo $row['Kg'];?></td>
+													<td><?php echo $row['Box'];?></td>
 													<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
 													<a href='tariff.php?ty=del&b_id=$row[branch_id]&c_id=$row[city_id]'>
 														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
