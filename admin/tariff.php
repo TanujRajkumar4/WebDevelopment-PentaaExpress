@@ -335,48 +335,44 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="hr hr-dotted"></div>
-								<?php
-								$exportdt="";
-								$exportdt.="<div class='row'>";
-								$exportdt.="<div class='col-xs-12'>";
-								$exportdt.="<table id='dynamic-table' class='table table-striped table-bordered table-hover'>";
-								$exportdt.="<thead>";
-								$exportdt.="<tr><th>SNo</th>
-													<th>From</th>
-													<th>Destination City</th>
-													<th>Price per Kg</th>
-													<th>Price per Box</th>
-													<th class='hidden-480'>Action</th>
-													</tr>
-											</thead>
+								<div class='row'>
+								<div class='col-xs-12'>
+								<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
+								<thead>
+								<tr><th>SNo</th>
+								<th>From</th>
+								<th>Destination City</th>
+								<th>Price per Kg</th>
+								<th>Price per Box</th>
+								<th class='hidden-480'>Action</th>
+							 	</tr>
+								</thead>
 
 											<tbody>
-											<tr>";
+											<tr>
+											<?php
 											$i=0;
 											$msql=mysqli_query($dbConn,"Select * from tariff");
 											while($row=mysqli_fetch_array($msql))
 											{
 											$i=$i+1;
 											$rowbranch=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_offices where id=$row[branch_id]"));
-											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id='$row[city_id]'"));
-												$exportdt.="	<td class='center'>  $i</td>";
-													$exportdt.="<td>".$rowbranch['off_name']."</td>";
-													$exportdt.="<td>".$dsql['bname']."</td>";
-													$exportdt.="<td>".$row['Kg']."</td>";
-													$exportdt.="<td>".$row['Box']."</td>";
-													$exportdt.="<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id='$row[city_id]'"));?>
+													<td class='center'>  <?php echo $i;?></td>
+													<td><?php $rowbranch['off_name']; ?></td>
+													<td><?php $dsql['bname']; ?></td>
+													<td><?php $row['Kg'];?></td>
+													<td><?php $row['Box'];?></td>
+													<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
 													<a href='tariff.php?ty=del&b_id=$row[branch_id]&c_id=$row[city_id]'>
 														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
 												
-												}
+												<?php } ?>
 												
-											$exportdt.="</tbody>
+											</tbody>
 										</table>
 									</div><!-- /.span -->
-								</div><!-- /.row -->";
-								 echo $exportdt;
-								
-								?>
+								</div><!-- /.row -->
 								</div>
 							</div><!-- /.span -->
 						</div><!-- /.row -->
