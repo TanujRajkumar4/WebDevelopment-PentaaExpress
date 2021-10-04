@@ -202,11 +202,12 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<td><a href="#"><?php echo $row['consignee_name'] . "," . $row['consignee_phone'] . "," . $row['consignee_add']; ?></a></td>
 															<td><a href="#"><?php $dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from tbl_offices where id='$row[dest_off]' and status='A'"));
 																			echo $dsql['off_name']; ?></a></td>
-															<td class="hidden-480">
+															<td class="hidden-480 center">
 																<a href="add-consignment.php?ty=edit&editid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-primary bigger-110"><i class="ace-icon fa fa-pencil bigger-110"></i>Edit</span></a>
-																<a href="add-consignment.php?ty=status&editid=<?php echo $row[0]; ?>">
-																	<span class="btn btn-sm btn-success bigger-110"><i class="ace-icon fa fa-fire bigger-110"></i>Update</span></a>
+																<!-- <a href="add-consignment.php?ty=status&editid=<?php echo $row[0]; ?>">
+																	<span class="btn btn-sm btn-success bigger-110"><i class="ace-icon fa fa-fire bigger-110"></i>Update</span></a> -->
+
 																<a href="add-consignment.php?ty=del&delid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-danger bigger-110"><i class="ace-icon fa fa-trash-o  bigger-110"></i>Delete</span></a>
 
@@ -223,6 +224,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										</table>
 
 										<div class="modal-footer no-margin-top">
+											<div class="row">
+												<p class = "text-left warning-text">Update the selected Way Bill Numbers to the Status below:</p>
+											</div>
 											<select class="col-xs-12 col-sm-3" id="Book_Status_Update" name="Book_Status_Update">
 												<?php
 
@@ -239,11 +243,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												?>
 											</select>
 
-											<input value="Update Status of Selected Way Bills" name="UpdateConsignment" type="submit" class="btn btn-sm btn-danger pull-left" data-dismiss="modal" />
+											<input value="Update Status" name="UpdateConsignment" type="submit" class="btn btn-sm btn-danger pull-left" data-dismiss="modal" />
 
 											<ul class="pagination pull-right no-margin">
 												<li class="prev">
-													<a onclick="SetActivePage(1); SetActivePage(1);" href = "view-consignment.php?&page=1">
+													<a onclick="SetActivePage(1); SetActivePage(1);" href="view-consignment.php?&page=1">
 														<i class="ace-icon fa fa-angle-double-left"></i>
 													</a>
 												</li>
