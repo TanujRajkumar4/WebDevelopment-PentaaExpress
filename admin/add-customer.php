@@ -325,7 +325,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					}
 																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																					?>
-																						<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																						<option value="<?php echo $rwtoi['b_id']; ?>">
+																							<?php echo $rwtoi['bname']; ?>
+																						</option>
 																					<?php
 																					}
 																					?>
@@ -515,13 +517,15 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<th>GSTIN No.</th>
 													<th>Phone No.</th>
 													<th>Address</th>
-													<th>Kg Rate</th>
+
+													<!-- <th>Kg Rate</th>
 													<th>Box Rate</th>
 													<th>Waybill Charges</th>
 													<th>Insurance Charges</th>
 													<th>Other Charges</th>
 													<th>ODA Charges</th>
-													<th>Topay Charges</th>
+													<th>Topay Charges</th> -->
+
 													<th>Created Date</th>
 													<th class='hidden-480'>Action</th>
 													</tr>
@@ -556,13 +560,15 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
-											$exportdt .= "<td>" . $row['freight'] . "</td>";
-											$exportdt .= "<td>" . $row['boxrate'] . "</td>";
-											$exportdt .= "<td>" . $row['waych'] . "</td>";
-											$exportdt .= "<td>" . $row['insch'] . "</td>";
-											$exportdt .= "<td>" . $row['othch'] . "</td>";
-											$exportdt .= "<td>" . $row['odach'] . "</td>";
-											$exportdt .= "<td>" . $row['topaych'] . "</td>";
+
+											// $exportdt .= "<td>" . $row['freight'] . "</td>";
+											// $exportdt .= "<td>" . $row['boxrate'] . "</td>";
+											// $exportdt .= "<td>" . $row['waych'] . "</td>";
+											// $exportdt .= "<td>" . $row['insch'] . "</td>";
+											// $exportdt .= "<td>" . $row['othch'] . "</td>";
+											// $exportdt .= "<td>" . $row['odach'] . "</td>";
+											// $exportdt .= "<td>" . $row['topaych'] . "</td>";
+											
 											$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
 											//START of IF - BRANCH ACCESS											
 											if ($user_type == "Branch") {
