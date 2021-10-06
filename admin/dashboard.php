@@ -132,7 +132,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="dashboard.php">Home</a>
 							</li>
 							<li class="active">Dashboard</li>
 						</ul><!-- /.breadcrumb -->

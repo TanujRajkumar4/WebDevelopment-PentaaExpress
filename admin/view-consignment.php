@@ -139,10 +139,19 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="dashboard.php">Home</a>
 							</li>
 							<li class="active"> Consignment</li>
 						</ul><!-- /.breadcrumb -->
+						<div class="page-header">
+							<h1>
+								<?php echo "Consignment"; ?>
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									<?php echo "View & Update"; ?>
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
@@ -225,7 +234,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 										<div class="modal-footer no-margin-top">
 											<div class="row">
-												<p class = "text-left warning-text">Update the selected Way Bill Numbers to the Status below:</p>
+												<p class="text-left warning-text">Update the selected Way Bill Numbers to the Status below:</p>
 											</div>
 											<select class="col-xs-12 col-sm-3" id="Book_Status_Update" name="Book_Status_Update">
 												<?php

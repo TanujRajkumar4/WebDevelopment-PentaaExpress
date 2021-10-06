@@ -206,7 +206,7 @@ if($_GET['ac'] == 'del')
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="dashboard.php">Home</a>
 							</li>
 							<li class="active">About Us</li>
 						</ul><!-- /.breadcrumb -->

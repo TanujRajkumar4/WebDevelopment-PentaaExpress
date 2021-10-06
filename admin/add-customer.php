@@ -261,7 +261,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 							<ul class="breadcrumb">
 								<li>
 									<i class="ace-icon fa fa-home home-icon"></i>
-									<a href="#">Home</a>
+									<a href="dashboard.php">Home</a>
 								</li>
 								<li class="active"> Consignment</li>
 							</ul><!-- /.breadcrumb -->
@@ -608,7 +608,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
-																<form>  
+																<form>
 																	<div class="form-group">
 																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
 

@@ -193,9 +193,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 							<ul class="breadcrumb">
 								<li>
 									<i class="ace-icon fa fa-home home-icon"></i>
-									<a href="#">Home</a>
+									<a href="dashboard.php">Home</a>
 								</li>
-								<li class="active"> Traiff</li>
+								<li class="active"> Tariff</li>
 							</ul><!-- /.breadcrumb -->
 						</div>
 						<?php
@@ -204,10 +204,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
 									<h1>
-										<?php echo $title; ?>
+										<?php echo "Tariff"; ?>
 										<small>
 											<i class="ace-icon fa fa-angle-double-right"></i>
-											<?php echo $title; ?>
+											<?php echo "Customer"; ?>
 										</small>
 									</h1>
 								</div><!-- /.page-header -->
