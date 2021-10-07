@@ -590,9 +590,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											} //END of IF - BRANCH ACCESS
 											else { //START of ELSE - HO ACCESS
 												$exportdt .= "<td class='hidden-480'>
-													<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													<a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
-													<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>
+													<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110 '><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>													
+													<a href='add-customer.php?ty=repay&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
+													<a href='customer_tariff.php?ty=add&cid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Tariff</span></a>													
+													<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='w-15 btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>
 													</td>
 													</tr>";
 											} //END of ELSE - HO ACCESS

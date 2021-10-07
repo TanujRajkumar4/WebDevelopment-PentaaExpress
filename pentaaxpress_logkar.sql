@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2021 at 11:53 AM
+-- Generation Time: Oct 07, 2021 at 06:56 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -115,13 +115,20 @@ INSERT INTO `city` (`b_id`, `bname`, `status`) VALUES
 
 CREATE TABLE `customer_tariff` (
   `CT_ID` int(11) NOT NULL,
-  `Cust_ID` int(11) NOT NULL COMMENT 'Customer ID from tbl_customer',
+  `Cust_ID` varchar(11) NOT NULL COMMENT 'Customer ID from tbl_customer',
   `Branch_ID` int(11) DEFAULT NULL COMMENT 'Pickup City ID',
   `City_ID` int(11) DEFAULT NULL COMMENT 'Destination City ID',
   `Price_KG` int(5) DEFAULT NULL,
   `Price_Box` int(5) DEFAULT NULL,
   `Status` varchar(1) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customer_tariff`
+--
+
+INSERT INTO `customer_tariff` (`CT_ID`, `Cust_ID`, `Branch_ID`, `City_ID`, `Price_KG`, `Price_Box`, `Status`) VALUES
+(6, 'PLX000002', 1, 16, 7, 8, 'A');
 
 -- --------------------------------------------------------
 
@@ -227,7 +234,8 @@ CREATE TABLE `tariff` (
 
 INSERT INTO `tariff` (`branch_id`, `city_id`, `Kg`, `Box`) VALUES
 (1, 3, 4, 5),
-(5, 1, 4, 4);
+(5, 1, 4, 4),
+(1, 3, 7, 8);
 
 -- --------------------------------------------------------
 
@@ -663,7 +671,7 @@ CREATE TABLE `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`cid`, `custID`, `consignor_name`, `Type`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`, `boxrate`, `waych`, `insch`, `othch`, `odach`, `topaych`, `bala`, `cre_dt`, `status`, `User_Access`) VALUES
-(3, 'PLX 000002', 'Go Fashion India  Pvt  Ltd', 1, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '5.00', '0.00', '50.00', '0.00', '0.00', '0.00', '0.00', '', '2018-11-29', 'A', 'Branch');
+(3, 'PLX000002', 'Go Fashion India  Pvt  Ltd', 1, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '5.00', '0.00', '50.00', '0.00', '0.00', '0.00', '0.00', '', '2018-11-29', 'A', 'Branch');
 
 -- --------------------------------------------------------
 
@@ -852,7 +860,7 @@ ALTER TABLE `book_status`
 -- AUTO_INCREMENT for table `customer_tariff`
 --
 ALTER TABLE `customer_tariff`
-  MODIFY `CT_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cust_trans`

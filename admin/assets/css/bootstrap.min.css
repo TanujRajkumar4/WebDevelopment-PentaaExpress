@@ -6863,3 +6863,7 @@ button.close {
     font-size:small;
     color: #ac2925;
 }
+
+.w-15{
+  width: 80px !important;
+}

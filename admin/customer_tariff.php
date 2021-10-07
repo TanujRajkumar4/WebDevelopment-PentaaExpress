@@ -24,37 +24,40 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 		if (isset($_GET['ac'])) {
 			if ($_GET['ac'] == "ins") {
-				$qry = "INSERT INTO `tariff`(`branch_id`,`city_id`,`Kg`,`Box`)VALUES('" . $_POST['branch'] . "','" . $_POST['destination'] . "','" . $_POST['Kg'] . "','" . $_POST['Box'] . "')";
+				$qry = "INSERT INTO `customer_tariff`(`Branch_ID`,`City_ID`,`Price_KG`,`Price_Box`,`Cust_ID`) VALUES('" . $_POST['branch'] . "','" . $_POST['destination'] . "','" . $_POST['Kg'] . "','" . $_POST['Box'] . "','" . $_GET['cid'] . "')";
 				$sql = mysqli_query($dbConn, $qry);
+				$CustID = $_GET['cid'];
 				if ($sql) {
-					echo "<script>alert('Inserted Sucessfully');window.location.href = 'tariff.php?ty=$_GET[ty]';</script>";
+					echo "<script>alert('Inserted Sucessfully');window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 				} else {
 					// echo $qry;
-					echo "<script>alert('Not Inserted');window.location.href = 'tariff.php?ty=add';</script>";
+					echo "<script>alert('Not Inserted');window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 				}
 			}
 			if ($_GET['ac'] == "upd") {
-				$qry = "UPDATE `tariff` SET `Kg`='" . $_POST['Kg'] . "',`Box`='" . $_POST['Box'] . "'WHERE `branch_id`='" . $_GET['b_id'] . "' and `city_id`='" . $_GET['c_id'] . "'";
+				$qry = "UPDATE `customer_tariff` SET `Price_KG`='" . $_POST['Kg'] . "',`Price_Box`='" . $_POST['Box'] . "'WHERE `CT_ID`='" . $_GET['TID'] . "'";
 				$sql = mysqli_query($dbConn, $qry);
+				$CustID = $_GET['CID'];
 				if ($sql) {
 					// echo $qry;
-					echo "<script>alert('Updated Successfully');window.location.href = 'tariff.php?ty=add';</script>";
+					echo "<script>alert('Updated Successfully');window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 				} else {
-					echo "<script>alert('Not Updated');window.location.href = 'tariff.php?ty=add';</script>";
+					echo "<script>alert('Not Updated');window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 				}
 			}
 		}
 
 		if ($_GET['ty'] == "del") {
-			$sql = "DELETE FROM tariff WHERE city_id='" . $_GET['c_id'] . "' AND branch_id = '" . $_GET['b_id'] . "'";
+			$sql = "DELETE FROM customer_tariff WHERE CT_ID='" . $_GET['TID'] . "'";
+			$CustID = $_GET['CID'];
 			if (mysqli_query($dbConn, $sql)) {
 				echo "<script>alert('Record Deleted Successfully');
 
-					window.location.href = 'tariff.php?ty=add';</script>";
+					window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 			} else {
 				echo "<script>alert('Error in Deleting the record');
 
-					window.location.href = 'tariff.php?ty=add';</script>";
+					window.location.href = 'customer_tariff.php?ty=add&cid=$CustID';</script>";
 			}
 		}
 
@@ -204,10 +207,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
 									<h1>
-										<?php echo "Tariff"; ?>
+										<?php echo "Customer Tariff"; ?>
 										<small>
 											<i class="ace-icon fa fa-angle-double-right"></i>
-											<?php echo "Customer"; ?>
+											<?php echo "Add"; ?>
 										</small>
 									</h1>
 								</div><!-- /.page-header -->
@@ -226,7 +229,16 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<div class="step-pane active">
 
 
-																<form class="form-horizontal" method="POST" action="tariff.php?ac=ins&ty=<?php echo $_GET['ty']; ?>">
+																<form class="form-horizontal" method="POST" action="customer_tariff.php?ac=ins&ty=<?php echo $_GET['ty']; ?>&cid=<?php echo $_GET['cid']; ?>">
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Customer ID:</label>
+
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required disabled value="<?php echo $_GET['cid']; ?>">
+																			</div>
+																		</div>
+																	</div>
 																	<div class="form-group">
 																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch</label>
 
@@ -275,7 +287,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
-																				<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required />
+																				<input type="number" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required />
 																			</div>
 																		</div>
 																	</div>
@@ -288,11 +300,14 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
 
-																				<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" required />
+																				<input type="number" id="Box" name="Box" class="col-xs-12 col-sm-3" required />
 																			</div>
 																		</div>
 																	</div>
 																	<div style="padding-left: 30%;">
+																		<button class="btn btn-success btn-next" onclick="window.location.assign('add-customer.php?ty=add')">
+																			Back
+																		</button>
 																		<button class="btn btn-success btn-next" type="Submit">
 																			Add to Tariff
 																		</button>
@@ -315,6 +330,24 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<div class="row">
 									<div class="col-xs-12">
 										<div class="hr hr-dotted"></div>
+										<div class="page-header">
+											<h1>
+												<?php echo "Customer Tariff"; ?>
+												<small>
+													<i class="ace-icon fa fa-angle-double-right"></i>
+													<?php echo "Edit"; ?>
+												</small>
+											</h1>
+										</div><!-- /.page-header -->
+										<!-- <div class="form-group" style="padding-bottom: 10px;"> -->
+										<!-- <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Customer ID:</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required disabled value="<?php echo $_GET['cid']; ?>">
+											</div>
+										</div> -->
+										<!-- </div> -->
+
 										<?php
 										$exportdt = "";
 										$exportdt .= "<div class='row'>";
@@ -322,9 +355,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										$exportdt .= "<table id='dynamic-table' class='table table-striped table-bordered table-hover'>";
 										$exportdt .= "<thead>";
 										$exportdt .= "<tr><th>SNo</th>
-													<th>From</th>
+													<th>Booking Branch - City</th>
 													<th>Destination City</th>
-													<th>Price per Kg</th>
+													<th>Price per KG</th>
 													<th>Price per Box</th>
 													<th class='hidden-480'>Action</th>
 													</tr>
@@ -333,19 +366,19 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 											<tr>";
 										$i = 0;
-										$msql = mysqli_query($dbConn, "Select * from tariff");
+										$msql = mysqli_query($dbConn, "SELECT * FROM customer_tariff WHERE Status='A' AND Cust_ID = '$_GET[cid]' ");
 										while ($row = mysqli_fetch_array($msql)) {
 											$i = $i + 1;
-											$rowbranch = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_offices where id=$row[branch_id]"));
-											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id='$row[city_id]'"));
-											$exportdt .= "	<td class='center'>  $i</td>";
-											$exportdt .= "<td>" . $rowbranch['off_name'] . "</td>";
+											$rowbranch = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from tbl_offices where id=$row[Branch_ID] AND Status= 'A'"));
+											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$row[City_ID]' AND Status = 'A' "));
+											$dsql1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$rowbranch[city]' AND Status = 'A' "));
+											$exportdt .= "	<td class='center'>$i</td>";
+											$exportdt .= "<td>" . $dsql1['bname'] . "</td>";
 											$exportdt .= "<td>" . $dsql['bname'] . "</td>";
-											$exportdt .= "<td>" . $row['Kg'] . "</td>";
-											$exportdt .= "<td>" . $row['Box'] . "</td>";
-											$exportdt .= "<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													<a href='tariff.php?ty=del&b_id=$row[branch_id]&c_id=$row[city_id]'>
-														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
+											$exportdt .= "<td>" . $row['Price_KG'] . "</td>";
+											$exportdt .= "<td>" . $row['Price_Box'] . "</td>";
+											$exportdt .= "<td class='hidden-480'><a href='customer_tariff.php?ty=edit&TID=$row[CT_ID]&CID=$row[Cust_ID]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+														<a href='customer_tariff.php?ty=del&TID=$row[CT_ID]&CID=$row[Cust_ID]'><span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
 										}
 
 										$exportdt .= "</tbody>
@@ -363,20 +396,26 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<?php
 						if (isset($_GET['ty'])) {
 							if ($_GET['ty'] == "edit") {
-								$sql1 = mysqli_query($dbConn, "Select * from tbl_offices where id= '" . $_GET['b_id'] . "'");
-								$row1 = mysqli_fetch_array($sql1);
-								$sql2 = mysqli_query($dbConn, "Select * from city where b_id= '" . $_GET['c_id'] . "'");
-								$row2 = mysqli_fetch_array($sql2);
-								$sql3 = mysqli_query($dbConn, "Select * from tariff");
-								$row3 = mysqli_fetch_array($sql3);
+								// $sql1 = mysqli_query($dbConn, "Select * from tbl_offices where id= '" . $_GET['b_id'] . "'");
+								// $row1 = mysqli_fetch_array($sql1);
+								// $sql2 = mysqli_query($dbConn, "Select * from city where b_id= '" . $_GET['c_id'] . "'");
+								// $row2 = mysqli_fetch_array($sql2);
+								// $sql3 = mysqli_query($dbConn, "Select * from tariff");
+								// $row3 = mysqli_fetch_array($sql3);
+								// TANUJ
+								$row = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from customer_tariff where CT_ID=$_GET[TID] AND Status= 'A'"));
+								$BranchName = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from tbl_offices where id=$row[Branch_ID] AND Status= 'A'"));
+								$CityNameFromID = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$row[City_ID]' AND Status = 'A' "));
+								$CityNameFromID1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$BranchName[city]' AND Status = 'A' "));
+
 						?> <div class="page-content">
 									<!-- /.ace-settings-container -->
 									<div class="page-header">
 										<h1>
-											Edit Section
+											Customer Tariff
 											<small>
 												<i class="ace-icon fa fa-angle-double-right"></i>
-												<?php echo $title; ?>
+												<?php echo "Edit"; ?>
 											</small>
 										</h1>
 									</div><!-- /.page-header -->
@@ -384,12 +423,21 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 									<div class="row">
 										<div class="col-xs-12">
 											<!-- PAGE CONTENT BEGINS -->
-											<form class="form-horizontal" method="POST" action="tariff.php?ac=upd&ty=edit&b_id=<?php echo $_GET['b_id']; ?>&c_id=<?php echo $_GET['c_id'] ?>">
+											<form class="form-horizontal" method="POST" action="customer_tariff.php?ac=upd&ty=edit&TID=<?php echo $_GET['TID']; ?>&CID=<?php echo $_GET['CID']; ?>  ">
+												<div class="form-group">
+													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Customer ID:</label>
+
+													<div class="col-xs-12 col-sm-9">
+														<div class="clearfix">
+															<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" required disabled value="<?php echo $_GET['CID']; ?>">
+														</div>
+													</div>
+												</div>
 												<div class="form-group">
 													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch Name:</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="branch" id="branch" class="col-xs-12 col-sm-3" value="<?php echo $row1['off_name']; ?>" readonly />
+															<input type="text" name="branch" id="branch" class="col-xs-12 col-sm-3" value="<?php echo $CityNameFromID1['bname']; ?>" readonly />
 														</div>
 													</div>
 												</div>
@@ -401,7 +449,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="destination" id="destination" class="col-xs-12 col-sm-3" value="<?php echo $row2['bname']; ?>" readonly />
+															<input type="text" name="destination" id="destination" class="col-xs-12 col-sm-3" value="<?php echo $CityNameFromID['bname']; ?>" readonly />
 														</div>
 													</div>
 												</div>
@@ -411,7 +459,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Price per Kg:</label>
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" value="<?php echo $row3['Kg']; ?>" required />
+															<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" value="<?php echo $row['Price_KG']; ?>" required />
 														</div>
 													</div>
 												</div>
@@ -424,13 +472,16 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
 
-															<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" value="<?php echo $row3['Box']; ?>" required />
+															<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" value="<?php echo $row['Price_Box']; ?>" required />
 														</div>
 													</div>
 												</div>
 
-												<div style="padding-left: 30%;">
-													<button class="btn btn-success btn-next " type="Submit">
+												<div style="padding-left: 26%;">
+													<button class="btn btn-success" onclick="window.location.assign('add-customer.php?ty=add')">
+														Back
+													</button>
+													<button class="btn btn-success btn-next " type="submit">
 														Update
 													</button>
 												</div>
