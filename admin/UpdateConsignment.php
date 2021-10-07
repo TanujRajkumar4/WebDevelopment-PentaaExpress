@@ -28,7 +28,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid'])) && isset($_POST["UpdateConsi
     if ($sql && $sql1) {
         echo "<script>alert('Updated Successfully');window.location.href = 'view-consignment.php';</script>";
     } else {
-        echo "<script>alert('Not Updated');window.location.href = 'view-consignment.php';</script>";
+        echo "<script>alert('NOT Updated');window.location.href = 'view-consignment.php';</script>";
     }
 
 ?>

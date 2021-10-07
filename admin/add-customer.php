@@ -261,7 +261,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 							<ul class="breadcrumb">
 								<li>
 									<i class="ace-icon fa fa-home home-icon"></i>
-									<a href="#">Home</a>
+									<a href="dashboard.php">Home</a>
 								</li>
 								<li class="active"> Consignment</li>
 							</ul><!-- /.breadcrumb -->
@@ -325,7 +325,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					}
 																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																					?>
-																						<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																						<option value="<?php echo $rwtoi['b_id']; ?>">
+																							<?php echo $rwtoi['bname']; ?>
+																						</option>
 																					<?php
 																					}
 																					?>
@@ -388,7 +390,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		</div>
 																	</div>
 
-
+<!-- 
 																	<h3 class="lighter block green">Charges Details</h3>
 																	<div class="hr hr-dotted"></div>
 
@@ -471,7 +473,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																				<input type="number" name="topay" id="topay" class="col-xs-12 col-sm-5 " value="0.00" />
 																			</div>
 																		</div>
-																	</div>
+																	</div> -->
 
 																	<div>
 																		<button class="btn btn-success btn-next" type="Submit">
@@ -509,19 +511,21 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										$exportdt .= "<table id='dynamic-table' class='table table-striped table-bordered table-hover'>";
 										$exportdt .= "<thead>";
 										$exportdt .= "<tr><th>SNo</th>
-													<th>Customer Id</th>
+													<th>Customer ID</th>
 													<th>Customer Name</th>
 													<th>Type</th>
 													<th>GSTIN No.</th>
 													<th>Phone No.</th>
 													<th>Address</th>
-													<th>Kg Rate</th>
+
+													<!-- <th>Kg Rate</th>
 													<th>Box Rate</th>
 													<th>Waybill Charges</th>
 													<th>Insurance Charges</th>
 													<th>Other Charges</th>
 													<th>ODA Charges</th>
-													<th>Topay Charges</th>
+													<th>Topay Charges</th> -->
+
 													<th>Created Date</th>
 													<th class='hidden-480'>Action</th>
 													</tr>
@@ -552,22 +556,30 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$exportdt .= "	<td class='center'>  $i</td>";
 											$exportdt .= "<td>" . $row['custID'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
-											$exportdt .= "<td>" . $row['Type']  . "</td>";
+											$Query="SELECT * from pay_meth where status='A'AND b_id = ". $row['Type'];
+											$msql1 = mysqli_query($dbConn,$Query);
+											$row1=mysqli_fetch_array($msql1);
+
+											$exportdt .= "<td>" . $row1['bname']  . "</td>";
 											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
-											$exportdt .= "<td>" . $row['freight'] . "</td>";
-											$exportdt .= "<td>" . $row['boxrate'] . "</td>";
-											$exportdt .= "<td>" . $row['waych'] . "</td>";
-											$exportdt .= "<td>" . $row['insch'] . "</td>";
-											$exportdt .= "<td>" . $row['othch'] . "</td>";
-											$exportdt .= "<td>" . $row['odach'] . "</td>";
-											$exportdt .= "<td>" . $row['topaych'] . "</td>";
+
+											// $exportdt .= "<td>" . $row['freight'] . "</td>";
+											// $exportdt .= "<td>" . $row['boxrate'] . "</td>";
+											// $exportdt .= "<td>" . $row['waych'] . "</td>";
+											// $exportdt .= "<td>" . $row['insch'] . "</td>";
+											// $exportdt .= "<td>" . $row['othch'] . "</td>";
+											// $exportdt .= "<td>" . $row['odach'] . "</td>";
+											// $exportdt .= "<td>" . $row['topaych'] . "</td>";
+
 											$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
 											//START of IF - BRANCH ACCESS											
 											if ($user_type == "Branch") {
 												$exportdt .= "<td class='hidden-480'>
 													 <a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+													 
+													 <!-- Customer Pending Payment - Repayment Button -->
 													 <a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
 													
 													</td>
@@ -608,14 +620,14 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
-																<form>  
+																<form id="CustomerTypeFiltering" method="POST" action = "add-customer.php?ty=add">
 																	<div class="form-group">
-																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+																		<label class="control-label" for="custID">Customer Type:</label>
 
-																		<div class="col-xs-12 col-sm-9">
-																			<div class="clearfix">
+																		<!-- <div class="col-xs-12 col-sm-9"> -->
+																			<!-- <div class="clearfix"> -->
 
-																				<select class="col-xs-12 col-sm-3" id="Cust_Type_Edit" name="Cust_Type_Edit">
+																				<select class="" id="Cust_Type_Edit" name="Cust_Type_Edit" onchange='document.getElementById("CustomerTypeFiltering").submit();'>
 																					<?php
 
 																					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
@@ -625,13 +637,13 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					<?php
 																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																					?>
-																						<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																						<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
 																					<?php
 																					}
 																					?>
 																				</select>
-																			</div>
-																		</div>
+																			<!-- </div>
+																		</div> -->
 																	</div>
 																</form>
 															</div>
@@ -959,7 +971,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													</div>
 												</div>
 
-												<h3 class="lighter block green">Charges Details</h3>
+												<!-- <h3 class="lighter block green">Charges Details</h3>
 												<div class="hr hr-dotted"></div>
 
 												<div class="form-group">
@@ -1040,7 +1052,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<input type="number" name="topay" id="topay" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['topaych']; ?>" />
 														</div>
 													</div>
-												</div>
+												</div> -->
 
 												<div>
 													<button class="btn btn-success btn-next" type="Submit">
