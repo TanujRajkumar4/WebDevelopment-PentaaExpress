@@ -225,10 +225,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 							<div class="page-header">
 								<h1>
 									<?php echo $title; ?>
-									<small>
+									<!-- <small>
 										<i class="ace-icon fa fa-angle-double-right"></i>
 										<?php echo $title; ?>
-									</small>
+									</small> -->
 								</h1>
 							</div><!-- /.page-header -->
 							<div class="row">
@@ -387,10 +387,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
 									<h1>
-										Edit Section
+										Edit 
 										<small>
 											<i class="ace-icon fa fa-angle-double-right"></i>
-											<?php echo $title; ?>
+											<?php echo "Tariff"; ?>
 										</small>
 									</h1>
 								</div><!-- /.page-header -->
