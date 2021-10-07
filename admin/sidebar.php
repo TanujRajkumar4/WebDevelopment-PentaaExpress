@@ -114,7 +114,7 @@ $type = $_SESSION['type'];
 
 				</li>
 
-				<li class="">
+				<!-- <li class="">
 					<a href="customer_tariff.php?ty=add">
 						<i class="menu-icon fa fa-caret-right"></i>
 
@@ -124,7 +124,7 @@ $type = $_SESSION['type'];
 
 					<b class="arrow"></b>
 
-				</li>
+				</li> -->
 			</ul>
 		</li>
 	<?php } ?>
