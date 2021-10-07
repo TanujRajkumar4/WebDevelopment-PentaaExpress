@@ -134,145 +134,51 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="dashboard.php">Home</a>
 							</li>
-							<li class="active">	Customer</li>
-						</ul><!-- /.breadcrumb -->
-
-<!-- /.nav-search -->
-					</div>
-					<div class="page-content">
-						<!-- /.ace-settings-container -->
-						<div class="page-header">
-							<h1>
-								Customer  
-								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									Report
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
-						
-
+							<!-- <li class="active">	Customer</li> -->
+						</ul><!-- /.breadcrumb --></div>
 						<div class="row">
 							<div class="col-xs-12">
-							<h3 class="lighter block green">Payment Details</h3><div class="hr hr-dotted"></div>
-							<form class="form-horizontal" method="POST" action="cust-report.php">
-							
-								<div class="form-group" >
-								
-									<div class="col-xs-12 col-sm-12">
-									<div class="col-xs-12 col-sm-3">
-										<div class="clearfix">
-											<select class="col-xs-12 col-sm-9" id="branch" name="branch" required>
-												<option value="">
-													<--------Select-------->
-												</option>
-												<?php
-												$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
-												while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-													?>
-													<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
-													<?php
-													}
-													?>
-													</select>
-												</div>
-									</div>
-										<div class="col-xs-12 col-sm-6">
-											<label class="line-height-1 blue">
-												<input name="gender" value="1" id="Wgt" type="radio" class="ace" required />
-												<span class="lbl"> Credit Customer</span>
-											</label>
-										</div>
-										<div class="col-xs-12 col-sm-6">
-											<label class="line-height-1 blue">
-												<input name="gender" value="2" id="Wgt" type="radio" class="ace" />
-												<span class="lbl"> To Pay</span>
-											</label>
-										</div>
-										<div class="col-xs-12 col-sm-6" >
-										<div class="clearfix">
-											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-										</div>
-										</div>
-									
-									<div class="">
-									
-									</div>
-								</div>
-									
-							</form>
-							</div>
-						</div>
-						<div class="row">
-								<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<div class="row">
-									<div class="col-xs-12">
-										<table id="simple-table" class="table  table-bordered table-hover">
-											<thead>
-												<tr>													
-													<th>SNo</th>
-													<th>Name & Address</th>
-													<th>Outstanding</th>
-													<th>Type</th>
-													
-												</tr>
-											</thead>
 
-											<tbody>
-											<tr>
-											<?php
-											$filters="";
-											if(isset($_POST['search']) and isset($_POST['gender']))
-											{
-											if($_POST['gender'] == 1)
-											{
-												$filters="Select * from tbl_customer where bala!='0' and status='A'";
-											}
-											elseif($_POST['gender'] == 2)
-											{
-												$filters="Select * from tbl_courier where pay_mode='1' and status='A'";
-											}
-											
-											$i=0;
-											//echo $filters;
-											$msql=mysqli_query($dbConn, $filters);
-											while($row=mysqli_fetch_array($msql))
-											{
-											?>
-													<td class="center"> <?php echo $i=$i+1; ?></td>
-													<?php if ($_POST['gender'] == 1)
-													{
-														?>
-														<td><a href="#"><?php echo $row['consignor_name'].",<br>".$row['consignor_phone'].",<br>".$row['consignor_add'] ?></a></td>
-														<td><a href="#"><?php echo $row['bala']; ?></a></td>
-														<td><a href="#">Credit</td>
-														<?php
-													}
-													if ($_POST['gender'] == 2)
-													{
-													?>
-													<td><a href="#"><?php echo $row['consignee_name'].",<br>".$row['consignee_phone'].",<br>".$row['consignee_add']; ?></a></td>
-													<td><a href="#"><?php echo $row['tot']; ?></a></td>
-													<td><a href="#">Topay</td>
-													<?php
-													}
-													?>
-																												
-												</tr>
-												<?php
-												}
-												
-											}
-												?>
-											</tbody>
-										</table>
-									</div><!-- /.span -->
-								</div><!-- /.row -->
+								<div class="error-container">
+									<div class="well">
+										<h1 class="grey lighter smaller">
+											<span class="green bigger-125">
+												<i class="ace-icon fa fa-sitemap"></i>
+												404
+											</span>
+											Page Not Found
+										</h1>
+
+										<hr />
+										<h3 class="lighter smaller">We looked everywhere but we couldn't find it!</h3>
+										<hr />
+										<div class="space"></div>
+										<div></div>
+											<a href="javascript:history.back()" class="col-xs-12 col-sm-1"	>
+												<div class="clearfix"  >
+												<button class="btn btn-success btn-next" >Go back</button>
+												</div>
+											</a>
+											<a href="dashboard.php" class="col-xs-12 col-sm-1">
+												<div class="clearfix">
+												<button class="btn btn-success btn-next" >Dashboard</button>
+												</div>
+											</a>
+											<div class="space"></div>
+											<div class="space"></div>
+											<div class="space"></div>
+									</div>
 								</div>
-								</div>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+
+					
+								
 								<div class="footer">
 				<div class="footer-inner">
 					<div class="footer-content">
@@ -290,7 +196,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
-		</div><!-- /.main-container -->
+		<!-- /.main-container -->
 
 		<!-- basic scripts -->
 
