@@ -390,7 +390,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		</div>
 																	</div>
 
-<!-- 
+																	<!-- 
 																	<h3 class="lighter block green">Charges Details</h3>
 																	<div class="hr hr-dotted"></div>
 
@@ -540,13 +540,16 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										} else {
 											$page = $_GET['page'];
 										}
-										$results_per_page = 10;
-										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
-										$Cust_Count = mysqli_num_rows($msql);
-										$page_first_result = ($page - 1) * $results_per_page;
-										$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
-										$number_of_page = ceil($Cust_Count / $results_per_page);
-
+										$results_per_page = 15;
+										if (isset($_POST['Cust_Type_Edit'])) {
+											$Cust_Type = $_POST['Cust_Type_Edit'];
+										} else {
+											$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
+											$Cust_Count = mysqli_num_rows($msql);
+											$page_first_result = ($page - 1) * $results_per_page;
+											$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
+											$number_of_page = ceil($Cust_Count / $results_per_page);
+										}
 										// PAGINATION - END
 
 
@@ -556,9 +559,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$exportdt .= "	<td class='center'>  $i</td>";
 											$exportdt .= "<td>" . $row['custID'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
-											$Query="SELECT * from pay_meth where status='A'AND b_id = ". $row['Type'];
-											$msql1 = mysqli_query($dbConn,$Query);
-											$row1=mysqli_fetch_array($msql1);
+											$Query = "SELECT * from pay_meth where status='A'AND b_id = " . $row['Type'];
+											$msql1 = mysqli_query($dbConn, $Query);
+											$row1 = mysqli_fetch_array($msql1);
 
 											$exportdt .= "<td>" . $row1['bname']  . "</td>";
 											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
@@ -620,29 +623,29 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
-																<form id="CustomerTypeFiltering" method="POST" action = "add-customer.php?ty=add">
+																<form id="CustomerTypeFiltering" method="POST" action="add-customer.php?ty=add">
 																	<div class="form-group">
 																		<label class="control-label" for="custID">Customer Type:</label>
 
 																		<!-- <div class="col-xs-12 col-sm-9"> -->
-																			<!-- <div class="clearfix"> -->
+																		<!-- <div class="clearfix"> -->
 
-																				<select class="" id="Cust_Type_Edit" name="Cust_Type_Edit" onchange='document.getElementById("CustomerTypeFiltering").submit();'>
-																					<?php
+																		<select class="" id="Cust_Type_Edit" name="Cust_Type_Edit" onchange="document.getElementById('CustomerTypeFiltering').submit();">
+																			<?php
 
-																					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+																			$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
 
-																					?>
-																					<option value="All">All</option>
-																					<?php
-																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-																					?>
-																						<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
-																					<?php
-																					}
-																					?>
-																				</select>
-																			<!-- </div>
+																			?>
+																			<option value="All">All</option>
+																			<?php
+																			while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																			?>
+																				<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																			<?php
+																			}
+																			?>
+																		</select>
+																		<!-- </div>
 																		</div> -->
 																	</div>
 																</form>
@@ -919,7 +922,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<?php
 																while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																?>
-																	<option value="<?php echo $rwtoi['bname']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																	<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
 																<?php
 																}
 																?>

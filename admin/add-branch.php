@@ -74,7 +74,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 
 		{
 
-			$sql="DELETE FROM tbl_offices WHERE office='".$_GET['delid']."'";
+			$sql="DELETE FROM tbl_offices WHERE id='".$_GET['delid']."'";
 
 			if(mysqli_query($dbConn,$sql))
 
