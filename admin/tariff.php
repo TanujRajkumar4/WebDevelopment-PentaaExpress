@@ -67,7 +67,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 				if(mysqli_query($dbConn,$sql))
 				{
 					echo "<script>alert('Record Deleted Successfully');
-					// echo $sql;
+
 					window.location.href = 'tariff.php?ty=add';</script>";
 				}
 				else
@@ -363,8 +363,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<td><?php echo $dsql['bname']; ?></td>
 													<td><?php echo $row['Kg'];?></td>
 													<td><?php echo $row['Box'];?></td>
-													<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=<?php echo  $row['branch_id'];?>&c_id=<?php echo $row['city_id'];?>'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													<a href='tariff.php?ty=del&b_id=<?php echo $row['branch_id'];?>&c_id=<?php echo $row['city_id'];?>'><span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>
+													<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+													<a href='tariff.php?ty=del&b_id=$row[branch_id]&c_id=$row[city_id]'>
+														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
 												
 												<?php } ?>
 												

@@ -161,41 +161,26 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 							
 								<div class="form-group" >
 								
-									<div class="col-xs-12 col-sm-12">
-									<div class="col-xs-12 col-sm-3">
-										<div class="clearfix">
-											<select class="col-xs-12 col-sm-9" id="branch" name="branch" required>
-												<option value="">
-													<--------Select-------->
-												</option>
-												<?php
-												$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
-												while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-													?>
-													<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
-													<?php
-													}
-													?>
-													</select>
-												</div>
-									</div>
-										<div class="col-xs-12 col-sm-6">
+									<div class="col-xs-12 col-sm-9">
+									
+										<div class="col-xs-12 col-sm-3">
 											<label class="line-height-1 blue">
 												<input name="gender" value="1" id="Wgt" type="radio" class="ace" required />
 												<span class="lbl"> Credit Customer</span>
 											</label>
 										</div>
-										<div class="col-xs-12 col-sm-6">
+										<div class="col-xs-12 col-sm-3">
 											<label class="line-height-1 blue">
 												<input name="gender" value="2" id="Wgt" type="radio" class="ace" />
 												<span class="lbl"> To Pay</span>
 											</label>
 										</div>
-										<div class="col-xs-12 col-sm-6" >
+										<div class="col-xs-12 col-sm-3">
 										<div class="clearfix">
 											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 										</div>
-										</div>
+									</div>
+									</div>
 									
 									<div class="">
 									
