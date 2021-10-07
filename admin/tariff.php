@@ -31,7 +31,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			{
 				if($_GET['ac']=="ins")
 				{
-				$qry="INSERT INTO `tariff`(`branch_id`,`city_id`,`Kg`,`Box`)VALUES('".$_POST['branch']."','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."')";
+				$qry="INSERT INTO `tariff`(`branch_id`,`city_id`,`price_per_kg`,`price_per_box`)VALUES('".$_POST['branch']."','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."')";
 				$sql=mysqli_query($dbConn,$qry);
 				if($sql)
 				{
@@ -45,7 +45,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			}
 			if ($_GET['ac']=="upd")
 			{
-				$qry="UPDATE `tariff` SET `Kg`='".$_POST['Kg']."',`Box`='".$_POST['Box']."'WHERE `branch_id`='".$_GET['b_id']."' and `city_id`='".$_GET['c_id']."'";
+				$qry="UPDATE `tariff` SET `price_per_kg`='".$_POST['Kg']."',`price_per_box`='".$_POST['Box']."'WHERE `tariff_id`='".$_GET['editid']."'";
 				$sql=mysqli_query($dbConn,$qry);
 				if($sql)
 				{
@@ -63,7 +63,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 			if($_GET['ty']=="del")
 			{
-				$sql="DELETE FROM tariff WHERE city_id='".$_GET['c_id']."' AND branch_id = '".$_GET['b_id']."'";
+				$sql="DELETE FROM tariff WHERE tariff_id='".$_GET['delid']."'";
 				if(mysqli_query($dbConn,$sql))
 				{
 					echo "<script>alert('Record Deleted Successfully');
@@ -361,10 +361,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<td class='center'>  <?php echo $i;?></td>
 													<td><?php echo $rowbranch['off_name']; ?></td>
 													<td><?php echo $dsql['bname']; ?></td>
-													<td><?php echo $row['Kg'];?></td>
-													<td><?php echo $row['Box'];?></td>
-													<td class='hidden-480'><a href='tariff.php?ty=edit&b_id=$row[branch_id]&c_id=$row[city_id]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													<a href='tariff.php?ty=del&b_id=$row[branch_id]&c_id=$row[city_id]'>
+													<td><?php echo $row['price_per_kg'];?></td>
+													<td><?php echo $row['price_per_box'];?></td>
+													<td class='hidden-480'><a href='tariff.php?ty=edit&editid=<?php echo $row['tariff_id'];?>'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
+													<a href='tariff.php?ty=del&delid=<?php echo $row['tariff_id'];?>'>
 														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
 												
 												<?php } ?>
@@ -381,12 +381,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<?php 
 					if (isset($_GET['ty'])) {
 						if ($_GET['ty'] == "edit") {
-							$sql1 = mysqli_query($dbConn, "Select * from tbl_offices where id= '" . $_GET['b_id'] . "'");
+							$sql1 = mysqli_query($dbConn,"Select * from tariff where tariff_id= '".$_GET['editid']."'");
 							$row1 = mysqli_fetch_array($sql1);
-							$sql2 = mysqli_query($dbConn, "Select * from city where b_id= '".$_GET['c_id']."'");
-							$row2 = mysqli_fetch_array($sql2);
-							$sql3 = mysqli_query($dbConn,"Select * from tariff");
-							$row3 = mysqli_fetch_array($sql3);
 						?> <div class="page-content">
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
@@ -402,12 +398,18 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<div class="row">
 									<div class="col-xs-12">
 										<!-- PAGE CONTENT BEGINS -->
-										<form class="form-horizontal" method="POST" action="tariff.php?ac=upd&ty=edit&b_id=<?php echo $_GET['b_id']; ?>&c_id=<?php echo $_GET['c_id']?>">
+										<form class="form-horizontal" method="POST" action="tariff.php?ac=upd&ty=edit&editid=<?php echo $_GET['editid']; ?>">
+										<?php 
+										$sql2 = mysqli_query($dbConn, "Select * from tbl_offices where id= '".$row1['branch_id']."'");
+										$row2 = mysqli_fetch_array($sql2);
+										$sql3 = mysqli_query($dbConn, "Select * from city where b_id= '".$row1['city_id']."'");
+										$row3 = mysqli_fetch_array($sql3);
+										?>
 											<div class="form-group">
 												<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch Name:</label>
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
-														<input type="text" name="branch" id="branch" class="col-xs-12 col-sm-3" value="<?php echo $row1['off_name']; ?>"  readonly />
+														<input type="text" name="branch" id="branch" class="col-xs-12 col-sm-3" value="<?php echo $row2['off_name']; ?>"  readonly />
 													</div>
 												</div>
 											</div>
@@ -419,7 +421,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
-														<input type="text" name="destination" id="destination" class="col-xs-12 col-sm-3" value="<?php echo $row2['bname']; ?>"  readonly />
+														<input type="text" name="destination" id="destination" class="col-xs-12 col-sm-3" value="<?php echo $row3['bname']; ?>"  readonly />
 													</div>
 												</div>
 											</div>
@@ -429,7 +431,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Kg">Price per Kg:</label>
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
-														<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" value="<?php echo $row3['Kg']; ?>" required />
+														<input type="text" name="Kg" id="Kg" class="col-xs-12 col-sm-3" value="<?php echo $row1['price_per_kg']; ?>" required />
 													</div>
 												</div>
 											</div>
@@ -442,7 +444,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												<div class="col-xs-12 col-sm-9">
 													<div class="clearfix">
 
-														<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" value="<?php echo $row3['Box']; ?>" required />
+														<input type="text" id="Box" name="Box" class="col-xs-12 col-sm-3" value="<?php echo $row1['price_per_box']; ?>" required />
 													</div>
 												</div>
 											</div>
