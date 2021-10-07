@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2021 at 05:49 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Oct 07, 2021 at 10:03 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -215,19 +215,19 @@ CREATE TABLE `pincode` (
 --
 
 CREATE TABLE `tariff` (
+  `tariff_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
-  `Kg` int(5) DEFAULT NULL,
-  `Box` int(5) DEFAULT NULL
+  `price_per_kg` int(5) DEFAULT NULL,
+  `price_per_box` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tariff`
 --
 
-INSERT INTO `tariff` (`branch_id`, `city_id`, `Kg`, `Box`) VALUES
-(1, 3, 4, 5),
-(5, 1, 4, 4);
+INSERT INTO `tariff` (`tariff_id`, `branch_id`, `city_id`, `price_per_kg`, `price_per_box`) VALUES
+(7, 3, 2, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -892,6 +892,12 @@ ALTER TABLE `pincode`
   ADD PRIMARY KEY (`b_id`);
 
 --
+-- Indexes for table `tariff`
+--
+ALTER TABLE `tariff`
+  ADD PRIMARY KEY (`tariff_id`);
+
+--
 -- Indexes for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
@@ -986,6 +992,12 @@ ALTER TABLE `pincode`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tariff`
+--
+ALTER TABLE `tariff`
+  MODIFY `tariff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
@@ -1013,7 +1025,7 @@ ALTER TABLE `tbl_customer`
 -- AUTO_INCREMENT for table `tbl_offices`
 --
 ALTER TABLE `tbl_offices`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_transactions`
