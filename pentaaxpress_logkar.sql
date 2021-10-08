@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2021 at 06:56 PM
+-- Generation Time: Oct 08, 2021 at 09:50 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -222,20 +222,19 @@ CREATE TABLE `pincode` (
 --
 
 CREATE TABLE `tariff` (
+  `tariff_id` int(11) NOT NULL,
   `branch_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
-  `Kg` int(5) DEFAULT NULL,
-  `Box` int(5) DEFAULT NULL
+  `price_per_kg` int(5) DEFAULT NULL,
+  `price_per_box` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tariff`
 --
 
-INSERT INTO `tariff` (`branch_id`, `city_id`, `Kg`, `Box`) VALUES
-(1, 3, 4, 5),
-(5, 1, 4, 4),
-(1, 3, 7, 8);
+INSERT INTO `tariff` (`tariff_id`, `branch_id`, `city_id`, `price_per_kg`, `price_per_box`) VALUES
+(7, 3, 2, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -671,7 +670,8 @@ CREATE TABLE `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`cid`, `custID`, `consignor_name`, `Type`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`, `boxrate`, `waych`, `insch`, `othch`, `odach`, `topaych`, `bala`, `cre_dt`, `status`, `User_Access`) VALUES
-(3, 'PLX000002', 'Go Fashion India  Pvt  Ltd', 1, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '5.00', '0.00', '50.00', '0.00', '0.00', '0.00', '0.00', '', '2018-11-29', 'A', 'Branch');
+(3, 'PLX000002', 'Go Fashion India  Pvt.  Ltd.', 1, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '', '', '', '', '', '', '', '', '2018-11-29', 'A', 'Branch'),
+(106, 'PLX000003', 'TEST1', 1, '', '987 654 3210', 'TEST ADD', '', '', '', '', '', '', '', '', '2021-10-08', 'A', 'HO');
 
 -- --------------------------------------------------------
 
@@ -719,6 +719,14 @@ CREATE TABLE `tbl_transactions` (
   `Tran_Amt` int(11) NOT NULL,
   `Status` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_transactions`
+--
+
+INSERT INTO `tbl_transactions` (`Tran_ID`, `Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES
+(1, '2021-10-08', 'PLX000002', 1, 1, 'Cr', 'Credit Payment', -1000, 'A'),
+(11, '2021-10-08', 'PLX000002', 10, 1, 'Dr', 'Credit Repayment', 0, 'A');
 
 -- --------------------------------------------------------
 
@@ -797,6 +805,12 @@ ALTER TABLE `pay_meth`
 --
 ALTER TABLE `pincode`
   ADD PRIMARY KEY (`b_id`);
+
+--
+-- Indexes for table `tariff`
+--
+ALTER TABLE `tariff`
+  ADD PRIMARY KEY (`tariff_id`);
 
 --
 -- Indexes for table `tbl_courier`
@@ -893,6 +907,12 @@ ALTER TABLE `pincode`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tariff`
+--
+ALTER TABLE `tariff`
+  MODIFY `tariff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
@@ -914,7 +934,7 @@ ALTER TABLE `tbl_courier_track`
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `tbl_offices`
@@ -926,7 +946,7 @@ ALTER TABLE `tbl_offices`
 -- AUTO_INCREMENT for table `tbl_transactions`
 --
 ALTER TABLE `tbl_transactions`
-  MODIFY `Tran_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Tran_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `toi`

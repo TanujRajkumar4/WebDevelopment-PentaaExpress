@@ -13,7 +13,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			$title = "Add Customer";
 			if (isset($_POST['search'])) {
 				if ($_POST['mobile'] != "") {
-					$mobile = " And consignor_phone ='" . $_POST['mobile'] . "' or custID='" . $_POST['mobile'] . "'";
+					$mobile = " AND consignor_phone ='" . $_POST['mobile'] . "' OR custID='" . $_POST['mobile'] . "'";
 				}
 			}
 			if (isset($_POST['export_data'])) {
@@ -94,17 +94,29 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			}
 			if ($_GET['ac'] == "repay") {
 				$today = date("Y-m-d");
-				$ins = mysqli_query($dbConn, "INSERT INTO 'cust_trans'('tid', 'cust_id', 'repaid', 'outstanding', 'repaydt', 'status') VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['payment'] . "','" . $_POST['balance'] . "','" . $today . "','A')");
+				// $ins = mysqli_query($dbConn, "INSERT INTO 'cust_trans'('tid', 'cust_id', 'repaid', 'outstanding', 'repaydt', 'status') VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['payment'] . "','" . $_POST['balance'] . "','" . $today . "','A')");
+				// // echo $ins;
+				// if ($ins) {
+				// 	$sql = mysqli_query($dbConn, "UPDATE 'tbl_customer' SET 'bala'='" . $_POST['balance'] . "' WHERE 'custID'='" . $_POST['custID'] . "' and 'cid'='" . $_GET['editid'] . "' and 'status'='A'");
+
+				// 	if ($sql) {
+				// 		echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
+				// 	} else {
+				// 		echo "<script>alert('Not Updated');window.location.href = 'add-customer.php?ty=add';</script>";
+				// 	}
+				// } else {
+				// 	echo "<script>alert('Not Inserted ".$ins." ');window.location.href = 'add-customer.php?ty=add';</script>";
+				// }
+
+				$CustDetails = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM tbl_customer WHERE custID = '" . $_GET['editid'] . "'  AND Status = 'A' "));
+
+				$Tran_Upd_SQL = "INSERT INTO `tbl_transactions` (`Tran_ID`, `Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES (NULL, '$today', '$_GET[editid]', '$_SESSION[uid]', '$CustDetails[Type]', 'Dr', 'Credit Repayment', '$_POST[payment]', 'A')";
+
+				$ins = mysqli_query($dbConn, $Tran_Upd_SQL);
 				if ($ins) {
-					$sql = mysqli_query($dbConn, "UPDATE 'tbl_customer' SET 'bala'='" . $_POST['balance'] . "' WHERE 'custID'='" . $_POST['custID'] . "' and 'cid'='" . $_GET['editid'] . "' and 'status'='A'");
-					echo $sql;
-					if ($sql) {
-						echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
-					} else {
-						echo "<script>alert('Not Updated');window.location.href = 'add-customer.php?ty=add';</script>";
-					}
+					echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
 				} else {
-					echo "<script>alert('Not Inserted');window.location.href = 'add-customer.php?ty=add';</script>";
+					echo "<script>alert('Transaction NOT Updated');window.location.href = 'add-customer.php?ty=add';</script>";
 				}
 			}
 		}
@@ -304,7 +316,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
-																				<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" />
+																				<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" required />
 																			</div>
 																		</div>
 																	</div>
@@ -316,7 +328,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
 																				<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
-																				<select class="col-xs-12 col-sm-3" id="Cust_Type" name="Cust_Type">
+																				<select class="col-xs-12 col-sm-3" id="Cust_Type" name="Cust_Type" required>
 																					<?php
 																					if ($user_type == "Branch") {
 																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
@@ -344,7 +356,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
-																				<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" />
+																				<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" required />
 																			</div>
 																		</div>
 																	</div>
@@ -373,7 +385,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					<i class="ace-icon fa fa-phone"></i>
 																				</span>
 
-																				<input type="tel" id="phone" name="phone" />
+																				<input type="tel" id="phone" name="phone" required />
 																			</div>
 																		</div>
 																	</div>
@@ -385,7 +397,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 																		<div class="col-xs-12 col-sm-9">
 																			<div class="clearfix">
-																				<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs"></textarea>
+																				<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs" required></textarea>
 																			</div>
 																		</div>
 																	</div>
@@ -514,7 +526,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<th>Customer ID</th>
 													<th>Customer Name</th>
 													<th>Type</th>
-													<th>GSTIN No.</th>
+													<!--<th>GSTIN No.</th>-->
 													<th>Phone No.</th>
 													<th>Address</th>
 
@@ -527,6 +539,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<th>Topay Charges</th> -->
 
 													<th>Created Date</th>
+													<th>Outstanding Amount</th>
+
 													<th class='hidden-480'>Action</th>
 													</tr>
 											</thead>
@@ -534,6 +548,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 											<tr>";
 										$i = 0;
+										$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
+										$Cust_Count = mysqli_num_rows($msql);
+										$results_per_page = 15;
+										$number_of_page = ceil($Cust_Count / $results_per_page);
+
 										// PAGINATION - START
 										if (!isset($_GET['page'])) {
 											$page = 1;
@@ -544,10 +563,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										if (isset($_POST['Cust_Type_Edit'])) {
 											$Cust_Type = $_POST['Cust_Type_Edit'];
 										} else {
-											$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile ");
+											$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
 											$Cust_Count = mysqli_num_rows($msql);
 											$page_first_result = ($page - 1) * $results_per_page;
-											$msql = mysqli_query($dbConn, "Select * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
+											$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
 											$number_of_page = ceil($Cust_Count / $results_per_page);
 										}
 										// PAGINATION - END
@@ -564,7 +583,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											$row1 = mysqli_fetch_array($msql1);
 
 											$exportdt .= "<td>" . $row1['bname']  . "</td>";
-											$exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
+											// $exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
 											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
 
@@ -577,23 +596,47 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											// $exportdt .= "<td>" . $row['topaych'] . "</td>";
 
 											$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
+
+											$SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
+											$Tran_Sum = mysqli_fetch_array(mysqli_query($dbConn, $SQL));
+											$Tran_Amt_Sum = $Tran_Sum['Amount'];
+											if ($Tran_Amt_Sum == NULL) {
+												$Tran_Amt_Sum = 0;
+											}
+											$exportdt .= "<td> Rs. " . $Tran_Amt_Sum . "/-</td>";
+
 											//START of IF - BRANCH ACCESS											
 											if ($user_type == "Branch") {
-												$exportdt .= "<td class='hidden-480'>
-													 <a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
-													 
+												$exportdt .= "<td class='hidden-480'>";
+
+												$exportdt .= "
+													 <a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>";
+
+												if ($Tran_Amt_Sum < 0) {
+													$exportdt .= " 
 													 <!-- Customer Pending Payment - Repayment Button -->
-													 <a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
-													
-													</td>
+													 <a href='add-customer.php?ty=repay&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>";
+												}
+												$exportdt .= "
+													 </td>
 													</tr>";
 											} //END of IF - BRANCH ACCESS
 											else { //START of ELSE - HO ACCESS
-												$exportdt .= "<td class='hidden-480'>
-													<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110 '><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>													
-													<a href='add-customer.php?ty=repay&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>
-													<a href='customer_tariff.php?ty=add&cid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Tariff</span></a>													
-													<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='w-15 btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>
+												$exportdt .= "<td class='hidden-480'>";
+
+												$exportdt .= "
+													<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110 '><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>";
+												if ($Tran_Amt_Sum < 0) {
+													$exportdt .= "
+													<a href='add-customer.php?ty=repay&editid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>";
+												}
+												$exportdt .= "
+													<a href='customer_tariff.php?ty=add&cid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Tariff</span></a>";
+
+												$exportdt .= "
+													<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='w-15 btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>";
+
+												$exportdt .= "
 													</td>
 													</tr>";
 											} //END of ELSE - HO ACCESS
@@ -781,8 +824,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<?php
 						if (isset($_GET['ty'])) {
 							if ($_GET['ty'] == "repay") {
-								$sqlms = mysqli_query($dbConn, "Select * from tbl_customer where cid = '" . $_GET['editid'] . "'");
+								$sqlms = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $_GET['editid'] . "' AND Status = 'A'";
+								$sqlms = mysqli_query($dbConn, $sqlms);
+								// $sqlms = mysqli_query($dbConn, "Select * from tbl_customer where cid = '" . $_GET['editid'] . "'");
 								$rowms = mysqli_fetch_array($sqlms);
+								$CustDetails = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM tbl_customer WHERE custID = '" . $_GET['editid'] . "'  AND Status = 'A' "));
 						?> <div class="page-content">
 									<!-- /.ace-settings-container -->
 									<div class="page-header">
@@ -804,7 +850,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $rowms['custID']; ?>" />
+															<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $rowms['Cust_ID']; ?>" readonly />
 														</div>
 													</div>
 												</div>
@@ -815,7 +861,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $rowms['consignor_name']; ?>" />
+															<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $CustDetails['consignor_name']; ?>" readonly />
 														</div>
 													</div>
 												</div>
@@ -826,7 +872,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 													<div class="col-xs-12 col-sm-9">
 														<div class="clearfix">
-															<input type="text" name="outstanding" id="outstanding" class="col-xs-12 col-sm-6" value="<?php echo $rowms['bala']; ?>" readonly />
+															<input type="text" name="outstanding" id="outstanding" class="col-xs-12 col-sm-6" value="<?php echo $rowms['Amount']; ?>" readonly />
 														</div>
 													</div>
 												</div>
@@ -1181,7 +1227,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						var tot = 0.0;
 						sgst = $("#payment").val();
 						subtot = $("#outstanding").val();
-						tot = parseFloat(subtot) - parseFloat(sgst);
+						tot = parseFloat(subtot) + parseFloat(sgst);
 						$('#balance').val(tot.toFixed(2));
 					}
 
