@@ -275,7 +275,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 									<i class="ace-icon fa fa-home home-icon"></i>
 									<a href="dashboard.php">Home</a>
 								</li>
-								<li class="active"> Consignment</li>
+								<li class="active">Customer</li>
 							</ul><!-- /.breadcrumb -->
 
 							<!-- /.nav-search -->
@@ -287,10 +287,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<!-- /.ace-settings-container -->
 								<div class="page-header">
 									<h1>
-										<?php echo $title; ?>
+										<?php echo 'Customer'; ?>
 										<small>
 											<i class="ace-icon fa fa-angle-double-right"></i>
-											<?php echo $title; ?>
+											<?php echo 'Add'; ?>
 										</small>
 									</h1>
 								</div><!-- /.page-header -->
@@ -922,7 +922,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											Edit Section
 											<small>
 												<i class="ace-icon fa fa-angle-double-right"></i>
-												<?php echo $title; ?>
+												<?php echo $title; 
+												$CustDetails1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE b_id = '" . $rowms['Type'] . "'  AND Status = 'A' "));
+												?>
 											</small>
 										</h1>
 									</div><!-- /.page-header -->
@@ -965,7 +967,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																	$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
 																}
 																?>
-																<option value="<?php echo $rowms['Type']; ?>"><?php echo $rowms['Type']; ?></option>
+																<option value="<?php echo $rowms['Type']; ?>"><?php echo $CustDetails1['bname']; ?></option>
 																<?php
 																while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																?>
