@@ -160,31 +160,49 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 							<form class="form-horizontal" method="POST" action="cust-report.php">
 							
 								<div class="form-group" >
-								
+									<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch:</label>
 									<div class="col-xs-12 col-sm-9">
-									
-										<div class="col-xs-12 col-sm-3">
-											<label class="line-height-1 blue">
-												<input name="gender" value="1" id="Wgt" type="radio" class="ace" required />
-												<span class="lbl"> Credit Customer</span>
-											</label>
-										</div>
-										<div class="col-xs-12 col-sm-3">
-											<label class="line-height-1 blue">
-												<input name="gender" value="2" id="Wgt" type="radio" class="ace" />
-												<span class="lbl"> To Pay</span>
-											</label>
-										</div>
-										<div class="col-xs-12 col-sm-3">
 										<div class="clearfix">
-											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
+										<select class="col-xs-12 col-sm-3" id="branch" name="branch" required>	
+										<option value="">
+										<-----Branch----->
+										</option>
+										<?php
+										$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
+										while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+										?>
+										<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
+										<?php
+										}
+										?>
+										</select>
 										</div>
-									</div>
-									</div>
+										</div>
+										</div>	
+										<div class="form-group" >
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Customer Type:</label>
+										<div class="col-xs-12 col-sm-9">
+										<div class="clearfix">
+										<select class="col-xs-12 col-sm-3" id="cus_type" name="cus_type" required>
+										<option value="">
+										<-----Customer Type----->
+										</option>
+										<?php
+										$sqltoi = mysqli_query($dbConn, "Select * from pay_meth where status= 'A'");
+										while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+										?>
+										<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+										<?php
+										}
+										?>
+										</select>
+										</div>
+										</div>
+										</div>
+										<div style="padding-left: 30%;">
+										<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
+										</div>
 									
-									<div class="">
-									
-									</div>
 								</div>
 									
 							</form>
@@ -200,7 +218,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 												<tr>													
 													<th>SNo</th>
 													<th>Name & Address</th>
-													<th>Outstanding</th>
+													<th>Amount</th>
 													<th>Type</th>
 													
 												</tr>
@@ -210,17 +228,9 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 											<tr>
 											<?php
 											$filters="";
-											if(isset($_POST['search']) and isset($_POST['gender']))
+											if(isset($_POST['search']) and isset($_POST['cus_type']))
 											{
-											if($_POST['gender'] == 1)
-											{
-												$filters="Select * from tbl_customer where bala!='0' and status='A'";
-											}
-											elseif($_POST['gender'] == 2)
-											{
-												$filters="Select * from tbl_courier where pay_mode='1' and status='A'";
-											}
-											
+												$filters="Select * from tbl_transactions where Branch_id='".$_POST['branch']."' and Pay_Meth_ID='".$_POST['cus_type']."' and status='A'";
 											$i=0;
 											//echo $filters;
 											$msql=mysqli_query($dbConn, $filters);
@@ -228,20 +238,32 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 											{
 											?>
 													<td class="center"> <?php echo $i=$i+1; ?></td>
-													<?php if ($_POST['gender'] == 1)
+													<?php 
+													
+													if ($_POST['cus_type'] == 1 )
 													{
+														$row1=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_customer where custID= '".$row['Cust_ID']."'"));
 														?>
-														<td><a href="#"><?php echo $row['consignor_name'].",<br>".$row['consignor_phone'].",<br>".$row['consignor_add'] ?></a></td>
-														<td><a href="#"><?php echo $row['bala']; ?></a></td>
-														<td><a href="#">Credit</td>
+														<td><a href="#"><?php echo $row1['consignor_name'].",<br>".$row1['consignor_phone'].",<br>".$row1['consignor_add']; ?></a></td>
+														<td><a href="#"><?php echo $row1['bala']; ?></a></td>
+														<td><a href="#">Topay</td>
 														<?php
 													}
-													if ($_POST['gender'] == 2)
+													elseif ($_POST['cus_type'] == 2)
+													{
+														$row1=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_customer where custID= '".$row['Cust_ID']."'"));
+													?>
+													<td><a href="#"><?php echo $row1['consignor_name'].",<br>".$row1['consignor_phone'].",<br>".$row1['consignor_add']; ?></a></td>
+													<td><a href="#"><?php echo $row1['bala']; ?></a></td>
+													<td><a href="#">Credit</td>
+													<?php
+													}
+													elseif ($_POST['cus_type'] == 3)
 													{
 													?>
 													<td><a href="#"><?php echo $row['consignee_name'].",<br>".$row['consignee_phone'].",<br>".$row['consignee_add']; ?></a></td>
 													<td><a href="#"><?php echo $row['tot']; ?></a></td>
-													<td><a href="#">Topay</td>
+													<td><a href="#">Pre-paid</td>
 													<?php
 													}
 													?>
