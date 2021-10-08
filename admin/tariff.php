@@ -248,7 +248,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 															<form class="form-horizontal" method="POST" action="tariff.php?ac=ins&ty=<?php echo $_GET['ty']; ?>">
 																<div class="form-group">
-																	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch</label>
+																	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch:</label>
 
 																	<div class="col-xs-12 col-sm-9">
 																		<div class="clearfix">
@@ -269,7 +269,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																	</div>
 																</div>
 																<div class="form-group">
-																	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="destination">Destination City</label>
+																	<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="destination">Destination City:</label>
 
 																	<div class="col-xs-12 col-sm-9">
 																		<div class="clearfix">
@@ -365,7 +365,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													<td><?php echo $row['price_per_box'];?></td>
 													<td class='hidden-480'><a href='tariff.php?ty=edit&editid=<?php echo $row['tariff_id'];?>'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>
 													<a href='tariff.php?ty=del&delid=<?php echo $row['tariff_id'];?>'>
-														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>";
+														<span class='btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a></td></tr>
 												
 												<?php } ?>
 												
