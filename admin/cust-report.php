@@ -1,10 +1,10 @@
 <?php
 session_start();
 include("database.php");
-$total=0;
+$total = 0;
 if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 	$id = $_SESSION['uid'];
-	
+
 ?>
 
 	<!DOCTYPE html>
@@ -53,6 +53,15 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
+	<script type="text/javascript">
+		function printpage(paravalue) {
+			var body = document.body.innerHTML;
+			var table = document.getElementById(paravalue).innerHTML;
+			document.body.innerHTML = table;
+			window.print();
+			document.body.innerHTML = body;
+		}
+	</script>
 
 	<body class="skin-3">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
@@ -180,22 +189,22 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		<select class="col-xs-12 col-sm-3" id="branch" name="branch" required>
 																			<?php
 																			$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
-																			if ($id==10){ ?>
+																			if ($id == 10) { ?>
 																				<option value="">
-																				<-----Branch----->
+																					<-----Branch----->
 																				</option>
-																			<?php }
+																				<?php }
 																			while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-																				if ($id == 10){
-																			?>
-																				<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
-																			<?php
+																				if ($id == 10) {
+																				?>
+																					<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
+																				<?php
+																				}
 																			}
-																			}
-																			if($id!=10){ 
-																			$sql1 = mysqli_query($dbConn,"Select * from tbl_offices where id = $id ");
-																			$row1 = mysqli_fetch_array($sql1) ?>
-																			<option value="<?php echo $row1['id']; ?>"  ><?php echo $row1['off_name'];?></option>																			<?php	} ?>
+																			if ($id != 10) {
+																				$sql1 = mysqli_query($dbConn, "Select * from tbl_offices where id = $id ");
+																				$row1 = mysqli_fetch_array($sql1) ?>
+																				<option value="<?php echo $row1['id']; ?>"><?php echo $row1['off_name']; ?></option> <?php	} ?>
 																		</select>
 																	</div>
 																</div>
@@ -243,17 +252,15 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																					<button class="btn btn-success btn-next" type="Submit" name="search">Search</button>
 																				</div>
 																			</div>
-
 																		</div>
 																	</div>
-
 																</div>
 															</div>
-															<div class="col-xs-12 col-sm-12">
-																<div style="padding-left: 85%;">
-																	<span class="menu-text" style="font-size: 23px;">Total:<?php echo $total;?></span>
-																</div>
-
+															<div class="col-xs-12 col-sm-3" style="padding-left: 80%;">
+																<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');">Print</a>
+															</div>
+															<div style="padding-left: 85%;">
+																<span class="menu-text" style="font-size: 23px;">Total:<?php echo $total; ?></span>
 															</div>
 														</form>
 													</div>
@@ -268,7 +275,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="hr hr-dotted"></div>
-								<div class="row">
+								<div class="row" id="table">
 									<div class="col-xs-12">
 										<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
 											<thead>
@@ -297,7 +304,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															if ($_POST['cus_type'] == 1) {
 																$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select  SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
 																$debit['Debit_Total'];
-																$GLOBALS ['total'] = 100;
+																$GLOBALS['total'] = 100;
 																$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
 															?>
 																<td><a href="#"><?php echo $row1['consignor_name'] . ",<br>" . $row1['consignor_phone'] . ",<br>" . $row1['consignor_add']; ?></a></td>
@@ -325,7 +332,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															}
 															?>
 												</tr>
-										<?php }}
+										<?php }
+													}
 										?>
 											</tbody>
 										</table>
