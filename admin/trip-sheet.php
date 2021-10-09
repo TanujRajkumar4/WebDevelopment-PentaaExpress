@@ -62,12 +62,16 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<![endif]-->
 	</head>
 	<script type="text/javascript">
-function printpage()
+function printpage(paravalue)
   {
-  window.print()
+	  var body = document.body.innerHTML;
+	  var table = document.getElementById(paravalue).innerHTML;
+	  document.body.innerHTML = table;
+	  window.print();
+	  document.body.innerHTML = body;
   }
 </script>
-	<body class="skin-3">
+	<body class="skin-3" id="body">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
@@ -175,7 +179,7 @@ function printpage()
 								<div class="form-group" >
 									<div class="col-xs-12 col-sm-3">
 										
-											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage();" >Print</a>
+											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');" >Print</a>
 										
 											
 										</div>
@@ -187,7 +191,7 @@ function printpage()
 									
 							</form>
 								<!-- PAGE CONTENT BEGINS -->
-								<div class="row">
+								<div class="row" id="table">
 									<div class="col-xs-12">
 										<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>

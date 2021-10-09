@@ -72,7 +72,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 	
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+	<head id="head">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
 		<title>Customer - Admin</title>
@@ -115,13 +115,17 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
-		<script>
-			function printpage()
+	<script type="text/javascript">
+			function printpage(paravalue)
 			{
-			window.print()
+			var body = document.body.innerHTML;
+			var table = document.getElementById(paravalue).innerHTML;
+			document.body.innerHTML = table;
+			window.print();
+			document.body.innerHTML =body;
 			}
 		</script>
-	<body class="skin-3">
+	<body class="skin-3" id="body">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
@@ -181,7 +185,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
 
-			<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+			<div id="sidebar" class="sidebar    responsive   ace-save-state">
 				<script type="text/javascript">
 					try{ace.settings.loadState('sidebar')}catch(e){}
 				</script>
@@ -237,19 +241,18 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 										<div class="clearfix">
 											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
 											<button class="btn btn-success btn-next" type="Submit" name="export_data" id="export_data">Export to Excel</button>
-											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage();" >Print</a>
+											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');" >Print</a>
 										</div>
 										
 									</div>
 											
 										</div>
 									</div>
-									<div class="">
 									
-									</div>
 								</div>
 									
 							</form>
+							<div id="table" >		
 							<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>
 												<tr>													
@@ -297,6 +300,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 												?>
 											</tbody>
 										</table>
+										</div>
 										</div><!-- /.span -->
 								</div>
 								</div>
@@ -350,6 +354,11 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js"></script>
 		<script src="assets/js/ace.min.js"></script>
+
+		
+												
+	</body>
+
 	<?php
 }
 	?>
