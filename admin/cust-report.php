@@ -1,14 +1,15 @@
-<?php 
+<?php
 session_start();
 include("database.php");
-if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
-{
-	$id=$_SESSION['uid'];
+$total=0;
+if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
+	$id = $_SESSION['uid'];
 	
-	?>
-	
-<!DOCTYPE html>
-<html lang="en">
+?>
+
+	<!DOCTYPE html>
+	<html lang="en">
+
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
@@ -52,6 +53,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
+
 	<body class="skin-3">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
@@ -81,7 +83,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username'];?>
+									<?php echo $_SESSION['username']; ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -109,16 +111,20 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
-				try{ace.settings.loadState('main-container')}catch(e){}
+				try {
+					ace.settings.loadState('main-container')
+				} catch (e) {}
 			</script>
 
-			<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+			<div id="sidebar" class="sidebar  responsive  ace-save-state">
 				<script type="text/javascript">
-					try{ace.settings.loadState('sidebar')}catch(e){}
+					try {
+						ace.settings.loadState('sidebar')
+					} catch (e) {}
 				</script>
 
 				<!-- /.sidebar-shortcuts -->
-				<?php 
+				<?php
 				include("sidebar.php");
 				?>
 				<!-- /.nav-list -->
@@ -136,209 +142,257 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="dashboard.php">Home</a>
 							</li>
-							<li class="active">	Customer</li>
+							<li class="active"> Customer</li>
 						</ul><!-- /.breadcrumb -->
 
-<!-- /.nav-search -->
+						<!-- /.nav-search -->
 					</div>
 					<div class="page-content">
 						<!-- /.ace-settings-container -->
 						<div class="page-header">
 							<h1>
-								Customer  
+								Customer
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Report
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
-						
+
 
 						<div class="row">
 							<div class="col-xs-12">
-							<h3 class="lighter block green">Payment Details</h3><div class="hr hr-dotted"></div>
-							<form class="form-horizontal" method="POST" action="cust-report.php">
-							
-								<div class="form-group" >
-									<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch:</label>
-									<div class="col-xs-12 col-sm-9">
-										<div class="clearfix">
-										<select class="col-xs-12 col-sm-3" id="branch" name="branch" required>	
-										<option value="">
-										<-----Branch----->
-										</option>
-										<?php
-										$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
-										while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-										?>
-										<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
-										<?php
-										}
-										?>
-										</select>
+								<div class="widget-box">
+									<div class="widget-header widget-header-blue widget-header-flat">
+										<h4 class="widget-title lighter">Payment Details</h4>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main">
+											<div>
+												<div class="step-content pos-rel">
+													<div class="step-pane active">
+														<form class="form-horizontal" method="POST" action="cust-report.php">
+
+															<div class="form-group">
+																<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Branch:</label>
+																<div class="col-xs-12 col-sm-9">
+																	<div class="clearfix">
+																		<select class="col-xs-12 col-sm-3" id="branch" name="branch" required>
+																			<?php
+																			$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
+																			if ($id==10){ ?>
+																				<option value="">
+																				<-----Branch----->
+																				</option>
+																			<?php }
+																			while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																				if ($id == 10){
+																			?>
+																				<option value="<?php echo $rwtoi['id']; ?>"><?php echo $rwtoi['off_name']; ?></option>
+																			<?php
+																			}
+																			}
+																			if($id!=10){ 
+																			$sql1 = mysqli_query($dbConn,"Select * from tbl_offices where id = $id ");
+																			$row1 = mysqli_fetch_array($sql1) ?>
+																			<option value="<?php echo $row1['id']; ?>"  ><?php echo $row1['off_name'];?></option>																			<?php	} ?>
+																		</select>
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label col-xs-12 col-sm-3 no-padding-right">Customer Type:</label>
+																<div class="col-xs-12 col-sm-9">
+																	<div class="clearfix">
+																		<select class="col-xs-12 col-sm-3" id="cus_type" name="cus_type" required>
+																			<option value="">
+																				<-----Customer Type----->
+																			</option>
+																			<?php
+																			$sqltoi = mysqli_query($dbConn, "Select * from pay_meth where status= 'A'");
+																			while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																			?>
+																				<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																			<?php
+																			}
+																			?>
+																		</select>
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label col-xs-12 col-sm-3 no-padding-right">Between:</label>
+																<div class="col-xs-12 col-sm-9">
+																	<div class="clearfix">
+																		<div class="col-xs-12 col-sm-3">
+																			<div class="input-group">
+																				<input class="form-control date-picker" id="id-date-picker-1" name="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd" required />
+																				<span class="input-group-addon">
+																					<i class="fa fa-calendar bigger-110"></i>
+																				</span>
+																			</div>
+																			<div class="input-group">
+																				<input class="form-control date-picker" id="id-date-picker-1" name="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd" required />
+																				<span class="input-group-addon">
+																					<i class="fa fa-calendar bigger-110"></i>
+																				</span>
+																			</div>
+																			<div class="space"></div>
+																			<div class="col-xs-12 col-sm-12">
+																				<div style="padding-left: 30%;">
+																					<button class="btn btn-success btn-next" type="Submit" name="search">Search</button>
+																				</div>
+																			</div>
+
+																		</div>
+																	</div>
+
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-12">
+																<div style="padding-left: 85%;">
+																	<span class="menu-text" style="font-size: 23px;">Total:<?php echo $total;?></span>
+																</div>
+
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
 										</div>
-										</div>
-										</div>	
-										<div class="form-group" >
-										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="branch">Customer Type:</label>
-										<div class="col-xs-12 col-sm-9">
-										<div class="clearfix">
-										<select class="col-xs-12 col-sm-3" id="cus_type" name="cus_type" required>
-										<option value="">
-										<-----Customer Type----->
-										</option>
-										<?php
-										$sqltoi = mysqli_query($dbConn, "Select * from pay_meth where status= 'A'");
-										while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-										?>
-										<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
-										<?php
-										}
-										?>
-										</select>
-										</div>
-										</div>
-										</div>
-										<div style="padding-left: 30%;">
-										<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-										</div>
-									
+									</div>
 								</div>
-									
-							</form>
 							</div>
 						</div>
+
 						<div class="row">
-								<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
+							<div class="col-xs-12">
+								<div class="hr hr-dotted"></div>
 								<div class="row">
 									<div class="col-xs-12">
-										<table id="simple-table" class="table  table-bordered table-hover">
+										<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
 											<thead>
-												<tr>													
+												<tr>
 													<th>SNo</th>
 													<th>Name & Address</th>
 													<th>Amount</th>
 													<th>Type</th>
-													
+
 												</tr>
 											</thead>
 
 											<tbody>
-											<tr>
-											<?php
-											$filters="";
-											if(isset($_POST['search']) and isset($_POST['cus_type']))
-											{
-												$filters="Select * from tbl_transactions where Branch_id='".$_POST['branch']."' and Pay_Meth_ID='".$_POST['cus_type']."' and status='A'";
-											$i=0;
-											//echo $filters;
-											$msql=mysqli_query($dbConn, $filters);
-											while($row=mysqli_fetch_array($msql))
-											{
-											?>
-													<td class="center"> <?php echo $i=$i+1; ?></td>
-													<?php 
-													
-													if ($_POST['cus_type'] == 1 )
-													{
-														$row1=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_customer where custID= '".$row['Cust_ID']."'"));
-														?>
-														<td><a href="#"><?php echo $row1['consignor_name'].",<br>".$row1['consignor_phone'].",<br>".$row1['consignor_add']; ?></a></td>
-														<td><a href="#"><?php echo $row1['bala']; ?></a></td>
-														<td><a href="#">Topay</td>
-														<?php
-													}
-													elseif ($_POST['cus_type'] == 2)
-													{
-														$row1=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_customer where custID= '".$row['Cust_ID']."'"));
-													?>
-													<td><a href="#"><?php echo $row1['consignor_name'].",<br>".$row1['consignor_phone'].",<br>".$row1['consignor_add']; ?></a></td>
-													<td><a href="#"><?php echo $row1['bala']; ?></a></td>
-													<td><a href="#">Credit</td>
+												<tr>
 													<?php
-													}
-													elseif ($_POST['cus_type'] == 3)
-													{
+													$filters = "";
+													if (isset($_POST['search']) and isset($_POST['cus_type'])) {
+														$filters = "Select * from tbl_transactions where Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and Branch_id='" . $_POST['branch'] . "' and Pay_Meth_ID='" . $_POST['cus_type'] . "' and status='A'";
+														$i = 0;
+														$msql = mysqli_query($dbConn, $filters);
+														while ($row = mysqli_fetch_array($msql)) {
 													?>
-													<td><a href="#"><?php echo $row['consignee_name'].",<br>".$row['consignee_phone'].",<br>".$row['consignee_add']; ?></a></td>
-													<td><a href="#"><?php echo $row['tot']; ?></a></td>
-													<td><a href="#">Pre-paid</td>
-													<?php
-													}
-													?>
-																												
+															<td class="center"> <?php echo $i = $i + 1; ?></td>
+															<?php
+
+															if ($_POST['cus_type'] == 1) {
+																$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select  SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
+																$debit['Debit_Total'];
+																$GLOBALS ['total'] = 100;
+																$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
+															?>
+																<td><a href="#"><?php echo $row1['consignor_name'] . ",<br>" . $row1['consignor_phone'] . ",<br>" . $row1['consignor_add']; ?></a></td>
+																<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
+																<td><a href="#">Topay</td>
+															<?php
+															} elseif ($_POST['cus_type'] == 2) {
+																$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+																echo $credit['Credit_Total'];
+																$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
+															?>
+																<td><a href="#"><?php echo $row1['consignor_name'] . ",<br>" . $row1['consignor_phone'] . ",<br>" . $row1['consignor_add']; ?></a></td>
+																<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
+																<td><a href="#">Credit</td>
+															<?php
+															} elseif ($_POST['cus_type'] == 3) {
+																$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+																echo $credit['Topay_Total'];
+																$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
+															?>
+																<td><a href="#"><?php echo $row1['consignee_name'] . ",<br>" . $row1['consignee_phone'] . ",<br>" . $row1['consignee_add']; ?></a></td>
+																<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
+																<td><a href="#">Pre-paid</td>
+															<?php
+															}
+															?>
 												</tr>
-												<?php
-												}
-												
-											}
-												?>
+										<?php }}
+										?>
 											</tbody>
 										</table>
 									</div><!-- /.span -->
 								</div><!-- /.row -->
-								</div>
-								</div>
-								<div class="footer">
-				<div class="footer-inner">
-					<div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
-							&copy; <?php echo date('Y');?>  Shakthisoftsolutions
-						</span>
-
-						&nbsp; &nbsp;
-					
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+					<div class="footer">
+						<div class="footer-inner">
+							<div class="footer-content">
+								<span class="bigger-120">
+									<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
+									&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
+								</span>
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>
-		</div><!-- /.main-container -->
+								&nbsp; &nbsp;
 
-		<!-- basic scripts -->
+							</div>
+						</div>
+					</div>
 
-		<!--[if !IE]> -->
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
+					<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+						<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+					</a>
+				</div><!-- /.main-container -->
 
-		<!-- <![endif]-->
+				<!-- basic scripts -->
 
-		<!--[if IE]>
+				<!--[if !IE]> -->
+				<script src="assets/js/jquery-2.1.4.min.js"></script>
+
+				<!-- <![endif]-->
+
+				<!--[if IE]>
 <script src="assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>
-		<script src="assets/js/bootstrap.min.js"></script>
+				<script type="text/javascript">
+					if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+				</script>
+				<script src="assets/js/bootstrap.min.js"></script>
 
-		<!-- page specific plugin scripts -->
-		<script src="assets/js/wizard.min.js"></script>
-		<script src="assets/js/jquery.validate.min.js"></script>
-		<script src="assets/js/jquery-additional-methods.min.js"></script>
-		<script src="assets/js/bootbox.js"></script>
-		<script src="assets/js/jquery.maskedinput.min.js"></script>
-		<script src="assets/js/select2.min.js"></script>
-		<script src="assets/js/moment.min.js"></script>
+				<!-- page specific plugin scripts -->
+				<script src="assets/js/wizard.min.js"></script>
+				<script src="assets/js/jquery.validate.min.js"></script>
+				<script src="assets/js/jquery-additional-methods.min.js"></script>
+				<script src="assets/js/bootbox.js"></script>
+				<script src="assets/js/jquery.maskedinput.min.js"></script>
+				<script src="assets/js/select2.min.js"></script>
+				<script src="assets/js/moment.min.js"></script>
 
-		<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />		
-		<script src="assets/js/bootstrap-datepicker.min.js"></script>
+				<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />
+				<script src="assets/js/bootstrap-datepicker.min.js"></script>
 
-		<!-- ace scripts -->
-		<script src="assets/js/ace-elements.min.js"></script>
-		<script src="assets/js/ace.min.js"></script>
-		<script>
-		$('.date-picker').datepicker({
-					autoclose: true,
-					todayHighlight: true
-				})
-				//show datepicker when clicking on the icon
-				.next().on(ace.click_event, function(){
-					$(this).prev().focus();
-				});
-		</script>
-	<?php
-}
-	?>
+				<!-- ace scripts -->
+				<script src="assets/js/ace-elements.min.js"></script>
+				<script src="assets/js/ace.min.js"></script>
+				<script>
+					$('.date-picker').datepicker({
+							autoclose: true,
+							todayHighlight: true
+						})
+						//show datepicker when clicking on the icon
+						.next().on(ace.click_event, function() {
+							$(this).prev().focus();
+						});
+				</script>
+			<?php
+		}
+			?>
