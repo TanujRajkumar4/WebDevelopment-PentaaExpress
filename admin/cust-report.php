@@ -302,7 +302,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															$page = $_GET['page'];
 														}
 														$result_per_page = 10;
-														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "select * from tbl_transactions where status='A'"));
+														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "Select * from tbl_transactions where Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and Branch_id='" . $_POST['branch'] . "' and Pay_Meth_ID='" . $_POST['cus_type'] . "' and status='A'"));
 														$page_first_result = ($page - 1) * $result_per_page;
 														$filters = "Select * from tbl_transactions where Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and Branch_id='" . $_POST['branch'] . "' and Pay_Meth_ID='" . $_POST['cus_type'] . "' and status='A' ORDER BY Tran_ID DESC LIMIT ".$page_first_result.','.$result_per_page;
 														$msql = mysqli_query($dbConn, $filters);
