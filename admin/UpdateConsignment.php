@@ -3,11 +3,18 @@ session_start();
 include("database.php");
 if ((isset($_SESSION)) && (isset($_SESSION['uid'])) && isset($_POST["UpdateConsignment"])) {
     $id = $_SESSION['uid'];
+    if (!isset($_POST['SelectedWayBill'])) {
+        echo '<script>		
+        alert("NO Consignment Selected...");			
+        </script>';
+        header("Refresh: 0; url= view-consignment.php");
+        exit();
+    }
+    $SelectedWayBillNos[] = $_POST['SelectedWayBill'];
     $ConsignmentStatus = $_POST['Book_Status_Update'];
     $SQL = "UPDATE tbl_courier_track SET bk_status = $ConsignmentStatus WHERE cons_no IN ( ";
     $SQL1 = "UPDATE tbl_courier_track SET current_city = $id WHERE cons_no IN ( ";
 
-    $SelectedWayBillNos[] = $_POST['SelectedWayBill'];
     foreach ($SelectedWayBillNos as $WayBillNo) {
         foreach ($WayBillNo as $WayBillNo1) {
 
