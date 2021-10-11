@@ -56,8 +56,12 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		
 	if(isset($_POST['Submit']))
 		{
+			if($_GET['ty']=='pm'){
+				$sql=mysqli_query($dbConn,"INSERT INTO ".$tbl." VALUES (NULL,'$_POST[masters]','A','Branch')");
+			}
+			else{
 			$sql=mysqli_query($dbConn,"INSERT INTO ".$tbl." VALUES (NULL,'$_POST[masters]','A')");
-			echo $sql;
+			}
 			if($sql)
 				{
 					echo "<script>alert('Inserted Successfully');window.location.href = 'add-master.php?ty=$_GET[ty]&ac=ins';</script>";
