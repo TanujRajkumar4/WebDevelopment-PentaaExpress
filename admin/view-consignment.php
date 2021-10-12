@@ -183,10 +183,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														$page = $_GET['page'];
 													}
 													$results_per_page = 10;
-													$msql = mysqli_query($dbConn, "Select * from tbl_courier where status='A'");
+													$msql = mysqli_query($dbConn, "Select * from tbl_courier where status='A' ORDER BY waybillno DESC");
 													$Cust_Count = mysqli_num_rows($msql);
 													$page_first_result = ($page - 1) * $results_per_page;
-													$msql = mysqli_query($dbConn, "Select * from tbl_courier where status='A' ORDER BY book_date DESC LIMIT " . $page_first_result . ',' . $results_per_page);
+													$msql = mysqli_query($dbConn, "Select * from tbl_courier where status='A' ORDER BY waybillno DESC LIMIT " . $page_first_result . ',' . $results_per_page);
 													$number_of_page = ceil($Cust_Count / $results_per_page);
 													// PAGINATION - END
 													?>

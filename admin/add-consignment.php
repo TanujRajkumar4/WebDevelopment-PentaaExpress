@@ -24,10 +24,26 @@
 						$qry1 = "INSERT INTO `tbl_courier_track`(`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`,`status`) VALUES(NULL,'" . $_POST['waybillno'] . "','" . $_SESSION['orgid'] . "','1','" . $_POST['comment'] . "','$today','A')";
 						//echo $qry1;
 						$trksql = mysqli_query($dbConn, $qry1);
+
+						if ($_POST['platform'] == '1') {
+							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
+							$cust_bal = $selbal['bala'] + $_POST['tot'];
+							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
+							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Dr','To Pay Payment','$_POST[tot]','A')");
+						}
+
 						if ($_POST['platform'] == '2') {
 							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
 							$cust_bal = $selbal['bala'] + $_POST['tot'];
 							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
+							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Dr','Credit Payment','$_POST[tot]','A')");
+						}
+
+						if ($_POST['platform'] == '3') {
+							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
+							$cust_bal = $selbal['bala'] + $_POST['tot'];
+							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
+							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Cr','Pre-Paid Payment','$_POST[tot]','A')");
 						}
 						echo "<script>alert('Inserted Successfully');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
 					} else {
@@ -275,7 +291,7 @@
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" required/>
+																					<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" required />
 																				</div>
 																			</div>
 																		</div>
@@ -288,7 +304,7 @@
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 
-																					<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6"  />
+																					<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6" />
 																				</div>
 																			</div>
 																		</div>
@@ -304,7 +320,7 @@
 																						<i class="ace-icon fa fa-phone"></i>
 																					</span>
 
-																					<input type="tel" id="phone" name="phone" required/>
+																					<input type="tel" id="phone" name="phone" required />
 																				</div>
 																			</div>
 																		</div>
@@ -328,7 +344,7 @@
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="text" name="Consignee" id="Consignee" class="col-xs-12 col-sm-6" required/>
+																					<input type="text" name="Consignee" id="Consignee" class="col-xs-12 col-sm-6" required />
 																				</div>
 																			</div>
 																		</div>
@@ -356,7 +372,7 @@
 																						<i class="ace-icon fa fa-phone"></i>
 																					</span>
 
-																					<input type="tel" id="consigneephone" name="consigneephone" required/>
+																					<input type="tel" id="consigneephone" name="consigneephone" required />
 																				</div>
 																			</div>
 																		</div>
@@ -373,7 +389,7 @@
 																						<i class="ace-icon fa fa-map-marker"></i>
 																					</span>
 
-																					<input type="number" id="pincode" name="pincode" required/>
+																					<input type="number" id="pincode" name="pincode" required />
 																				</div>
 																			</div>
 																		</div>
@@ -389,12 +405,13 @@
 																				</div>
 																			</div>
 																		</div>
+
+
+																		<!-- CONSIGNMENT DETAILS - ADD FORM - START -->
 																		<h3 class="lighter block green">Consignment Details</h3>
 																		<div class="hr hr-dotted"></div>
-																		
-
-
 																		<div class="space-2"></div>
+
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="date-timepicker1">
 																				Pick Up Date/Time: </label>
@@ -418,7 +435,7 @@
 																							<--------Select-------->
 																						</option>
 																						<?php
-																						$sqltoi = mysqli_query($dbConn, "SELECT * from city where status= 'A'");
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM city WHERE status= 'A'");
 																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																						?>
 																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
@@ -429,6 +446,7 @@
 																				</div>
 																			</div>
 																		</div>
+
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="desoff">Destination Office:</label>
 
@@ -450,20 +468,17 @@
 																				</div>
 																			</div>
 																		</div>
-
-																		<div class="space-2"></div>
-
 																		<div class="form-group">
-																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contyp">Type of Consignment:</label>
+																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="platform">Payment Mode:</label>
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<select class="col-xs-12 col-sm-3" id="contyp" name="contyp">
+																					<select class="input-medium" id="platform" name="platform" required>
 																						<option value="">
 																							<--------Select-------->
 																						</option>
 																						<?php
-																						$sqltoi = mysqli_query($dbConn, "Select * from toi where status= 'A'");
+																						$sqltoi = mysqli_query($dbConn, "SELECT * from pay_meth where status= 'A'");
 																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																						?>
 																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
@@ -474,12 +489,16 @@
 																				</div>
 																			</div>
 																		</div>
-
-																		<div class="space-2"></div>
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right">Weight:</label>
-
+																			<div class="col-xs-12 col-sm-9">
+																				<div>
+																					<label class="line-height-1 blue" style="Display: none">
+																						<input name="gender" style="Display: none" value="0" id="None" type="radio" class="ace" onclick="enableTextbox()" checked />
+																						<span class="lbl" style="Display: none"> None</span>
+																					</label>
+																				</div>
+																			</div>
 																			<div class="col-xs-12 col-sm-9">
 																				<div>
 																					<label class="line-height-1 blue">
@@ -495,6 +514,33 @@
 																				</div>
 																			</div>
 																		</div>
+																		<div class="space-2"></div>
+
+																		<div class="form-group">
+																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="contyp">Type of Consignment:</label>
+
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<select class="col-xs-12 col-sm-3" id="contyp" name="contyp">
+																						<option value="">
+																							<--------Select-------->
+																						</option>
+																						<?php
+																						$sqltoi = mysqli_query($dbConn, "SELECT * from toi where status= 'A'");
+																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																						?>
+																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+																						<?php
+																						}
+																						?>
+																					</select>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="space-2"></div>
+
+
 
 																		<div id="ActWgt" style="display: none;">
 																			<div class="space-2"></div>
@@ -547,11 +593,11 @@
 																		<div class="space-2"></div>
 
 																		<div class="form-group">
+																			<!-- Price per KG or Price per Box -->
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="boxpkg">Price Per Kg / Box:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="text" name="boxpkg" id="boxpkg" value="0.00" placeholder="Price Per Kg / Box" required readonly/>
+																					<input type="text" name="boxpkg" id="boxpkg" value="0.00" placeholder="Price Per Kg / Box" required readonly />
 																				</div>
 
 																			</div>
@@ -582,7 +628,7 @@
 																							<--------Select-------->
 																						</option>
 																						<?php
-																						$sqltoi = mysqli_query($dbConn, "Select * from book_meth where status= 'A'");
+																						$sqltoi = mysqli_query($dbConn, "SELECT * from book_meth where status= 'A'");
 																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																						?>
 																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
@@ -633,27 +679,7 @@
 
 																		<div class="space-2"></div>
 
-																		<div class="form-group">
-																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="platform">Payment Mode:</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<select class="input-medium" id="platform" name="platform">
-																						<option value="">
-																							<--------Select-------->
-																						</option>
-																						<?php
-																						$sqltoi = mysqli_query($dbConn, "Select * from pay_meth where status= 'A'");
-																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-																						?>
-																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
-																						<?php
-																						}
-																						?>
-																					</select>
-																				</div>
-																			</div>
-																		</div>
 
 																		<div class="hr hr-dotted"></div>
 
@@ -788,7 +814,7 @@
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" requiredonloadstart="this.focus();" onmouseover="this.focus();" />
+																					<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" requiredonloadstart="this.focus();" onmouseover="this.focus();" required />
 																				</div>
 																			</div>
 																		</div>
@@ -823,7 +849,10 @@
 							<?php
 							}
 							?>
+							<!-- CONSIGNMENT DETAILS - ADD FORM - END -->
 
+
+							<!-- CONSIGNMENT DETAILS - EDIT FORM - START -->
 							<?php
 							if (isset($_GET['ty'])) {
 								if ($_GET['ty'] == "edit") {
@@ -1133,6 +1162,12 @@
 
 															<div class="col-xs-12 col-sm-9">
 																<div class="clearfix">
+
+
+
+
+
+
 																	<input type="text" name="boxesrt" id="boxesrt" class="col-xs-12 col-sm-3" value="<?php echo $rowms['boxes']; ?>" placeholder="No of Boxes" />
 																	<label class="control-label col-xs-12 col-sm-3" for="CFT">Box per KG:</label>
 																	<input type="text" name="boxpkg" id="boxpkg" class="col-xs-12 col-sm-3" value="<?php echo $rowms['bxpkg']; ?>" placeholder="Box Per Kg" />
@@ -1166,7 +1201,7 @@
 																		<--------Select-------->
 																	</option>
 																	<?php
-																	$sqltoi = mysqli_query($dbConn, "Select * from book_meth where status= 'A'");
+																	$sqltoi = mysqli_query($dbConn, "SELECT * from book_meth where status= 'A'");
 																	while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																	?>
 																		<option value="<?php echo $rwtoi['b_id']; ?>" <?php if ($rwtoi['b_id'] == $rowms['units']) {
@@ -1255,10 +1290,10 @@
 																<input type="number" name="freight" id="freight" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['freight']; ?>" readonly />
 																<?php
 																if ($rowms['pay_mode'] == '2') {
-																		$Org_City = $_SESSION['uid'];
-																		$Des_City= "";
+																	$Org_City = $_SESSION['uid'];
+																	$Des_City = "";
 
-																	$cussql = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where consignor_gst='" . $rowms['consignor_gst'] . "' and status='A'"));
+																	$cussql = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from tbl_customer where consignor_gst='" . $rowms['consignor_gst'] . "' and status='A'"));
 																	$fre = $cussql['freight'];
 																}
 																?>
@@ -1306,7 +1341,7 @@
 
 													<div class="form-group" id="odasec" style="display:
 															<?php
-															$pinsql = mysqli_fetch_array(mysqli_query($dbConn, "select * from pincode where bname='$rowms[consignee_pincode]'"));
+															$pinsql = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from pincode where bname='$rowms[consignee_pincode]'"));
 															if ($pinsql['bname'] == $rowms['consignee_pincode']) {
 																echo "none";
 															} else {
@@ -1414,6 +1449,9 @@
 								}
 							}
 							?>
+							<!-- CONSIGNMENT DETAILS - EDIT FORM - END -->
+
+							<!-- CONSIGNMENT DETAILS - STATUS FORM - START -->
 							<?php
 							if (isset($_GET['ty'])) {
 								if ($_GET['ty'] == "status") {
@@ -2004,7 +2042,7 @@
 							?>
 						</div>
 					</div>
-
+					<!-- CONSIGNMENT DETAILS - STATUS FORM - END -->
 					<div class="footer">
 						<div class="footer-inner">
 							<div class="footer-content">
@@ -2096,16 +2134,40 @@
 							}
 						}
 
+						function getTariff() {
+							// ADD Consignment - Consignor's Details Feed Function - START
+							var term = $("#custID").val();
+							var term1 = $("#descity").val();
+							if (term == "" || term == null) {
+								alert("Please Select a Customer...");
+								window.location.assign("add-consignment.php?ty=add");
+							}
+							if (term1 == "" || term1 == null) {
+								alert("Please Select a Destination City before Choosing the Weight Type");
+								window.location.assign("add-consignment.php?ty=add");
+							}
+							$.ajax({
+								type: "POST",
+								url: "verify-checks.php?key=3",
+								data: "term=" + term + "&term1=" + term1,
+								success: function(data) {
+									$('#freightch').val(data[4]);
+									$('#boxrtch').val(data[5]);
+								}
+							});
+							// ADD Consignment - Consignor's Details Feed Function - END	
 
+						}
 
 						$("input[type='radio']").change(function() {
+							getTariff();
 							if ($(this).val() == "1") {
-								
 								$("#ActWgt").show();
 								$("#BoxWgt").hide();
 								$("#boxpkg").val($('#freightch').val());
 								calculate();
 							} else if ($(this).val() == "2") {
+
 								$("#ActWgt").hide();
 								$("#BoxWgt").show();
 								$("#boxpkg").val($('#boxrtch').val());
@@ -2114,12 +2176,24 @@
 						});
 
 						$("#platform").change(function() {
+							$("input[type=radio][name=gender]").prop('checked', false);
 							if ($("#platform").val() == 1) {
 								$("#paysec").show();
 							} else {
 								$("#paysec").hide();
 							}
+							if ($("#platform").val() == 1 || $("#platform").val() == 3) {
+								// alert("Credit Pay,");
+								document.getElementById("boxpkg").removeAttribute("readonly");
+							}
+							if ($("#platform").val() == 2) {
+								// alert("Credit Pay,");
+								document.getElementById("boxpkg").setAttribute("readonly", "true");
+								
+							}
 						});
+
+
 						// ADD Consignment - Consignor's Details Feed Function - START
 						$("#custID").change(function() {
 							var term = $("#custID").val();
@@ -2128,22 +2202,29 @@
 								url: "verify-checks.php?key=2",
 								data: "term=" + term,
 								success: function(data) {
+									// alert("Hello");
 									$('#consignor').val(data[2]);
 									$('#gstincon').val(data[4]);
 									$('#phone').val(data[5]);
 									$('#cusAddrs').val(data[6]);
-									$('#freightch').val(data[6]);
-									$('#boxrtch').val(data[7]);
-									$('#insrance').val(data[8]);
-									$('#waybillch').val(data[9]);
-									$('#otherch').val(data[10]);
-									$('#oda').val(data[11]);
-									$('#topay').val(data[12]);
+									// $('#freightch').val(data[6]);
+									// $('#boxrtch').val(data[7]);
+									// $('#insrance').val(data[8]);
+									// $('#waybillch').val(data[9]);
+									// $('#otherch').val(data[10]);
+									// $('#oda').val(data[11]);
+									// $('#topay').val(data[12]);
 								}
 							});
 						});
 						// ADD Consignment - Consignor's Details Feed Function - END
 
+						// Destination City Change - START
+						$("#descity").change(function() {
+							$("input[type=radio][name=gender]").prop('checked', false);
+							getTariff();
+						});
+						// Destination City Change - END
 						$(document).on("change keyup blur", "#pincode", function() {
 							var pincode = $("#pincode").val();
 							calpin(pincode);

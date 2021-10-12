@@ -1,77 +1,71 @@
-<?php 
-session_start(); 
+<?php
+session_start();
 include("database.php");
-if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
-{
-	$id=$_SESSION['uid'];
-	$user_type=$_SESSION['type'];
-	if ($user_type == "Branch") {
-		echo '<script>		
-			alert("You do not have access to this page, you will be redirected to the dashboard...");			
-			  </script>';
-		header("Refresh: 0; url= dashboard.php");
+if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
+	$id = $_SESSION['uid'];
+	$user_type = $_SESSION['type'];
+	// if ($user_type == "Branch") {
+	// 	echo '<script>		
+	// 		alert("You do not have access to this page, you will be redirected to the dashboard...");			
+	// 		  </script>';
+	// 	header("Refresh: 0; url= dashboard.php");
 
-		exit();
-	}	
-	if(isset($_POST['export_data']))
-				{
-					// --------------------------------------------------------------------------- start export excel --------------------------------------------------------------------------------
-			//error_reporting (E_ALL ^ E_NOTICE); 
-			require_once("excelwriter.class.php");
-			$rec = array();
-			$excel=new ExcelWriter("customerpaymentdetails.xls");
-			if($excel==false)	
+	// 	exit();
+	// }
+	if (isset($_POST['export_data'])) {
+		// --------------------------------------------------------------------------- start export excel --------------------------------------------------------------------------------
+		//error_reporting (E_ALL ^ E_NOTICE); 
+		require_once("excelwriter.class.php");
+		$rec = array();
+		$excel = new ExcelWriter("customerpaymentdetails.xls");
+		if ($excel == false)
 			echo $excel->error;
-			$myArr=array("");
-			$myArr=array("CUSTOMER PAYMENT DETAILS");
-			$excel->writeLine($myArr);
-			$myArr=array("");
-			$excel->writeLine($myArr);
-			$myArr=array("SNo", "Customer Id", "Customer Name", "GSTIN No", "Phone No.", "Address", "Payments", "Outstanding", "Repayment Date");
-			$excel->writeLine($myArr);
-			//echo "SELECT * from classified inner join district $condition";
-			//$qry = mysqli_query($dbConn,"SELECT * from tbl_customer where status='A'");
-			if($_POST['mobile'] != "" || $_POST['mobile1'] != "")
-				{
-					$mobile=" And tbl_customer.consignor_phone ='".$_POST['mobile']."' or tbl_customer.consignor_phone='".$_POST['mobile1']."'";
-					$qry=mysqli_query($dbConn,"Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id $mobile");
-				}
-				else
-				{
-					$qry=mysqli_query($dbConn,"Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id");
-				}	
-			if($qry!=false)
-			{
-				$i=1;
-				while($res=mysqli_fetch_array($qry))
-				{ 
-											
-					$myArr=array($i,$res['custID'],$res['consignor_name'],$res['consignor_gst'],$res['consignor_phone'],$res['consignor_add'],$res['repaid'],$res['outstanding'],$res['repaydt']);
-					array_push($rec,$myArr);
-					$excel->writeLine($myArr);
-					$i++;
-				}
+		$myArr = array("");
+		$myArr = array("CUSTOMER PAYMENT DETAILS");
+		$excel->writeLine($myArr);
+		$myArr = array("");
+		$excel->writeLine($myArr);
+		$myArr = array("SNo", "Customer Id", "Customer Name", "GSTIN No", "Phone No.", "Address", "Payments", "Outstanding", "Repayment Date");
+		$excel->writeLine($myArr);
+		//echo "SELECT * from classified inner join district $condition";
+		//$qry = mysqli_query($dbConn,"SELECT * from tbl_customer where status='A'");
+		if ($_POST['mobile'] != "" || $_POST['mobile1'] != "") {
+			$mobile = " And tbl_customer.consignor_phone ='" . $_POST['mobile'] . "' or tbl_customer.consignor_phone='" . $_POST['mobile1'] . "'";
+			$qry = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id $mobile");
+		} else {
+			$qry = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id");
+		}
+		if ($qry != false) {
+			$i = 1;
+			while ($res = mysqli_fetch_array($qry)) {
+
+				$myArr = array($i, $res['custID'], $res['consignor_name'], $res['consignor_gst'], $res['consignor_phone'], $res['consignor_add'], $res['repaid'], $res['outstanding'], $res['repaydt']);
+				array_push($rec, $myArr);
+				$excel->writeLine($myArr);
+				$i++;
 			}
-		
+		}
 
 
-		$file = "customerpaymentdetails.xls";	
+
+		$file = "customerpaymentdetails.xls";
 		header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename='.basename($file));
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($file));
-        ob_clean();
-        flush();
-        readfile($file);
-			}
-	?>
-	
-<!DOCTYPE html>
-<html lang="en">
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename=' . basename($file));
+		header('Content-Transfer-Encoding: binary');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($file));
+		ob_clean();
+		flush();
+		readfile($file);
+	}
+?>
+
+	<!DOCTYPE html>
+	<html lang="en">
+
 	<head id="head">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
@@ -116,15 +110,15 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		<![endif]-->
 	</head>
 	<script type="text/javascript">
-			function printpage(paravalue)
-			{
+		function printpage(paravalue) {
 			var body = document.body.innerHTML;
 			var table = document.getElementById(paravalue).innerHTML;
 			document.body.innerHTML = table;
 			window.print();
-			document.body.innerHTML =body;
-			}
-		</script>
+			document.body.innerHTML = body;
+		}
+	</script>
+
 	<body class="skin-3" id="body">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
@@ -154,7 +148,7 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username'];?>
+									<?php echo $_SESSION['username']; ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -182,16 +176,20 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
-				try{ace.settings.loadState('main-container')}catch(e){}
+				try {
+					ace.settings.loadState('main-container')
+				} catch (e) {}
 			</script>
 
 			<div id="sidebar" class="sidebar    responsive   ace-save-state">
 				<script type="text/javascript">
-					try{ace.settings.loadState('sidebar')}catch(e){}
+					try {
+						ace.settings.loadState('sidebar')
+					} catch (e) {}
 				</script>
 
 				<!-- /.sidebar-shortcuts -->
-				<?php 
+				<?php
 				include("sidebar.php");
 				?>
 				<!-- /.nav-list -->
@@ -209,16 +207,16 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a href="dashboard.php">Home</a>
 							</li>
-							<li class="active">	Customer</li>
+							<li class="active"> Customer</li>
 						</ul><!-- /.breadcrumb -->
 
-<!-- /.nav-search -->
+						<!-- /.nav-search -->
 					</div>
 					<div class="page-content">
 						<!-- /.ace-settings-container -->
 						<div class="page-header">
 							<h1>
-								Customer  
+								Customer
 								<small>
 									<i class="ace-icon fa fa-angle-double-right"></i>
 									Payment History
@@ -228,137 +226,158 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 
 						<div class="row">
 							<div class="col-xs-12">
-								<h3 class="lighter block green">Customer Details</h3><div class="hr hr-dotted"></div>
-							<form class="form-horizontal" method="POST" action="history.php">
-							
-								<div class="form-group" >
-								<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mobile">Customer Id:</label>
-									<div class="col-xs-12 col-sm-9">
-										<div class="clearfix">
-											<input type="text" name="mobile" id="mobile" class="col-xs-12 col-sm-4 " />
-											<input type="hidden" name="mobile1" id="mobile1" value="<?php if(isset($_POST['mobile'])) echo $_POST['mobile'];?>" class="col-xs-12 col-sm-4 " />
-											<div class="col-xs-12 col-sm-5">
-										<div class="clearfix">
-											<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-											<button class="btn btn-success btn-next" type="Submit" name="export_data" id="export_data">Export to Excel</button>
-											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');" >Print</a>
-										</div>
-										
-									</div>
-											
-										</div>
-									</div>
-									
-								</div>
-									
-							</form>
-							<div id="table" >		
-							<table id="simple-table" class="table  table-bordered table-hover">
-											<thead>
-												<tr>													
-													<th>SNo</th>
-													<th>Customer Id</th>
-													<th>Customer Name</th>
-													<th>GSTIN No.</th>
-													<th>Phone No.</th>
-													<th>Address</th>
-													<th>Payments</th>
-													<th>Outstanding</th>
-													<th>Repayment Date</th>
-													
-												</tr>
-											</thead>
+								<h3 class="lighter block green">Customer Details</h3>
+								<div class="hr hr-dotted"></div>
+								<form class="form-horizontal" method="POST" action="history.php">
 
-											<tbody>
+									<div class="form-group">
+										<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mobile">Customer Id:</label>
+										<div class="col-xs-12 col-sm-9">
+											<div class="clearfix">
+												<input type="text" name="mobile" id="mobile" class="col-xs-12 col-sm-4 " />
+												<input type="hidden" name="mobile1" id="mobile1" value="<?php if (isset($_POST['mobile'])) echo $_POST['mobile']; ?>" class="col-xs-12 col-sm-4 " />
+												<div class="col-xs-12 col-sm-5">
+													<div class="clearfix">
+														<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
+														<button class="btn btn-success btn-next" type="Submit" name="export_data" id="export_data">Export to Excel</button>
+														<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');">Print</a>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+
+								</form>
+								<div id="table">
+									<table id="simple-table" class="table  table-bordered table-hover">
+										<thead>
 											<tr>
-											<?php
-											$i=0;
-											if(isset($_POST['search']))
-													{
-														if($_POST['mobile'] != "")
-															{
-																$mobile=" And tbl_customer.consignor_phone ='".$_POST['mobile']."' or tbl_customer.custID='".$_POST['mobile']."'";
-															
-											$msql=mysqli_query($dbConn,"Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id $mobile");
-											while($row=mysqli_fetch_array($msql))
-											{
-											?>
-													<td class="center"> <?php echo $i=$i+1; ?></td>
-													<td><a href="#"><?php echo $row['custID']; ?></a></td>
-													<td><a href="#"><?php echo $row['consignor_name']; ?></a></td>
-													<td><a href="#"><?php echo $row['consignor_gst']; ?></a></td>
-													<td><a href="#"><?php echo $row['consignor_phone']; ?></a></td>
-													<td><a href="#"><?php echo $row['consignor_add']; ?></a></td>
-													<td><a href="#"><?php  echo $row['repaid'];  ?></a></td>
-													<td><a href="#"><?php  echo $row['outstanding'];  ?></a></td>
-													<td><a href="#"><?php  echo $row['repaydt'];  ?></a></td>
-													</tr>
+												<th>SNo</th>
+												<th>Customer Id</th>
+												<th>Customer Name</th>
+												<th>Type</th>
+												<th>GSTIN No.</th>
+												<th>Phone No.</th>
+												<th>Address</th>
+												<th>Payments</th>
+												<th>Outstanding</th>
+												<th>Repayment Date</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr>
 												<?php
-												}
-												}
-													}
+												$i = 0;
+												if (isset($_POST['search'])) {
+													if ($_POST['mobile'] != "") {
+														$mobile = " AND tbl_customer.consignor_phone ='" . $_POST['mobile'] . "' OR tbl_customer.custID='" . $_POST['mobile'] . "'";
+
+														// $msql = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id $mobile");
+														$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where tbl_customer.status='A' $mobile");
+
+
+														while ($row = mysqli_fetch_array($msql)) {
+															$PaymentDetails = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE b_id = '" . $row['Type'] . "'  AND Status = 'A' "));
+
+															// OutStanding Balance Calc - START
+															// $SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
+															$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" .  $row['custID'] . "' AND `Status`='A'";
+															$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount, MAX(`Tran_Date`) AS LDate FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+
+															$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
+															$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+
+															$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
+															$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+
+															$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
+															if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
+																$Tran_Amt_Sum = 0;
+															}
+															// OutStanding Balance Calc - END
 												?>
-											</tbody>
-										</table>
-										</div>
-										</div><!-- /.span -->
+															<td class="center"> <?php echo $i = $i + 1; ?></td>
+															<td><a href="#"><?php echo $row['custID']; ?></a></td>
+															<td><a href="#"><?php echo $row['consignor_name']; ?></a></td>
+															<td><a href="#"><?php echo $PaymentDetails['bname']; ?></a></td>
+															<td><a href="#"><?php echo $row['consignor_gst']; ?></a></td>
+															<td><a href="#"><?php echo $row['consignor_phone']; ?></a></td>
+															<td><a href="#"><?php echo $row['consignor_add']; ?></a></td>
+															<td><a href="#"><?php echo $Tran_Amt_Sum_Cr;  ?></a></td>
+															<td><a href="#"><?php echo $Tran_Amt_Sum;  ?></a></td>
+															<td><a href="#"><?php echo $Tran_Sum_Cr['LDate'];  ?></a></td>
+											</tr>
+								<?php
+														}
+													}
+												}
+								?>
+										</tbody>
+									</table>
 								</div>
-								</div>
-								<div class="footer">
-				<div class="footer-inner">
-					<div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
-							&copy; <?php echo date('Y');?>  Shakthisoftsolutions
-						</span>
-
-						&nbsp; &nbsp;
-					
+							</div><!-- /.span -->
+						</div>
 					</div>
-				</div>
-			</div>
+					<div class="footer">
+						<div class="footer-inner">
+							<div class="footer-content">
+								<span class="bigger-120">
+									<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
+									&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
+								</span>
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>
-		</div><!-- /.main-container -->
+								&nbsp; &nbsp;
 
-		<!-- basic scripts -->
+							</div>
+						</div>
+					</div>
 
-		<!--[if !IE]> -->
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
+					<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+						<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+					</a>
+				</div><!-- /.main-container -->
 
-		<!-- <![endif]-->
+				<!-- basic scripts -->
 
-		<!--[if IE]>
+				<!--[if !IE]> -->
+				<script src="assets/js/jquery-2.1.4.min.js"></script>
+
+				<!-- <![endif]-->
+
+				<!--[if IE]>
 <script src="assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>
-		<script src="assets/js/bootstrap.min.js"></script>
+				<script type="text/javascript">
+					if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+				</script>
+				<script src="assets/js/bootstrap.min.js"></script>
 
-		<!-- page specific plugin scripts -->
-		<script src="assets/js/wizard.min.js"></script>
-		<script src="assets/js/jquery.validate.min.js"></script>
-		<script src="assets/js/jquery-additional-methods.min.js"></script>
-		<script src="assets/js/bootbox.js"></script>
-		<script src="assets/js/jquery.maskedinput.min.js"></script>
-		<script src="assets/js/select2.min.js"></script>
-		<script src="assets/js/moment.min.js"></script>
-		<script src="assets/js/daterangepicker.min.js"></script>
-		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-			<script src="master/assets/js/daterangepicker.min.js"></script>
-		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+				<!-- page specific plugin scripts -->
+				<script src="assets/js/wizard.min.js"></script>
+				<script src="assets/js/jquery.validate.min.js"></script>
+				<script src="assets/js/jquery-additional-methods.min.js"></script>
+				<script src="assets/js/bootbox.js"></script>
+				<script src="assets/js/jquery.maskedinput.min.js"></script>
+				<script src="assets/js/select2.min.js"></script>
+				<script src="assets/js/moment.min.js"></script>
+				<script src="assets/js/daterangepicker.min.js"></script>
+				<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+				<script src="master/assets/js/daterangepicker.min.js"></script>
+				<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
-		<!-- ace scripts -->
-		<script src="assets/js/ace-elements.min.js"></script>
-		<script src="assets/js/ace.min.js"></script>
+				<!-- ace scripts -->
+				<script src="assets/js/ace-elements.min.js"></script>
+				<script src="assets/js/ace.min.js"></script>
 
-		
-												
+
+
 	</body>
 
-	<?php
+<?php
 }
-	?>
+?>
