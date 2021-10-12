@@ -4,7 +4,19 @@ include("database.php");
 $total = 0;
 if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 	$id = $_SESSION['uid'];
-
+	if (isset($_POST['search']) and isset($_POST['cus_type'])) {
+		if ($_POST['cus_type'] == 1) {
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select  SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
+			$total = $debit['Debit_Total'];
+		} elseif ($_POST['cus_type'] == 2) {
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Debit_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$total = $credit['Credit_Total'] - $debit['Debit_Total'];
+		} elseif ($_POST['cus_type'] == 3) {
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$total = $credit['Topay_Total'];
+		}
+	}
 ?>
 
 	<!DOCTYPE html>
@@ -291,62 +303,38 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<tbody>
 												<tr>
 													<?php
-													$number_of_page=0;
+													$number_of_page = 0;
 													$filters = "";
 													if (isset($_POST['search']) and isset($_POST['cus_type'])) {
 														$i = 0;
+														$credit = 0;
 														// pagination
 														if (!isset($_GET['page'])) {
 															$page = 1;
 														} else {
 															$page = $_GET['page'];
 														}
+														$query = "Select * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and tbl_transactions.Branch_id='" . $_POST['branch'] . "' and tbl_transactions.Pay_Meth_ID='" . $_POST['cus_type'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
 														$result_per_page = 10;
-														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "Select * from tbl_transactions where Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and Branch_id='" . $_POST['branch'] . "' and Pay_Meth_ID='" . $_POST['cus_type'] . "' and status='A'"));
+														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $query));
 														$page_first_result = ($page - 1) * $result_per_page;
-														$filters = "Select * from tbl_transactions where Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and Branch_id='" . $_POST['branch'] . "' and Pay_Meth_ID='" . $_POST['cus_type'] . "' and status='A' ORDER BY Tran_ID DESC LIMIT ".$page_first_result.','.$result_per_page;
-														$msql = mysqli_query($dbConn, $filters);
-														$number_of_page = ceil($Cust_Count / $result_per_page); ?>
+														$number_of_page = ceil($Cust_Count / $result_per_page); 
+														$filters = $query . " ORDER BY tbl_transactions.Tran_ID DESC LIMIT " . $page_first_result . ", " . $result_per_page;
+														$msql = mysqli_query($dbConn, $filters); ?>
 														<form id="cust-report" action="cust-report.php" method="POST">
 															<?php while ($row = mysqli_fetch_array($msql)) {
 															?>
-																<td class="center"> <?php echo $i = $i + 1; ?></td>
-																<?php
-
-																if ($_POST['cus_type'] == 1) {
-																	$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select  SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
-																	$debit['Debit_Total'];
-																	$GLOBALS['total'] = 100;
-																	$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
-																?>
-																	<td><a href="#"><?php echo $row1['consignor_name'] . ",<br>" . $row1['consignor_phone'] . ",<br>" . $row1['consignor_add']; ?></a></td>
+																<tr>
+																	<td class="center"> <?php echo $i = $i + 1; ?></td>
+																	<td><a href="#"><?php echo $row['consignor_name'] . ",<br>" . $row['consignor_phone'] . ",<br>" . $row['consignor_add']; ?></a></td>
 																	<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
-																	<td><a href="#">Topay</td>
-																<?php
-																} elseif ($_POST['cus_type'] == 2) {
-																	$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
-																	echo $credit['Credit_Total'];
-																	$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
-																?>
-																	<td><a href="#"><?php echo $row1['consignor_name'] . ",<br>" . $row1['consignor_phone'] . ",<br>" . $row1['consignor_add']; ?></a></td>
-																	<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
-																	<td><a href="#">Credit</td>
-																<?php
-																} elseif ($_POST['cus_type'] == 3) {
-																	$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
-																	echo $credit['Topay_Total'];
-																	$row1 = mysqli_fetch_array(mysqli_query($dbConn, "select * from tbl_customer where custID= '" . $row['Cust_ID'] . "'"));
-																?>
-																	<td><a href="#"><?php echo $row1['consignee_name'] . ",<br>" . $row1['consignee_phone'] . ",<br>" . $row1['consignee_add']; ?></a></td>
-																	<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
-																	<td><a href="#">Pre-paid</td>
-																<?php
-																}
-																?>
-												</tr>
+																	<td><a href="#"><?php echo $row['Tran_Remarks']; ?></td>
+																</tr>
+											<?php } ?>
+											</tr>
 
 										<?php }
-														}
+
 										?>
 											</tbody>
 										</table>
@@ -371,8 +359,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															document.getElementById(PageNum).className = "active";
 
 														}
-
-
 													}
 												</script>
 
