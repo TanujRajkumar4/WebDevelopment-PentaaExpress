@@ -217,7 +217,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																<!-- <a href="add-consignment.php?ty=status&editid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-success bigger-110"><i class="ace-icon fa fa-fire bigger-110"></i>Update</span></a> -->
 
-																<a href="add-consignment.php?ty=del&delid=<?php echo $row[0]; ?>">
+																<a href="add-consignment.php?ty=del&delid=<?php echo $row[1]; ?>">
 																	<span class="btn btn-sm btn-danger bigger-110"><i class="ace-icon fa fa-trash-o  bigger-110"></i>Delete</span></a>
 
 															</td>

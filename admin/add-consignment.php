@@ -83,9 +83,10 @@
 
 			if ($_GET['ty'] == 'del') {
 
-				$sql = "DELETE FROM tbl_courier WHERE cid='" . $_GET['delid'] . "'";
+				$sql = "DELETE FROM tbl_courier WHERE waybillno='" . $_GET['delid'] . "'";
+				$sql1 = "DELETE FROM tbl_courier_track WHERE cons_no='" . $_GET['delid'] . "'";
 
-				if (mysqli_query($dbConn, $sql)) {
+				if (mysqli_query($dbConn, $sql) && mysqli_query($dbConn, $sql1)) {
 
 					echo "<script>alert('Record Deleted Successfully');
 
