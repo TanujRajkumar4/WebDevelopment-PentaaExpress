@@ -682,7 +682,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														<div class="col-xs-12 col-sm-5">
 															<div class="clearfix">
 																<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-																<button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button>
+																<a  class="btn btn-info" href="export.php" name="print-data" >Export to excel</a>
+																<!-- <button type="submit" id="export_data" name='export_data' value="Export to excel" class="btn btn-info">Export to excel</button> -->
 																<!-- CUSTOMER DETAILS FILTERING BASED ON TYPE FORM -->
 																<form id="CustomerTypeFiltering" method="POST" action="add-customer.php?ty=add">
 																	<div class="form-group">

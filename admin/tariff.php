@@ -31,7 +31,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			{
 				if($_GET['ac']=="ins")
 				{
-				$qry="INSERT INTO `tariff`(`branch_id`,`city_id`,`price_per_kg`,`price_per_box`)VALUES('".$_POST['branch']."','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."')";
+				$qry="INSERT INTO `tariff`(`branch_id`,`city_id`,`price_per_kg`,`price_per_box`,`Status`)VALUES('".$_POST['branch']."','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."','A')";
 				$sql=mysqli_query($dbConn,$qry);
 				if($sql)
 				{
@@ -356,8 +356,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											while($row=mysqli_fetch_array($msql))
 											{
 											$i=$i+1;
-											$rowbranch=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_offices where id=$row[branch_id]"));
-											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id='$row[city_id]'"));?>
+											$rowbranch=mysqli_fetch_array(mysqli_query($dbConn,"select * from tbl_offices where id=$row[branch_id] and status='A'"));
+											$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from city where b_id=$row[city_id] and status='A'"));?>
 													<td class='center'>  <?php echo $i;?></td>
 													<td><?php echo $rowbranch['off_name']; ?></td>
 													<td><?php echo $dsql['bname']; ?></td>
@@ -381,7 +381,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<?php 
 					if (isset($_GET['ty'])) {
 						if ($_GET['ty'] == "edit") {
-							$sql1 = mysqli_query($dbConn,"Select * from tariff where tariff_id= '".$_GET['editid']."'");
+							$sql1 = mysqli_query($dbConn,"Select * from tariff where tariff_id= '".$_GET['editid']."' and Status='A'");
 							$row1 = mysqli_fetch_array($sql1);
 						?> <div class="page-content">
 								<!-- /.ace-settings-container -->
@@ -400,9 +400,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										<!-- PAGE CONTENT BEGINS -->
 										<form class="form-horizontal" method="POST" action="tariff.php?ac=upd&ty=edit&editid=<?php echo $_GET['editid']; ?>">
 										<?php 
-										$sql2 = mysqli_query($dbConn, "Select * from tbl_offices where id= '".$row1['branch_id']."'");
+										$sql2 = mysqli_query($dbConn, "Select * from tbl_offices where id= '".$row1['branch_id']."' and Status='A'");
 										$row2 = mysqli_fetch_array($sql2);
-										$sql3 = mysqli_query($dbConn, "Select * from city where b_id= '".$row1['city_id']."'");
+										$sql3 = mysqli_query($dbConn, "Select * from city where b_id= '".$row1['city_id']."' and Status='A'");
 										$row3 = mysqli_fetch_array($sql3);
 										?>
 											<div class="form-group">

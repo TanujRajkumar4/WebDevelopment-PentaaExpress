@@ -195,8 +195,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 							</form>
 							<!-- PAGE CONTENT BEGINS -->
-							<div class="row" id="table">
+							<div class="row">
 								<div class="col-xs-12">
+									<div  id="table">
 									<table id="simple-table" class="table  table-bordered table-hover">
 										<thead>
 											<tr>
@@ -244,6 +245,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										?>
 										</tbody>
 									</table>
+									</div>
 									<div class="modal-footer no-margin-top">
 										<ul class="pagination pull-right no-margin">
 											<li class="prev">
