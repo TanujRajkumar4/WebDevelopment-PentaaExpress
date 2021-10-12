@@ -287,8 +287,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="hr hr-dotted"></div>
-								<div class="row" id="table">
+								<div class="row">
 									<div class="col-xs-12">
+										<div id="table">
 										<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
 											<thead>
 												<tr>
@@ -331,13 +332,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																	<td><a href="#"><?php echo $row['Tran_Remarks']; ?></td>
 																</tr>
 											<?php } ?>
-											</tr>
-
-										<?php }
-
-										?>
+											</form>
+										<?php }?>
 											</tbody>
 										</table>
+										</div>
 										<div class="modal-footer no-margin-top">
 											<ul class="pagination pull-right no-margin">
 												<li class="prev">
@@ -357,7 +356,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														for (var i = 0; i < 3; i++) {
 															var PageNum = "PageNo" + page;
 															document.getElementById(PageNum).className = "active";
-
 														}
 													}
 												</script>
