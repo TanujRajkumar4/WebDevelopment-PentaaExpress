@@ -1,8 +1,6 @@
 	<?php
 	session_start();
 	include("database.php");
-
-
 	if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		$id = $_SESSION['uid'];
 
@@ -14,7 +12,6 @@
 			} elseif ($_GET['ty'] == 'status') {
 				$title = "Consignment status";
 			}
-
 			if (isset($_GET['ac'])) {
 				if ($_GET['ac'] == "ins") {
 					$today = date("Y-m-d");
@@ -24,40 +21,33 @@
 						$qry1 = "INSERT INTO `tbl_courier_track`(`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`,`status`) VALUES(NULL,'" . $_POST['waybillno'] . "','" . $_SESSION['orgid'] . "','1','" . $_POST['comment'] . "','$today','A')";
 						//echo $qry1;
 						$trksql = mysqli_query($dbConn, $qry1);
-
+						$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
+						$cust_bal = $selbal['bala'] + $_POST['tot'];
+						$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
 						if ($_POST['platform'] == '1') {
-							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-							$cust_bal = $selbal['bala'] + $_POST['tot'];
-							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
-							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Dr','To Pay Payment','$_POST[tot]','A')");
+							$TranType = "Dr";
+							$TranRemarks = "To Pay Payment";
 						}
-
 						if ($_POST['platform'] == '2') {
-							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-							$cust_bal = $selbal['bala'] + $_POST['tot'];
-							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
-							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Dr','Credit Payment','$_POST[tot]','A')");
+							$TranType = "Dr";
+							$TranRemarks = "Credit Payment";
 						}
-
 						if ($_POST['platform'] == '3') {
-							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-							$cust_bal = $selbal['bala'] + $_POST['tot'];
-							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
-							$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','Cr','Pre-Paid Payment','$_POST[tot]','A')");
+							$TranType = "Cr";
+							$TranRemarks = "Credit Payment";
 						}
+						$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','$TranType','$TranRemarks','$_POST[tot]','A')");
 						echo "<script>alert('Inserted Successfully');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
 					} else {
 						echo "<script>alert('Not Inserted');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
 					}
 				}
 				if ($_GET['ac'] == "upd") {
-
 					$sql = mysqli_query($dbConn, "UPDATE `tbl_courier` SET `cgst`='" . $_POST['consignno'] . "',`waybillno`='" . $_POST['waybillno'] . "',`consignor_name`='" . $_POST['consignor'] . "',`consignor_gst`='" . $_POST['gstincon'] . "',`consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`consignee_name`='" . $_POST['Consignee'] . "',`consignee_gst`='" . $_POST['gstincong'] . "',`consignee_phone`='" . $_POST['consigneephone'] . "',`consignee_pincode`='" . $_POST['pincode'] . "',`consignee_add`='" . $_POST['consigneeAddrs'] . "',`toi`='" . $_POST['contyp'] . "',`weight`='" . $_POST['gender'] . "',`actwgt`='" . $_POST['actualwgt'] . "',`volh`='" . $_POST['volwgth'] . "',`volw`='" . $_POST['volwgtw'] . "',`voll`='" . $_POST['volwgtl'] . "',`volq`='" . $_POST['volqty'] . "',`volh`='" . $_POST['volwgth1'] . "',`volw`='" . $_POST['volwgtw1'] . "',`voll`='" . $_POST['volwgtl1'] . "',`volq`='" . $_POST['volqty1'] . "',`volh`='" . $_POST['volwgth2'] . "',`volw`='" . $_POST['volwgtw2'] . "',`voll`='" . $_POST['volwgtl2'] . "',`volq`='" . $_POST['volqty2'] . "',`cubft`='" . $_POST['cubft'] . "',`boxes`='" . $_POST['boxesrt'] . "',`bxpkg`='" . $_POST['boxpkg'] . "',`qty`='" . $_POST['qty'] . "',`units`='" . $_POST['uom'] . "',`invoice_no`='" . $_POST['invono'] . "',`invoice_val`='" . $_POST['invoval'] . "',`setto`='" . $_POST['setto'] . "',`pay_mode`='" . $_POST['platform'] . "',`pick_date`='" . $_POST['date-timepicker1'] . "',`dest_off`='" . $_POST['desoff'] . "',`freight`='" . $_POST['freight'] . "',`insurance`='" . $_POST['insrance'] . "',`waych`='" . $_POST['waybillch'] . "',`othch`='" . $_POST['otherch'] . "',`odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "',`subtot`='" . $_POST['subtot'] . "',`sgst`='" . $_POST['sgst'] . "',`tot`='" . $_POST['tot'] . "',`comments`='" . $_POST['comment'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
 					//echo $sql;
 					if ($sql) {
-
 						if ($_POST['platform'] == '2') {
-							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "select bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
+							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
 							$cust_bal = $selbal['bala'] + $_POST['tot'];
 							$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
 						}
@@ -70,7 +60,6 @@
 					$today = date("Y-m-d");
 					$qry = "UPDATE `tbl_courier_track` SET `current_city`='" . $_SESSION['orgid'] . "',`bk_status`='" . $_POST['book_status'] . "', `comments`='" . $_POST['comment'] . "',`bk_time`='" . $today . "' WHERE `cons_no`='" . $_POST['waybillno'] . "' and status='A'";
 					$sql = mysqli_query($dbConn, $qry);
-
 					//echo $qry;
 					if ($sql) {
 						echo "<script>alert('Updated Successfully');window.location.href = 'view-consignment.php';</script>";
@@ -79,41 +68,29 @@
 					}
 				}
 			}
-
-
 			if ($_GET['ty'] == 'del') {
-
 				$sql = "DELETE FROM tbl_courier WHERE waybillno='" . $_GET['delid'] . "'";
 				$sql1 = "DELETE FROM tbl_courier_track WHERE cons_no='" . $_GET['delid'] . "'";
-
 				if (mysqli_query($dbConn, $sql) && mysqli_query($dbConn, $sql1)) {
-
 					echo "<script>alert('Record Deleted Successfully');
-
-				window.location.href = 'view-consignment.php';</script>";
+					window.location.href = 'view-consignment.php';</script>";
 				} else {
-
 					echo "<script>alert('Error in Deleting the record');
-
-				window.location.href = 'view-consignment.php';</script>";
+					window.location.href = 'view-consignment.php';</script>";
 				}
 			}
 	?>
 			<!DOCTYPE html>
 			<html lang="en">
-
 			<head>
 				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta charset="utf-8" />
 				<title>Consignment - Admin</title>
-
 				<meta name="description" content="overview &amp; stats" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
 				<!-- bootstrap & fontawesome -->
 				<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 				<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-
 				<!-- page specific plugin styles -->
 
 				<!-- text fonts -->
@@ -407,7 +384,6 @@
 																			</div>
 																		</div>
 
-
 																		<!-- CONSIGNMENT DETAILS - ADD FORM - START -->
 																		<h3 class="lighter block green">Consignment Details</h3>
 																		<div class="hr hr-dotted"></div>
@@ -669,25 +645,16 @@
 
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="setto">Said To Contain:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="text" name="setto" id="setto" class="col-xs-12 col-sm-6" />
 																				</div>
 																			</div>
 																		</div>
-
-
 																		<div class="space-2"></div>
-
-
-
 																		<div class="hr hr-dotted"></div>
-
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="freight">Total Freight:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="freight" id="freight" class="col-xs-12 col-sm-5 " value="0.00" readonly />
@@ -697,10 +664,8 @@
 																			</div>
 																		</div>
 																		<div class="space-2"></div>
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="insrance">Insurance:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="insrance" id="insrance" class="col-xs-12 col-sm-5 " value="0.00" />
@@ -708,10 +673,8 @@
 																			</div>
 																		</div>
 																		<div class="space-2"></div>
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="otherch">Waybill Charges:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="waybillch" id="waybillch" class="col-xs-12 col-sm-5 " value="0.00" requried />
@@ -719,33 +682,24 @@
 																			</div>
 																		</div>
 																		<div class="space-2"></div>
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="otherch">Other Charges:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="otherch" id="otherch" class="col-xs-12 col-sm-5 " value="0.00" />
 																				</div>
 																			</div>
 																		</div>
-
-
 																		<div class="space-2"></div>
-
 																		<div class="form-group" id="odasec" style="display:block;">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="oda">ODA Charges:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="oda" id="oda" class="col-xs-12 col-sm-5 " value="0.00" />
 																				</div>
 																			</div>
 																		</div>
-
-
 																		<div class="space-2"></div>
-
 																		<div class="form-group" id="paysec">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="topay">To Pay Charges:</label>
 
@@ -755,22 +709,18 @@
 																				</div>
 																			</div>
 																		</div>
-
 																		<div class="space-2"></div>
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="subtot">Sub Total:</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="subtot" id="subtot" class="col-xs-12 col-sm-5 " value="0.00" readonly />
 																				</div>
 																			</div>
 																		</div>
-
 																		<div class="space-2"></div>
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sgst">SGST(%):</label>
-
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
 																					<input type="number" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="9" requried />
@@ -2023,14 +1973,10 @@
 													<div>
 														<button class="btn btn-success btn-next" type="Submit">
 															Submit
-
 														</button>
 														<button class="btn btn-prev">
-
 															Clear
 														</button>
-
-
 													</div>
 												</form>
 											</div>
@@ -2051,35 +1997,25 @@
 									<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
 									&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
 								</span>
-
 								&nbsp; &nbsp;
-
 							</div>
 						</div>
 					</div>
-
 					<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 						<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 					</a>
 				</div><!-- /.main-container -->
-
 				<!-- basic scripts -->
-
 				<!--[if !IE]> -->
 				<script src="assets/js/jquery-2.1.4.min.js"></script>
-
 				<!-- <![endif]-->
-
 				<!--[if IE]>
-<script src="assets/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
-
-
+				<script src="assets/js/jquery-1.11.3.min.js"></script>
+				<![endif]-->
 				<script type="text/javascript">
 					if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 				</script>
 				<script src="assets/js/bootstrap.min.js"></script>
-
 				<!-- page specific plugin scripts -->
 				<script src="assets/js/wizard.min.js"></script>
 				<script src="assets/js/jquery.validate.min.js"></script>
@@ -2090,35 +2026,25 @@
 				<script src="assets/js/moment.min.js"></script>
 				<script src="assets/js/daterangepicker.min.js"></script>
 				<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-
-
-
 				<!-- ace scripts -->
 				<script src="assets/js/ace-elements.min.js"></script>
 				<script src="assets/js/ace.min.js"></script>
-
 				<script type="text/javascript">
 					jQuery(function($) {
-
 						$('[data-rel=tooltip]').tooltip();
-
 						$('.select2').css('width', '200px').select2({
 								allowClear: true
 							})
 							.on('change', function() {
 								$(this).closest('form').validate().element($(this));
 							});
-
 						var substringMatcher = function(strs) {
 							return function findMatches(q, cb) {
 								var matches, substringRegex;
-
 								// an array that will be populated with substring matches
 								matches = [];
-
 								// regex used to determine if a string contains the substring `q`
 								substrRegex = new RegExp(q, 'i');
-
 								// iterate through the pool of strings and for any string that
 								// contains the substring `q`, add it to the `matches` array
 								$.each(strs, function(i, str) {
@@ -2130,7 +2056,6 @@
 										});
 									}
 								});
-
 								cb(matches);
 							}
 						}
@@ -2157,9 +2082,7 @@
 								}
 							});
 							// ADD Consignment - Consignor's Details Feed Function - END	
-
 						}
-
 						$("input[type='radio']").change(function() {
 							getTariff();
 							if ($(this).val() == "1") {
@@ -2190,10 +2113,9 @@
 							if ($("#platform").val() == 2) {
 								// alert("Credit Pay,");
 								document.getElementById("boxpkg").setAttribute("readonly", "true");
-								
+
 							}
 						});
-
 
 						// ADD Consignment - Consignor's Details Feed Function - START
 						$("#custID").change(function() {
@@ -2411,10 +2333,6 @@
 						}).next().on(ace.click_event, function() {
 							$(this).prev().focus();
 						});
-
-
-
-
 						//hide or show the other form which requires validation
 						//this is for demo only, you usullay want just one form in your application
 						$('#skip-validation').removeAttr('checked').on('click', function() {
@@ -2427,19 +2345,12 @@
 								$('#sample-form').show();
 							}
 						})
-
-
-
 						//documentation : http://docs.jquery.com/Plugins/Validation/validate
-
-
 						$.mask.definitions['~'] = '[+-]';
 						$('#phone').mask('999 999 9999');
-
 						jQuery.validator.addMethod("phone", function(value, element) {
 							return this.optional(element) || /^\d{3}\ \d{3}\ \d{4}( x\d{1,6})?$/.test(value);
 						}, "Enter a valid phone number.");
-
 						$('#validation-form').validate({
 							errorElement: 'div',
 							errorClass: 'help-block',
@@ -2504,17 +2415,13 @@
 								gender: "Please choose weight choice",
 								agree: "Please accept our policy"
 							},
-
-
 							highlight: function(e) {
 								$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
 							},
-
 							success: function(e) {
 								$(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
 								$(e).remove();
 							},
-
 							errorPlacement: function(error, element) {
 								if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
 									var controls = element.closest('div[class*="col-"]');
@@ -2526,29 +2433,19 @@
 									error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
 								} else error.insertAfter(element.parent());
 							},
-
 							submitHandler: function(form) {},
 							invalidHandler: function(form) {}
 						});
-
-
-
-
 						$('#modal-wizard-container').ace_wizard();
 						$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
-
 						/**
 						$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
 							$(this).closest('form').validate().element($(this));
-						});
-						
+						});						
 						$('#mychosen').chosen().on('change', function(ev) {
 							$(this).closest('form').validate().element($(this));
 						});
 						*/
-
-
 						$(document).one('ajaxloadstart.page', function(e) {
 							//in ajax mode, remove remaining elements before leaving page
 							$('[class*=select2]').remove();
@@ -2556,7 +2453,6 @@
 						});
 					})
 				</script>
-
 		<?php
 		}
 	}
