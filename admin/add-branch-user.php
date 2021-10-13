@@ -6,10 +6,10 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 	$id=$_SESSION['uid'];
 	$user_type=$_SESSION['type'];
 	if ($user_type == "Branch") {
-		echo '<script>		
-			alert("You do not have access to this page, you will be redirected to the dashboard...");			
-			  </script>';
-		header("Refresh: 0; url= dashboard.php");
+		// echo '<script>		
+		// 	alert("You do not have access to this page, you will be redirected to the dashboard...");			
+		// 	  </script>';
+		header("Refresh: 0; url= error-403.php");
 
 		exit();
 	}	
