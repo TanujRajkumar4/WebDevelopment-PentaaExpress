@@ -184,8 +184,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										<div class="col-xs-12 col-sm-3">
 
 											<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');">Print</a>
-
-
+											<a  class="btn btn-success btn-next" href="export.php?ty=ts" name="print-data" >Export to excel</a>
 										</div>
 									</div>
 									<div class="">
