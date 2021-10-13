@@ -8,7 +8,7 @@ while ($res = mysqli_fetch_assoc($qry)) {
     $i++;
 }
 $table.='</table>';
-$file = "customerdetails.xls";
-header('Content-Type: application/xls');
+$file = "customerdetails.xlsx";
+header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename=' . basename($file));
-echo $html;
+echo $table;
