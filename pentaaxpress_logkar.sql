@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 01:17 PM
+-- Generation Time: Oct 13, 2021 at 07:29 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -306,8 +306,9 @@ CREATE TABLE `tbl_courier` (
 
 INSERT INTO `tbl_courier` (`cid`, `waybillno`, `consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`, `bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`, `dest_city`, `org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`, `cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES
 (10, '000006', 'crystal knitters private ltd', '33AABCC5572D1Z1', '822 001 3199', 'no-19, new no 41 Nehru street, Tirupur-641601', 'Rikab Agencies', '33AAIPM4051B1Z9', '044-24525562', '600041', 'no-3 l.b road, 1st floor, b-wing\r\ntiruvanmiyur, chennai', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '4', '35', 4, '1', '819-100899', '81194', 'knitted garments', '3', '22/10/2018 6:00:00 PM', '3', 3, '1', 720, '0.00', '0.00', '0.00', '0.00', '0.00', '720.00', '0.00', '0.00', '720.00', '', '3', 'A', '2018-10-22'),
-(158, '000007', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TES', '123', '9876543210', '641603', 'TEST', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '10', '8', 10, '1', '', '', '', '2', '26/10/2021 12:00:00 PM', '1', 0, '10', 80, '10', '10', '5', '5', '0.00', '110.00', '9', '9', '129.80', '', '1', 'A', '2021-10-12'),
-(159, '000008', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', 'test', '641603', 'test', '1', 1, '18', '5', '10', '5', '1', '01', '10', '15', '2', '0', '0', '0', 0, '0', '0', '7', 3, '1', '', '', '', '1', '20/10/2021 12:00:00 AM', '1', 0, '10', 126, '0.00', '0.00', '0.00', '0.00', '0.00', '126.00', '9', '9', '148.68', '', '1', 'A', '2021-10-12');
+(161, '000012', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'GST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '7', 0, '', '', '', '', '2', '12/10/2021 7:00:00 PM', '6', 0, '10', 700, '50', '0.00', '0.00', '0.00', '0.00', '750.00', '9', '9', '885.00', 'TEST COMMENT', '1', 'A', '2021-10-13'),
+(162, '000013', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'xdff', 'hfghfg', '9876543210', '641603', 'ADD', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '21/10/2021 12:00:00 AM', '10', 0, '1', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
+(163, '000020', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 10, '1', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13');
 
 -- --------------------------------------------------------
 
@@ -360,9 +361,10 @@ CREATE TABLE `tbl_courier_track` (
 --
 
 INSERT INTO `tbl_courier_track` (`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`, `status`) VALUES
-(4, '000006', '10', '3', '', '2021-10-02', 'A'),
-(6, '000008', '10', '3', '', '0000-00-00', 'A'),
-(5, '000007', '10', '3', '', '0000-00-00', 'A');
+(4, '000006', '10', '2', '', '2021-10-02', 'A'),
+(155, '000012', '10', '2', 'TEST COMMENT', '2021-10-13', 'A'),
+(156, '000013', '1', '1', '', '2021-10-13', 'A'),
+(157, '000020', '10', '1', '', '2021-10-13', 'A');
 
 -- --------------------------------------------------------
 
@@ -396,7 +398,7 @@ CREATE TABLE `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`cid`, `custID`, `consignor_name`, `Type`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`, `boxrate`, `waych`, `insch`, `othch`, `odach`, `topaych`, `bala`, `cre_dt`, `status`, `User_Access`) VALUES
-(3, 'PLX000002', 'Go Fashion India  Pvt.  Ltd.', 2, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '0', '0', '0', '0', '0', '0', '0', '378.48', '2018-11-29', 'A', 'Branch'),
+(3, 'PLX000002', 'Go Fashion India  Pvt.  Ltd.', 2, '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', '0', '0', '0', '0', '0', '0', '0', '2986.28', '2018-11-29', 'A', 'Branch'),
 (108, 'PLX000005', 'TEST3', 2, 'TEST-GST', '987 654 3210', 'TEST-ADD', '', '', '', '', '', '', '', '', '2021-10-09', 'A', 'HO'),
 (107, 'PLX000004', 'TEST2', 3, 'TEST-GST', '987 654 3210', 'TEST- ADD', '', '', '', '', '', '', '', '', '2021-10-09', 'A', 'HO'),
 (106, 'PLX000003', 'TEST1', 1, 'ABCD', '987 654 3210', 'TEST ADD1', '', '', '', '', '', '', '', '', '2021-10-08', 'A', 'HO');
@@ -458,7 +460,41 @@ INSERT INTO `tbl_transactions` (`Tran_ID`, `Tran_Date`, `Cust_ID`, `Branch_ID`, 
 (23, '2021-10-09', 'PLX000003', 10, 1, 'Cr', 'To Pay Repayment', 100, 'A'),
 (25, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
 (26, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
-(27, '2021-10-12', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 149, 'A');
+(27, '2021-10-12', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 149, 'A'),
+(28, '2021-10-12', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 543, 'A'),
+(29, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit\r\n Repayment', 1722, 'A'),
+(30, '2021-10-09', 'PLX000003', 10, 3, 'Dr', 'To Pay Payment', 1500, 'A'),
+(31, '2021-10-09', 'PLX000003', 10, 1, 'Cr', 'To Pay Repayment', 100, 'A'),
+(32, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(33, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(34, '2021-10-12', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 149, 'A'),
+(35, '2021-10-12', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 543, 'A'),
+(36, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit\r\n Repayment', 1722, 'A'),
+(37, '2021-10-08', 'PLX000002', 1, 2, 'Dr', 'Credit Payment', 1000, 'A'),
+(38, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(39, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(40, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 1722, 'A'),
+(41, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(42, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(43, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 1722, 'A'),
+(44, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 1722, 'A'),
+(45, '2021-10-08', 'PLX000002', 1, 2, 'Dr', 'Credit Payment', 1000, 'A'),
+(46, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(47, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(48, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit\r\n Repayment', 1722, 'A'),
+(49, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(50, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(51, '2021-10-08', 'PLX000002', 1, 2, 'Dr', 'Credit Payment', 1000, 'A'),
+(52, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(53, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(54, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 1722, 'A'),
+(55, '2021-10-12', 'PLX000002', 10, 2, 'Cr', 'Credit\r\n Repayment', 100, 'A'),
+(56, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 130, 'A'),
+(57, '2021-10-12', 'PLX000002', 10, 2, 'Dr', 'Credit\r\n Repayment', 1722, 'A'),
+(58, '2021-10-13', 'PLX000002', 10, 2, 'Dr', 'Credit Payment', 885, 'A'),
+(59, '2021-10-13', 'PLX000002', 1, 1, 'Dr', 'To Pay Payment', 590, 'A'),
+(60, '2021-10-13', 'PLX000002', 1, 2, 'Cr', 'Credit\r\n Repayment', 1000, 'A'),
+(61, '2021-10-13', 'PLX000002', 10, 1, 'Dr', 'To Pay Payment', 590, 'A');
 
 -- --------------------------------------------------------
 
@@ -606,7 +642,7 @@ ALTER TABLE `book_status`
 -- AUTO_INCREMENT for table `customer_tariff`
 --
 ALTER TABLE `customer_tariff`
-  MODIFY `CT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `CT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `cust_trans`
@@ -648,7 +684,7 @@ ALTER TABLE `tariff`
 -- AUTO_INCREMENT for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT for table `tbl_courier_officers`
@@ -660,7 +696,7 @@ ALTER TABLE `tbl_courier_officers`
 -- AUTO_INCREMENT for table `tbl_courier_track`
 --
 ALTER TABLE `tbl_courier_track`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer`
@@ -678,7 +714,7 @@ ALTER TABLE `tbl_offices`
 -- AUTO_INCREMENT for table `tbl_transactions`
 --
 ALTER TABLE `tbl_transactions`
-  MODIFY `Tran_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `Tran_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `toi`
