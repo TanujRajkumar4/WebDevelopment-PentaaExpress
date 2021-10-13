@@ -195,9 +195,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 							</form>
 							<!-- PAGE CONTENT BEGINS -->
-							<div class="row">
+							<div class="row" id="table">
 								<div class="col-xs-12">
-									<div  id="table">
 									<table id="simple-table" class="table  table-bordered table-hover">
 										<thead>
 											<tr>
@@ -223,7 +222,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													$page = $_GET['page'];
 												}
 												$result_per_page = 10;
-												$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "Select * from tbl_courier,tbl_courier_track where tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier_track.current_city='" . $_SESSION['orgid'] . "'and tbl_courier_track.bk_status='1' and tbl_courier_track.status='A'"));
+												$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "select * from tbl_courier where status='A'"));
 												$page_first_result = ($page - 1) * $result_per_page;
 												$msql = mysqli_query($dbConn, "Select * from tbl_courier,tbl_courier_track where tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier_track.current_city='" . $_SESSION['orgid'] . "'and tbl_courier_track.bk_status='1' and tbl_courier_track.status='A' ORDER BY book_date DESC LIMIT " . $page_first_result . ',' . $result_per_page);
 												$number_of_page = ceil($Cust_Count / $result_per_page); ?>
@@ -245,7 +244,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										?>
 										</tbody>
 									</table>
-									</div>
 									<div class="modal-footer no-margin-top">
 										<ul class="pagination pull-right no-margin">
 											<li class="prev">

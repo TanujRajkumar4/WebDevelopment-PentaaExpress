@@ -255,27 +255,22 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														}
 														$i = 0;
 														$result_per_page = 10;
-														// $Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "select * from tbl_courier where status='A'"));
+														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "select * from tbl_courier where status='A'"));
 														$page_first_result = ($page - 1) * $result_per_page;
 														if ($_POST['gender'] == 1) {
 															$filters = "Select * from tbl_courier where  tbl_courier.book_status=1 and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "' ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
 															$status = "book_status";
-															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn,$filters));
 														} elseif ($_POST['gender'] == 2) {
 															$filters = "Select * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=2 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
-															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn,$filters));
 														}
 														if ($_POST['gender'] == 3) {
 															$filters = "Select * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=3 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
-															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn,$filters));
 														} elseif ($_POST['gender'] == 4) {
 															$filters = "Select * from tbl_courier,tbl_courier_track where (tbl_courier_track.bk_time BETWEEN '" . $_POST['id-date-picker-1'] . "' AND '" . $_POST['id-date-picker-2'] . "')and tbl_courier_track.cons_no=tbl_courier.waybillno  and tbl_courier.status='A'  and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
-															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn,$filters));
 														}
 														$msql = mysqli_query($dbConn, $filters);
 														$number_of_page = ceil($Cust_Count / $result_per_page);
-
-														 ?>
+													?>
 														<form id="book-report" action="report.php" method="POST">
 															<?php while ($row = mysqli_fetch_array($msql)) {
 															?>

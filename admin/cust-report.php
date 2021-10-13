@@ -290,52 +290,51 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								<div class="row">
 									<div class="col-xs-12">
 										<div id="table">
-										<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
-											<thead>
-												<tr>
-													<th>SNo</th>
-													<th>Name & Address</th>
-													<th>Amount</th>
-													<th>Type</th>
+											<table id='dynamic-table' class='table table-striped table-bordered table-hover'>
+												<thead>
+													<tr>
+														<th>SNo</th>
+														<th>Name & Address</th>
+														<th>Amount</th>
+														<th>Type</th>
 
-												</tr>
-											</thead>
-
-											<tbody>
-												<tr>
-													<?php
-													$number_of_page = 0;
-													$filters = "";
-													if (isset($_POST['search']) and isset($_POST['cus_type'])) {
-														$i = 0;
-														$credit = 0;
-														// pagination
-														if (!isset($_GET['page'])) {
-															$page = 1;
-														} else {
-															$page = $_GET['page'];
-														}
-														$query = "Select * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and tbl_transactions.Branch_id='" . $_POST['branch'] . "' and tbl_transactions.Pay_Meth_ID='" . $_POST['cus_type'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
-														$result_per_page = 10;
-														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $query));
-														$page_first_result = ($page - 1) * $result_per_page;
-														$number_of_page = ceil($Cust_Count / $result_per_page); 
-														$filters = $query . " ORDER BY tbl_transactions.Tran_ID DESC LIMIT " . $page_first_result . ", " . $result_per_page;
-														$msql = mysqli_query($dbConn, $filters); ?>
-														<form id="cust-report" action="cust-report.php" method="POST">
-															<?php while ($row = mysqli_fetch_array($msql)) {
-															?>
-																<tr>
-																	<td class="center"> <?php echo $i = $i + 1; ?></td>
-																	<td><a href="#"><?php echo $row['consignor_name'] . ",<br>" . $row['consignor_phone'] . ",<br>" . $row['consignor_add']; ?></a></td>
-																	<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
-																	<td><a href="#"><?php echo $row['Tran_Remarks']; ?></td>
-																</tr>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<?php
+														$number_of_page = 0;
+														$filters = "";
+														if (isset($_POST['search']) and isset($_POST['cus_type'])) {
+															$i = 0;
+															$credit = 0;
+															// pagination
+															if (!isset($_GET['page'])) {
+																$page = 1;
+															} else {
+																$page = $_GET['page'];
+															}
+															$query = "SELECT * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and tbl_transactions.Branch_id='" . $_POST['branch'] . "' and tbl_transactions.Pay_Meth_ID='" . $_POST['cus_type'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
+															$result_per_page = 10;
+															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $query));
+															$page_first_result = ($page - 1) * $result_per_page;
+															$number_of_page = ceil($Cust_Count / $result_per_page);
+															$filters = $query . " ORDER BY tbl_transactions.Tran_ID DESC LIMIT " . $page_first_result . ", " . $result_per_page;
+															$msql = mysqli_query($dbConn, $filters); ?>
+															<form id="cust-report" action="cust-report.php" method="POST">
+																<?php while ($row = mysqli_fetch_array($msql)) {
+																?>
+													<tr>
+														<td class="center"> <?php echo $i = $i + 1; ?></td>
+														<td><a href="#"><?php echo $row['consignor_name'] . ",<br>" . $row['consignor_phone'] . ",<br>" . $row['consignor_add']; ?></a></td>
+														<td><a href="#"><?php echo $row['Tran_Amt']; ?></a></td>
+														<td><a href="#"><?php echo $row['Tran_Remarks']; ?></td>
+													</tr>
+												<?php } ?>
+												</form>
 											<?php } ?>
-											</form>
-										<?php }?>
-											</tbody>
-										</table>
+												</tbody>
+											</table>
 										</div>
 										<div class="modal-footer no-margin-top">
 											<ul class="pagination pull-right no-margin">
@@ -344,7 +343,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														<i class="ace-icon fa fa-angle-double-left"></i>
 													</a>
 												</li>
-												<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
+												<?php for ($page = 1; $page <= $number_of_page; $page++) {
+													 
+													
+													
+													?>
 													<li id="<?php echo 'PageNo' . $page; ?>">
 														<?php echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "cust-report.php?&page=' . $page . '">' . $page . ' </a>'; ?>
 													</li>
