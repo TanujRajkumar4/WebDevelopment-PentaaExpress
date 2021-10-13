@@ -19,29 +19,29 @@
 					$sql = mysqli_query($dbConn, $qry);
 					echo $qry;
 					if ($sql) {
-					// 	$qry1 = "INSERT INTO `tbl_courier_track`(`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`,`status`) VALUES(NULL,'" . $_POST['waybillno'] . "','" . $_SESSION['orgid'] . "','1','" . $_POST['comment'] . "','$today','A')";
+						$qry1 = "INSERT INTO `tbl_courier_track`(`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`,`status`) VALUES(NULL,'" . $_POST['waybillno'] . "','" . $_SESSION['orgid'] . "','1','" . $_POST['comment'] . "','$today','A')";
 					echo $qry;
-					// 	$trksql = mysqli_query($dbConn, $qry1);
-					// 	$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-					// 	$cust_bal = $selbal['bala'] + $_POST['tot'];
-					// 	$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
-					// 	if ($_POST['platform'] == '1') {
-					// 		$TranType = "Dr";
-					// 		$TranRemarks = "To Pay Payment";
-					// 	}
-					// 	if ($_POST['platform'] == '2') {
-					// 		$TranType = "Dr";
-					// 		$TranRemarks = "Credit Payment";
-					// 	}
-					// 	if ($_POST['platform'] == '3') {
-					// 		$TranType = "Cr";
-					// 		$TranRemarks = "Credit Payment";
-					// 	}
-					// 	$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','$TranType','$TranRemarks','$_POST[tot]','A')");
-					// 	echo "<script>alert('Inserted Successfully');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
-					// } else {
-					// 	echo "<script>alert('Not Inserted');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
-					// }
+						$trksql = mysqli_query($dbConn, $qry1);
+						$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
+						$cust_bal = $selbal['bala'] + $_POST['tot'];
+						$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
+						if ($_POST['platform'] == '1') {
+							$TranType = "Dr";
+							$TranRemarks = "To Pay Payment";
+						}
+						if ($_POST['platform'] == '2') {
+							$TranType = "Dr";
+							$TranRemarks = "Credit Payment";
+						}
+						if ($_POST['platform'] == '3') {
+							$TranType = "Cr";
+							$TranRemarks = "Credit Payment";
+						}
+						$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','$TranType','$TranRemarks','$_POST[tot]','A')");
+						echo "<script>alert('Inserted Successfully');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
+					} else {
+						echo "<script>alert('Not Inserted');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
+					}
 				}
 				if ($_GET['ac'] == "upd") {
 					$sql = mysqli_query($dbConn, "UPDATE `tbl_courier` SET `cgst`='" . $_POST['consignno'] . "',`waybillno`='" . $_POST['waybillno'] . "',`consignor_name`='" . $_POST['consignor'] . "',`consignor_gst`='" . $_POST['gstincon'] . "',`consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`consignee_name`='" . $_POST['Consignee'] . "',`consignee_gst`='" . $_POST['gstincong'] . "',`consignee_phone`='" . $_POST['consigneephone'] . "',`consignee_pincode`='" . $_POST['pincode'] . "',`consignee_add`='" . $_POST['consigneeAddrs'] . "',`toi`='" . $_POST['contyp'] . "',`weight`='" . $_POST['gender'] . "',`actwgt`='" . $_POST['actualwgt'] . "',`volh`='" . $_POST['volwgth'] . "',`volw`='" . $_POST['volwgtw'] . "',`voll`='" . $_POST['volwgtl'] . "',`volq`='" . $_POST['volqty'] . "',`volh`='" . $_POST['volwgth1'] . "',`volw`='" . $_POST['volwgtw1'] . "',`voll`='" . $_POST['volwgtl1'] . "',`volq`='" . $_POST['volqty1'] . "',`volh`='" . $_POST['volwgth2'] . "',`volw`='" . $_POST['volwgtw2'] . "',`voll`='" . $_POST['volwgtl2'] . "',`volq`='" . $_POST['volqty2'] . "',`cubft`='" . $_POST['cubft'] . "',`boxes`='" . $_POST['boxesrt'] . "',`bxpkg`='" . $_POST['boxpkg'] . "',`qty`='" . $_POST['qty'] . "',`units`='" . $_POST['uom'] . "',`invoice_no`='" . $_POST['invono'] . "',`invoice_val`='" . $_POST['invoval'] . "',`setto`='" . $_POST['setto'] . "',`pay_mode`='" . $_POST['platform'] . "',`pick_date`='" . $_POST['date-timepicker1'] . "',`dest_off`='" . $_POST['desoff'] . "',`freight`='" . $_POST['freight'] . "',`insurance`='" . $_POST['insrance'] . "',`waych`='" . $_POST['waybillch'] . "',`othch`='" . $_POST['otherch'] . "',`odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "',`subtot`='" . $_POST['subtot'] . "',`sgst`='" . $_POST['sgst'] . "',`tot`='" . $_POST['tot'] . "',`comments`='" . $_POST['comment'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
