@@ -730,10 +730,16 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
 												<li id="<?php echo 'PageNo' . $page; ?>">
 													<?php
-													if (isset($_POST['search']) && $_POST['mobile'] == "") {
+													if ((isset($_POST['search']) && $_POST['mobile'] == "")) {
 														$ct = $_POST['Cust_Type_Edit'];
-														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $ct . '' . '">' . $page . ' </a>';
-													} else {
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $ct . '&#CD' . '">' . $page . ' </a>';
+													} 
+													else if(isset($_GET['ct']) && $_GET['ct']!=0){
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $_GET['ct'] . '&#CD' . '">' . $page . ' </a>';
+
+
+													}
+													else {
 														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '#CD' . '">' . $page . ' </a>';
 													}
 													?>
