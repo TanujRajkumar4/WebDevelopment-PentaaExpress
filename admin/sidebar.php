@@ -200,6 +200,15 @@ $type = $_SESSION['type'];
 			</li>
 		</ul>
 	</li>
+
+	<li class="">
+		<a href="trip-sheet.php">
+			<i class="menu-icon fa fa-picture-o"></i>
+			<span class="menu-text"> Trip Sheet </span>
+		</a>
+
+		<b class="arrow"></b>
+	</li>
 	<?php if (($type == "HO")) { ?>
 		<li class="">
 			<a href="#" class="dropdown-toggle">
@@ -229,14 +238,7 @@ $type = $_SESSION['type'];
 
 			</ul>
 		</li>
-		<li class="">
-			<a href="trip-sheet.php">
-				<i class="menu-icon fa fa-picture-o"></i>
-				<span class="menu-text"> Trip Sheet </span>
-			</a>
 
-			<b class="arrow"></b>
-		</li>
 	<?php } ?>
 	<li class="">
 		<a href="#" class="dropdown-toggle">
