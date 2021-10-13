@@ -147,13 +147,13 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 										<h1 class="grey lighter smaller">
 											<span class="green bigger-125">
 												<i class="ace-icon fa fa-sitemap"></i>
-												404
+												403
 											</span>
-											Page Not Found
+											ACCESSS DENIED
 										</h1>
 
 										<hr />
-										<h3 class="lighter smaller">We looked everywhere but we couldn't find it!</h3>
+										<h3 class="lighter smaller">You do not have access to this section. </h3>
 										<hr />
 										<div class="space"></div>
 										<div></div>
