@@ -2256,6 +2256,9 @@
 						$(document).on("change", "#freight", function() {
 							calSubTot();
 						});
+						$(document).on("change", "#boxpkg", function() {
+							calculate1();
+						});
 						$(document).on("change", "#insrance", function() {
 							calSubTot();
 						});
