@@ -15,12 +15,12 @@
 			if (isset($_GET['ac'])) {
 				if ($_GET['ac'] == "ins") {
 					$today = date("Y-m-d");
-					$qry = "INSERT INTO `tbl_courier`(`cid`, `waybillno`,`consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`,`bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`,`dest_city`,`org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`,`cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES (NULL,'" . $_POST['waybillno'] . "','" . $_POST['consignor'] . "','" . $_POST['gstincon'] . "','" . $_POST['phone'] . "','" . $_POST['cusAddrs'] . "','" . $_POST['Consignee'] . "','" . $_POST['gstincong'] . "','" . $_POST['consigneephone'] . "','" . $_POST['pincode'] . "','" . $_POST['consigneeAddrs'] . "','" . $_POST['contyp'] . "','" . $_POST['gender'] . "','" . $_POST['actualwgt'] . "','" . $_POST['volwgth'] . "','" . $_POST['volwgtw'] . "','" . $_POST['volwgtl'] . "','" . $_POST['volqty'] . "','" . $_POST['volwgth1'] . "','" . $_POST['volwgtw1'] . "','" . $_POST['volwgtl1'] . "','" . $_POST['volqty1'] . "','" . $_POST['volwgth2'] . "','" . $_POST['volwgtw2'] . "','" . $_POST['volwgtl2'] . "','" . $_POST['volqty2'] . "','" . $_POST['cubft'] . "','" . $_POST['boxesrt'] . "','" . $_POST['boxpkg'] . "','" . $_POST['qty'] . "','" . $_POST['uom'] . "','" . $_POST['invono'] . "','" . $_POST['invoval'] . "','" . $_POST['setto'] . "','" . $_POST['platform'] . "','" . $_POST['date-timepicker1'] . "','" . $_POST['desoff'] . "','" .$_POST['descity']."','". $_SESSION['orgid'] . "','" . $_POST['freight'] . "','" . $_POST['insrance'] . "','" . $_POST['waybillch'] . "','" . $_POST['otherch'] . "','" . $_POST['oda'] . "','" . $_POST['topay'] . "','" . $_POST['subtot'] . "','" . $_POST['sgst'] . "','" . $_POST['consignno'] . "','" . $_POST['tot'] . "','" . $_POST['comment'] . "','1','A','$today')";
+					$qry = "INSERT INTO `tbl_courier`(`cid`, `waybillno`,`Cust_ID`,`consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`,`bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`,`dest_city`,`org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`,`cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES (NULL,'" . $_POST['waybillno'] . "','" . $_POST['custID'] . "','" . $_POST['consignor'] . "','" . $_POST['gstincon'] . "','" . $_POST['phone'] . "','" . $_POST['cusAddrs'] . "','" . $_POST['Consignee'] . "','" . $_POST['gstincong'] . "','" . $_POST['consigneephone'] . "','" . $_POST['pincode'] . "','" . $_POST['consigneeAddrs'] . "','" . $_POST['contyp'] . "','" . $_POST['gender'] . "','" . $_POST['actualwgt'] . "','" . $_POST['volwgth'] . "','" . $_POST['volwgtw'] . "','" . $_POST['volwgtl'] . "','" . $_POST['volqty'] . "','" . $_POST['volwgth1'] . "','" . $_POST['volwgtw1'] . "','" . $_POST['volwgtl1'] . "','" . $_POST['volqty1'] . "','" . $_POST['volwgth2'] . "','" . $_POST['volwgtw2'] . "','" . $_POST['volwgtl2'] . "','" . $_POST['volqty2'] . "','" . $_POST['cubft'] . "','" . $_POST['boxesrt'] . "','" . $_POST['boxpkg'] . "','" . $_POST['qty'] . "','" . $_POST['uom'] . "','" . $_POST['invono'] . "','" . $_POST['invoval'] . "','" . $_POST['setto'] . "','" . $_POST['platform'] . "','" . $_POST['date-timepicker1'] . "','" . $_POST['desoff'] . "','" . $_POST['descity'] . "','" . $_SESSION['orgid'] . "','" . $_POST['freight'] . "','" . $_POST['insrance'] . "','" . $_POST['waybillch'] . "','" . $_POST['otherch'] . "','" . $_POST['oda'] . "','" . $_POST['topay'] . "','" . $_POST['subtot'] . "','" . $_POST['sgst'] . "','" . $_POST['consignno'] . "','" . $_POST['tot'] . "','" . $_POST['comment'] . "','1','A','$today')";
 					$sql = mysqli_query($dbConn, $qry);
 					// echo $qry;
 					if ($sql) {
 						$qry1 = "INSERT INTO `tbl_courier_track`(`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`,`status`) VALUES(NULL,'" . $_POST['waybillno'] . "','" . $_SESSION['orgid'] . "','1','" . $_POST['comment'] . "','$today','A')";
-					// echo $qry;
+						// echo $qry;
 						$trksql = mysqli_query($dbConn, $qry1);
 						$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
 						$cust_bal = $selbal['bala'] + $_POST['tot'];
@@ -35,17 +35,17 @@
 						}
 						if ($_POST['platform'] == '3') {
 							$TranType = "Cr";
-							$TranRemarks = "Credit Payment";
+							$TranRemarks = "Pre-Paid Consignment Payment";
 						}
-						$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_SESSION[uid]','$_POST[platform]','$TranType','$TranRemarks','$_POST[tot]','A')");
+						$ins = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`,`Way_Bill_No`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$_POST[custID]','$_POST[waybillno]','$_SESSION[uid]','$_POST[platform]','$TranType','$TranRemarks','$_POST[tot]','A')");
 						echo "<script>alert('Inserted Successfully');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
 					} else {
 						echo "<script>alert('Not Inserted');window.location.href = 'add-consignment.php?ty=$_GET[ty]';</script>";
 					}
 				}
 				if ($_GET['ac'] == "upd") {
-					$sql = mysqli_query($dbConn, "UPDATE `tbl_courier` SET `cgst`='" . $_POST['consignno'] . "',`waybillno`='" . $_POST['waybillno'] . "',`consignor_name`='" . $_POST['consignor'] . "',`consignor_gst`='" . $_POST['gstincon'] . "',`consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`consignee_name`='" . $_POST['Consignee'] . "',`consignee_gst`='" . $_POST['gstincong'] . "',`consignee_phone`='" . $_POST['consigneephone'] . "',`consignee_pincode`='" . $_POST['pincode'] . "',`consignee_add`='" . $_POST['consigneeAddrs'] . "',`toi`='" . $_POST['contyp'] . "',`weight`='" . $_POST['gender'] . "',`actwgt`='" . $_POST['actualwgt'] . "',`volh`='" . $_POST['volwgth'] . "',`volw`='" . $_POST['volwgtw'] . "',`voll`='" . $_POST['volwgtl'] . "',`volq`='" . $_POST['volqty'] . "',`volh`='" . $_POST['volwgth1'] . "',`volw`='" . $_POST['volwgtw1'] . "',`voll`='" . $_POST['volwgtl1'] . "',`volq`='" . $_POST['volqty1'] . "',`volh`='" . $_POST['volwgth2'] . "',`volw`='" . $_POST['volwgtw2'] . "',`voll`='" . $_POST['volwgtl2'] . "',`volq`='" . $_POST['volqty2'] . "',`cubft`='" . $_POST['cubft'] . "',`boxes`='" . $_POST['boxesrt'] . "',`bxpkg`='" . $_POST['boxpkg'] . "',`qty`='" . $_POST['qty'] . "',`units`='" . $_POST['uom'] . "',`invoice_no`='" . $_POST['invono'] . "',`invoice_val`='" . $_POST['invoval'] . "',`setto`='" . $_POST['setto'] . "',`pay_mode`='" . $_POST['platform'] . "',`pick_date`='" . $_POST['date-timepicker1'] . "',`dest_off`='" . $_POST['desoff'] . "',`freight`='" . $_POST['freight'] . "',`insurance`='" . $_POST['insrance'] . "',`waych`='" . $_POST['waybillch'] . "',`othch`='" . $_POST['otherch'] . "',`odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "',`subtot`='" . $_POST['subtot'] . "',`sgst`='" . $_POST['sgst'] . "',`tot`='" . $_POST['tot'] . "',`comments`='" . $_POST['comment'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
-					//echo $sql;
+					$sql = mysqli_query($dbConn, "UPDATE `tbl_courier` SET `consignor_name`='" . $_POST['consignor'] . "',`consignor_gst`='" . $_POST['gstincon'] . "',`consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`consignee_name`='" . $_POST['Consignee'] . "',`consignee_gst`='" . $_POST['gstincong'] . "',`consignee_phone`='" . $_POST['consigneephone'] . "',`consignee_pincode`='" . $_POST['pincode'] . "',`consignee_add`='" . $_POST['consigneeAddrs'] . "',`toi`='" . $_POST['contyp'] . "',`volh`='" . $_POST['volwgth'] . "',`volw`='" . $_POST['volwgtw'] . "',`voll`='" . $_POST['volwgtl'] . "',`volh`='" . $_POST['volwgth1'] . "',`volw`='" . $_POST['volwgtw1'] . "',`voll`='" . $_POST['volwgtl1'] . "',`volh`='" . $_POST['volwgth2'] . "',`volw`='" . $_POST['volwgtw2'] . "',`voll`='" . $_POST['volwgtl2'] . "',`cubft`='" . $_POST['cubft'] . "',`units`='" . $_POST['uom'] . "',`invoice_no`='" . $_POST['invono'] . "',`invoice_val`='" . $_POST['invoval'] . "',`setto`='" . $_POST['setto'] . "',`pick_date`='" . $_POST['date-timepicker1'] . "',`comments`='" . $_POST['comment'] . "' WHERE `waybillno` = '$_POST[waybillno]"  . "' and `status`='A'");
+					echo $sql;
 					if ($sql) {
 						if ($_POST['platform'] == '2') {
 							$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
@@ -70,9 +70,26 @@
 				}
 			}
 			if ($_GET['ty'] == 'del') {
+				$today = date("Y-m-d");
+				$QueryDelSel = "SELECT * FROM tbl_courier WHERE waybillno = " . $_GET['delid'];
+				$ConsDetails = mysqli_fetch_array(mysqli_query($dbConn, $QueryDelSel));
+				if ($ConsDetails['pay_mode'] == '1') {
+					$TranType = "Cr";
+					$TranRemarks = "To Pay Consignment - DELETED";
+				}
+				if ($ConsDetails['pay_mode'] == '2') {
+					$TranType = "Cr";
+					$TranRemarks = "Credit Consignment - DELETED";
+				}
+				if ($ConsDetails['pay_mode'] == '3') {
+					$TranType = "Dr";
+					$TranRemarks = "Pre-Paid Consignment - DELETED";
+				}
 				$sql = "DELETE FROM tbl_courier WHERE waybillno='" . $_GET['delid'] . "'";
 				$sql1 = "DELETE FROM tbl_courier_track WHERE cons_no='" . $_GET['delid'] . "'";
-				if (mysqli_query($dbConn, $sql) && mysqli_query($dbConn, $sql1)) {
+				$sql2 = mysqli_query($dbConn, "INSERT INTO `tbl_transactions`(`Tran_Date`, `Cust_ID`,`Way_Bill_No`, `Branch_ID`, `Pay_Meth_ID`, `Tran_Type`, `Tran_Remarks`, `Tran_Amt`, `Status`) VALUES ('$today','$ConsDetails[Cust_ID]','$_GET[delid]','$_SESSION[uid]','$ConsDetails[pay_mode]','$TranType','$TranRemarks','$ConsDetails[tot]','A')");
+
+				if (mysqli_query($dbConn, $sql) && mysqli_query($dbConn, $sql1) && $sql2) {
 					echo "<script>alert('Record Deleted Successfully');
 					window.location.href = 'view-consignment.php';</script>";
 				} else {
@@ -83,6 +100,7 @@
 	?>
 			<!DOCTYPE html>
 			<html lang="en">
+
 			<head>
 				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 				<meta charset="utf-8" />
@@ -808,7 +826,7 @@
 							<?php
 							if (isset($_GET['ty'])) {
 								if ($_GET['ty'] == "edit") {
-									$sqlms = mysqli_query($dbConn, "Select * from tbl_courier where cid = '" . $_GET['editid'] . "'");
+									$sqlms = mysqli_query($dbConn, "SELECT * from tbl_courier where cid = '" . $_GET['editid'] . "'");
 									$rowms = mysqli_fetch_array($sqlms);
 							?> <div class="page-content">
 										<!-- /.ace-settings-container -->
@@ -830,13 +848,18 @@
 														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer ID:</label>
 
 														<div class="col-xs-12 col-sm-9">
-															<select name="custID" id="custID" class="select2" data-placeholder="Click to Choose...">
+															<select name="custID" id="custID" class="select2" data-placeholder="Click to Choose..." disabled>
 																<option value="">&nbsp;</option>
 																<?php
-																$cus = mysqli_query($dbConn, "select * from tbl_customer where status='A'");
+																$cus = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A'");
 																while ($cussql = mysqli_fetch_array($cus)) {
 																?>
-																	<option value="<?php echo $cussql['custID']; ?>"><?php echo $cussql['custID']; ?></option>
+																	<option value="<?php echo $cussql['custID']; ?>" <?php
+																														if ($rowms['Cust_ID'] == $cussql['custID']) {
+																															echo "selected";
+																														}
+																														?>>
+																		<?php echo $cussql['custID']; ?></option>
 																<?php
 																}
 																?>
@@ -966,15 +989,7 @@
 													</div>
 													<h3 class="lighter block green">Consignment Details</h3>
 													<div class="hr hr-dotted"></div>
-													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="waybillno">Waybill No:</label>
 
-														<div class="col-xs-12 col-sm-9">
-															<div class="clearfix">
-																<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" value="<?php echo $rowms['waybillno']; ?>" />
-															</div>
-														</div>
-													</div>
 
 													<div class="space-2"></div>
 													<div class="form-group">
@@ -995,17 +1010,41 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<select class="col-xs-12 col-sm-5" id="desoff" name="desoff">
+																<select class="col-xs-12 col-sm-5" id="desoff" name="desoff" disabled>
 																	<option value="">
 																		<--------Select-------->
 																	</option>
 																	<?php
-																	$sqltoi = mysqli_query($dbConn, "Select * from tbl_offices where status= 'A'");
+																	$sqltoi = mysqli_query($dbConn, "SELECT * from tbl_offices where status= 'A'");
 																	while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																	?>
 																		<option value="<?php echo $rwtoi['id']; ?>" <?php if ($rwtoi['id'] == $rowms['dest_off']) {
 																														echo "selected";
 																													} ?>><?php echo $rwtoi['off_name']; ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+															</div>
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="desoff">Destination City</label>
+
+														<div class="col-xs-12 col-sm-9">
+															<div class="clearfix">
+																<select class="col-xs-12 col-sm-5" id="descity" name="descity" disabled>
+																	<option value="">
+																		<--------Select-------->
+																	</option>
+																	<?php
+																	$sqltoi = mysqli_query($dbConn, "SELECT * from city where status= 'A'");
+																	while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																	?>
+																		<option value="<?php echo $rwtoi['b_id']; ?>" <?php if ($rwtoi['b_id'] == $rowms['dest_city']) {
+																															echo "selected";
+																														} ?>><?php echo $rwtoi['bname']; ?></option>
 																	<?php
 																	}
 																	?>
@@ -1051,7 +1090,7 @@
 																	<input name="gender" value="1" id="Wgt" type="radio" class="ace" onclick="enableTextbox()" <?php if ($rowms['weight'] == 1) {
 																																									echo "checked";
 																																									$blk = "block";
-																																								} ?> />
+																																								} ?> disabled />
 																	<span class="lbl"> Weight</span>
 																</label>
 															</div>
@@ -1060,7 +1099,7 @@
 																	<input name="gender" value="2" id="Boxrt" type="radio" class="ace" onclick="enableTextbox()" <?php if ($rowms['weight'] == 2) {
 																																										echo "checked";
 																																										$blk = "block";
-																																									} ?> />
+																																									} ?> disabled />
 																	<span class="lbl"> Box Rate</span>
 																</label>
 															</div>
@@ -1076,7 +1115,7 @@
 
 															<div class="col-xs-12 col-sm-9">
 																<div class="clearfix">
-																	<input type="text" name="actualwgt" id="actualwgt" class="col-xs-12 col-sm-6" value="<?php echo $rowms['actwgt']; ?>" placeholder="Total Weight" />
+																	<input disabled type="text" name="actualwgt" id="actualwgt" class="col-xs-12 col-sm-6" value="<?php echo $rowms['actwgt']; ?>" disabled placeholder="Total Weight" />
 																</div>
 															</div>
 														</div>
@@ -1092,13 +1131,13 @@
 																	<input type="text" name="volwgtw" id="volwgtw" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volw']; ?>" placeholder="Width" /><label class="control-label col-xs-12 col-sm-1" for="L">L:</label>
 																	<input type="text" name="volwgtl" id="volwgtl" class="col-xs-12 col-sm-2" value="<?php echo $rowms['voll']; ?>" placeholder="Length" />
 																	<label class="control-label col-xs-12 col-sm-1" for="L">Qty:</label>
-																	<input type="text" name="volqty" id="volqty" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq']; ?>" placeholder="Quantity" /><label class="control-label col-xs-12 col-sm-1" for="H">H:</label><input type="text" name="volwgth1" id="volwgth1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volh1']; ?>" placeholder="Height" /><label class="control-label col-xs-12 col-sm-1" for="W">W:</label>
+																	<input type="text" name="volqty" id="volqty" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq']; ?>" placeholder="Quantity" disabled /><label class="control-label col-xs-12 col-sm-1" for="H">H:</label><input type="text" name="volwgth1" id="volwgth1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volh1']; ?>" placeholder="Height" /><label class="control-label col-xs-12 col-sm-1" for="W">W:</label>
 																	<input type="text" name="volwgtw1" id="volwgtw1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volw1']; ?>" placeholder="Width" /><label class="control-label col-xs-12 col-sm-1" for="L">L:</label>
 																	<input type="text" name="volwgtl1" id="volwgtl1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['voll1']; ?>" placeholder="Length" /><label class="control-label col-xs-12 col-sm-1" for="L">Qty:</label>
-																	<input type="text" name="volqty1" id="volqty1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq1']; ?>" placeholder="Quantity" /><label class="control-label col-xs-12 col-sm-1" for="H">H:</label><input type="text" name="volwgth2" id="volwgth2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volh2']; ?>" placeholder="Height" /><label class="control-label col-xs-12 col-sm-1" for="W">W:</label>
+																	<input type="text" name="volqty1" id="volqty1" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq1']; ?>" placeholder="Quantity" disabled /><label class="control-label col-xs-12 col-sm-1" for="H">H:</label><input type="text" name="volwgth2" id="volwgth2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volh2']; ?>" placeholder="Height" /><label class="control-label col-xs-12 col-sm-1" for="W">W:</label>
 																	<input type="text" name="volwgtw2" id="volwgtw2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volw2']; ?>" placeholder="Width" /><label class="control-label col-xs-12 col-sm-1" for="L">L:</label>
 																	<input type="text" name="volwgtl2" id="volwgtl2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['voll2']; ?>" placeholder="Length" /><label class="control-label col-xs-12 col-sm-1" for="L">Qty:</label>
-																	<input type="text" name="volqty2" id="volqty2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq2']; ?>" placeholder="Quantity" />
+																	<input type="text" name="volqty2" id="volqty2" class="col-xs-12 col-sm-2" value="<?php echo $rowms['volq2']; ?>" placeholder="Quantity" disabled />
 																	<label class="control-label col-xs-12 col-sm-1" for="CFT">CFT:</label>
 																	<input type="text" name="cubft" id="cubft" class="col-xs-12 col-sm-2" value="<?php echo $rowms['cubft']; ?>" placeholder="Cubic Feet" />
 																</div>
@@ -1114,15 +1153,9 @@
 
 															<div class="col-xs-12 col-sm-9">
 																<div class="clearfix">
-
-
-
-
-
-
-																	<input type="text" name="boxesrt" id="boxesrt" class="col-xs-12 col-sm-3" value="<?php echo $rowms['boxes']; ?>" placeholder="No of Boxes" />
+																	<input type="text" name="boxesrt" id="boxesrt" class="col-xs-12 col-sm-3" value="<?php echo $rowms['boxes']; ?>" placeholder="No of Boxes" disabled />
 																	<label class="control-label col-xs-12 col-sm-3" for="CFT">Box per KG:</label>
-																	<input type="text" name="boxpkg" id="boxpkg" class="col-xs-12 col-sm-3" value="<?php echo $rowms['bxpkg']; ?>" placeholder="Box Per Kg" />
+																	<input type="text" name="boxpkg" id="boxpkg" class="col-xs-12 col-sm-3" value="<?php echo $rowms['bxpkg']; ?>" placeholder="Box Per Kg" disabled />
 																</div>
 															</div>
 														</div>
@@ -1135,7 +1168,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="text" name="qty" id="qty" class="col-xs-12 col-sm-3 " value="<?php echo $rowms['qty']; ?>" />
+																<input type="text" name="qty" id="qty" class="col-xs-12 col-sm-3 " value="<?php echo $rowms['qty']; ?>" disabled />
 															</div>
 
 														</div>
@@ -1211,12 +1244,12 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<select class="input-medium" id="platform" name="platform">
+																<select class="input-medium" id="platform" name="platform" disabled>
 																	<option value="">
 																		<--------Select-------->
 																	</option>
 																	<?php
-																	$sqltoi = mysqli_query($dbConn, "Select * from pay_meth where status= 'A'");
+																	$sqltoi = mysqli_query($dbConn, "SELECT * from pay_meth where status= 'A'");
 																	while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																	?>
 																		<option value="<?php echo $rwtoi['b_id']; ?>" <?php if ($rwtoi['b_id'] == $rowms['pay_mode']) {
@@ -1229,11 +1262,7 @@
 															</div>
 														</div>
 													</div>
-
-
 													<div class="hr hr-dotted"></div>
-
-
 													<div class="form-group">
 														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="freight">Total Freight:</label>
 
@@ -1244,7 +1273,6 @@
 																if ($rowms['pay_mode'] == '2') {
 																	$Org_City = $_SESSION['uid'];
 																	$Des_City = "";
-
 																	$cussql = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from tbl_customer where consignor_gst='" . $rowms['consignor_gst'] . "' and status='A'"));
 																	$fre = $cussql['freight'];
 																}
@@ -1261,7 +1289,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="insrance" id="insrance" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['insurance']; ?>" />
+																<input type="number" name="insrance" id="insrance" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['insurance']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1272,7 +1300,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="waybillch" id="waybillch" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['waych']; ?>" required />
+																<input type="number" name="waybillch" id="waybillch" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['waych']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1283,7 +1311,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="otherch" id="otherch" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['othch']; ?>" required />
+																<input type="number" name="otherch" id="otherch" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['othch']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1304,7 +1332,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="oda" id="oda" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['odach']; ?>" />
+																<input type="number" name="oda" id="oda" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['odach']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1321,7 +1349,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="topay" id="topay" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['topaych']; ?>" />
+																<input type="number" name="topay" id="topay" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['topaych']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1332,7 +1360,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="subtot" id="subtot" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['subtot']; ?>" readonly />
+																<input type="number" name="subtot" id="subtot" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['subtot']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1343,7 +1371,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['sgst']; ?>" required />
+																<input type="number" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['sgst']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1354,7 +1382,7 @@
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="number" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="<?php echo $rowms['cgst']; ?>" required />
+																<input type="number" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="<?php echo $rowms['cgst']; ?>" disabled />
 															</div>
 														</div>
 													</div>
@@ -1379,18 +1407,23 @@
 															</div>
 														</div>
 													</div>
+													<div class="form-group">
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="waybillno">Waybill No:</label>
+
+														<div class="col-xs-12 col-sm-9">
+															<div class="clearfix">
+																<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" value="<?php echo $rowms['waybillno']; ?>" readonly />
+															</div>
+														</div>
+													</div>
 													<hr />
 													<div>
 														<button class="btn btn-success btn-next" type="Submit">
 															Submit
-
 														</button>
 														<button class="btn btn-prev">
-
 															Clear
 														</button>
-
-
 													</div>
 												</form>
 											</div>
@@ -2067,11 +2100,15 @@
 							var term1 = $("#descity").val();
 							if (term == "" || term == null) {
 								alert("Please Select a Customer...");
-								window.location.assign("add-consignment.php?ty=add");
+								<?php if ($_GET['ty'] == 'add') { ?>
+									window.location.assign("add-consignment.php?ty=add");
+								<?php } ?>
 							}
 							if (term1 == "" || term1 == null) {
-								alert("Please Select a Destination City before Choosing the Weight Type");
-								window.location.assign("add-consignment.php?ty=add");
+								<?php if ($_GET['ty'] == 'add') { ?>
+									alert("Please Select a Destination City before Choosing the Weight Type");
+									window.location.assign("add-consignment.php?ty=add");
+								<?php } ?>
 							}
 							$.ajax({
 								type: "POST",
