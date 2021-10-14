@@ -271,7 +271,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<div class="col-xs-12 col-sm-3" style="padding-left: 80%;">
 																<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');">Print</a>
 															</div>
-															<div style="padding-left: 85%;">
+															<div style="padding-left: 90%;">
 																<span class="menu-text" style="font-size: 23px;">Total:<?php echo $total; ?></span>
 															</div>
 														</form>

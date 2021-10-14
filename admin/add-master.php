@@ -272,7 +272,7 @@ if($_GET['ac'] == "ins")
 										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> <?php echo $title;?> </label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" name="masters" id="masters" placeholder="<?php echo $title;?>" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-1" name="masters" id="masters" required placeholder="<?php echo $title;?>" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 									<div class="clearfix form-actions">
