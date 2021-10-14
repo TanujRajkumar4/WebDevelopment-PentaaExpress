@@ -9,17 +9,17 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			$mobile = "";
 			$title = "Add Customer";
 			if ((isset($_POST['Cust_Type_Edit']) && $_POST['Cust_Type_Edit'] != 0)) {
-				$mobile = "AND Type = '".$_POST['Cust_Type_Edit']."'";
+				$mobile = "AND Type = '" . $_POST['Cust_Type_Edit'] . "'";
 			}
 			if ((isset($_GET['ct']) && $_GET['ct'] != 0)) {
 				$mobile = "AND Type = '" . $_GET['ct'] . "'";
 			}
 			if (isset($_POST['search'])) {
 				if ($_POST['mobile'] != "") {
-					$mobile .= " AND (consignor_phone ='".$_POST['mobile']."' OR custID='".$_POST['mobile']."')";
+					$mobile .= " AND (consignor_phone ='" . $_POST['mobile'] . "' OR custID='" . $_POST['mobile'] . "')";
 				}
 			}
-			if(isset($_POST['export_data'])) {
+			if (isset($_POST['export_data'])) {
 				//include();
 			}
 		} elseif ($_GET['ty'] == 'edit') {
@@ -80,8 +80,10 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			}
 		}
 		if ($_GET['ty'] == 'del') {
-			$sql = "DELETE FROM tbl_customer WHERE cid='" . $_GET['delid'] . "'";
-			if (mysqli_query($dbConn, $sql)) {
+			$sql = "DELETE FROM tbl_customer WHERE custID='" . $_GET['delid'] . "'";
+			$sql1 = "DELETE FROM customer_tariff WHERE Cust_ID='" . $_GET['delid'] . "'";
+
+			if (mysqli_query($dbConn, $sql) && mysqli_query($dbConn, $sql1)) {
 				echo "<script>alert('Record Deleted Successfully');
 				window.location.href = 'add-customer.php?ty=add';</script>";
 			} else {
@@ -125,6 +127,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 		</head>
+
 		<body class="skin-3">
 			<div id="navbar" class="navbar navbar-default          ace-save-state">
 				<div class="navbar-container ace-save-state" id="navbar-container">
@@ -223,99 +226,99 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 										</small>
 									</h1>
 								</div><!-- /.page-header -->
-	<div class="row">
-		<div class="col-xs-12">
-			<!-- PAGE CONTENT BEGINS -->
-			<div class="widget-box">
-				<div class="widget-header widget-header-blue widget-header-flat">
-					<h4 class="widget-title lighter">Customer Details</h4>
-				</div>
-				<div class="widget-body">
-					<div class="widget-main">
-						<div>
-							<div class="step-content pos-rel">
-								<div class="step-pane active">
-									<h3 class="lighter block green">Consignor's Details</h3>
-									<form class="form-horizontal" method="POST" action="add-customer.php?ac=ins&ty=<?php echo $_GET['ty']; ?>">
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer ID:</label>
-											<div class="col-xs-12 col-sm-9">
-												<div class="clearfix">
-													<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" required />
-												</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<!-- PAGE CONTENT BEGINS -->
+										<div class="widget-box">
+											<div class="widget-header widget-header-blue widget-header-flat">
+												<h4 class="widget-title lighter">Customer Details</h4>
 											</div>
-										</div>
-										<div class="space-2"></div>
-										<!-- CUSTOMER TYPE DROP DOWN LIST START-->
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
-											<div class="col-xs-12 col-sm-9">
-												<div class="clearfix">
-													<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
-													<select class="col-xs-12 col-sm-3" id="Cust_Type" name="Cust_Type" required>
-														<?php
-														if ($user_type == "Branch") {
-															$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
-														} else {
-															$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
-														}
-														while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-														?>
-															<option value="<?php echo $rwtoi['b_id']; ?>">
-																<?php echo $rwtoi['bname']; ?>
-															</option>
-														<?php
-														}
-														?>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="space-2"></div>
-										<!-- CUSTOMER TYPE DROP DOWN LIST END-->
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Customer's Name:</label>
-											<div class="col-xs-12 col-sm-9">
-												<div class="clearfix">
-													<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" required />
-												</div>
-											</div>
-										</div>
-										<div class="space-2"></div>
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="gstincon">GSTTIN Number:</label>
-											<div class="col-xs-12 col-sm-9">
-												<div class="clearfix">
-													<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6" />
-												</div>
-											</div>
-										</div>
-										<div class="space-2"></div>
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
-											<div class="col-xs-12 col-sm-9">
-												<div class="input-group">
-													<span class="input-group-addon">
-														<i class="ace-icon fa fa-phone"></i>
-													</span>
-													<input type="tel" id="phone" name="phone" required />
-												</div>
-											</div>
-										</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div>
+														<div class="step-content pos-rel">
+															<div class="step-pane active">
+																<h3 class="lighter block green">Consignor's Details</h3>
+																<form class="form-horizontal" method="POST" action="add-customer.php?ac=ins&ty=<?php echo $_GET['ty']; ?>">
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer ID:</label>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" required />
+																			</div>
+																		</div>
+																	</div>
+																	<div class="space-2"></div>
+																	<!-- CUSTOMER TYPE DROP DOWN LIST START-->
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
+																				<select class="col-xs-12 col-sm-3" id="Cust_Type" name="Cust_Type" required>
+																					<?php
+																					if ($user_type == "Branch") {
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
+																					} else {
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+																					}
+																					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+																					?>
+																						<option value="<?php echo $rwtoi['b_id']; ?>">
+																							<?php echo $rwtoi['bname']; ?>
+																						</option>
+																					<?php
+																					}
+																					?>
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="space-2"></div>
+																	<!-- CUSTOMER TYPE DROP DOWN LIST END-->
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Customer's Name:</label>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" required />
+																			</div>
+																		</div>
+																	</div>
+																	<div class="space-2"></div>
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="gstincon">GSTTIN Number:</label>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6" />
+																			</div>
+																		</div>
+																	</div>
+																	<div class="space-2"></div>
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="input-group">
+																				<span class="input-group-addon">
+																					<i class="ace-icon fa fa-phone"></i>
+																				</span>
+																				<input type="tel" id="phone" name="phone" required />
+																			</div>
+																		</div>
+																	</div>
 
-										<div class="space-2"></div>
+																	<div class="space-2"></div>
 
-										<div class="form-group">
-											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cusAddrs">Address:</label>
+																	<div class="form-group">
+																		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cusAddrs">Address:</label>
 
-											<div class="col-xs-12 col-sm-9">
-												<div class="clearfix">
-													<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs" required></textarea>
-												</div>
-											</div>
-										</div>
+																		<div class="col-xs-12 col-sm-9">
+																			<div class="clearfix">
+																				<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs" required></textarea>
+																			</div>
+																		</div>
+																	</div>
 
-										<!-- 
+																	<!-- 
 										<h3 class="lighter block green">Charges Details</h3>
 										<div class="hr hr-dotted"></div>
 
@@ -397,42 +400,42 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											</div>
 										</div> -->
 
-										<div>
-											<button class="btn btn-success btn-next" type="Submit">
-												Submit
+																	<div>
+																		<button class="btn btn-success btn-next" type="Submit">
+																			Submit
 
-											</button>
-											<button class="btn btn-prev">
+																		</button>
+																		<button class="btn btn-prev">
 
-												Clear
-											</button>
+																			Clear
+																		</button>
 
 
+																	</div>
+																</form>
+															</div>
+
+														</div>
+
+
+													</div>
+
+												</div><!-- /.widget-main -->
+											</div><!-- /.widget-body -->
 										</div>
-									</form>
+									</div>
 								</div>
-
-							</div>
-
-
-						</div>
-
-					</div><!-- /.widget-main -->
-				</div><!-- /.widget-body -->
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<h3 class="lighter block green" id="CD">Customer Details</h3>
-			<div class="hr hr-dotted"></div>
-			<?php
-			$exportdt = "";
-			$exportdt .= "<div class='row'>";
-			$exportdt .= "<div class='col-xs-12'>";
-			$exportdt .= "<table id='dynamic-table' class='table table-striped table-bordered table-hover'>";
-			$exportdt .= "<thead>";
-			$exportdt .= "<tr><th>SNo</th>
+								<div class="row">
+									<div class="col-xs-12">
+										<h3 class="lighter block green" id="CD">Customer Details</h3>
+										<div class="hr hr-dotted"></div>
+										<?php
+										$exportdt = "";
+										$exportdt .= "<div class='row'>";
+										$exportdt .= "<div class='col-xs-12'>";
+										$exportdt .= "<table id='dynamic-table' class='table table-striped table-bordered table-hover'>";
+										$exportdt .= "<thead>";
+										$exportdt .= "<tr><th>SNo</th>
 						<th>Customer ID</th>
 						<th>Customer Name</th>
 						<th>Type</th>
@@ -457,451 +460,444 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 				<tbody>
 				<tr>";
-			$i = 0;
-			$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
-			$Cust_Count = mysqli_num_rows($msql);
-			$results_per_page = 15;
-			$number_of_page = ceil($Cust_Count / $results_per_page);
+										$i = 0;
+										$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
+										$Cust_Count = mysqli_num_rows($msql);
+										$results_per_page = 15;
+										$number_of_page = ceil($Cust_Count / $results_per_page);
 
-			// PAGINATION - START
-			if (!isset($_GET['page'])) {
-				$page = 1;
-			} else {
-				$page = $_GET['page'];
-			}
-			$results_per_page = 15;
-			if (isset($_POST['Cust_Type_Edit'])) {
-				$Cust_Type = $_POST['Cust_Type_Edit'];
-			} else {
-				$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
-				$Cust_Count = mysqli_num_rows($msql);
-				$page_first_result = ($page - 1) * $results_per_page;
-				$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A' $mobile ORDER BY custID LIMIT " . $page_first_result . ',' . $results_per_page);
-				$number_of_page = ceil($Cust_Count / $results_per_page);
-			}
-			// PAGINATION - END
+										// PAGINATION - START
+										if (!isset($_GET['page'])) {
+											$page = 1;
+										} else {
+											$page = $_GET['page'];
+										}
+										$results_per_page = 15;
+										if (isset($_POST['Cust_Type_Edit'])) {
+											$Cust_Type = $_POST['Cust_Type_Edit'];
+										} else {
+											$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
+											$Cust_Count = mysqli_num_rows($msql);
+											$page_first_result = ($page - 1) * $results_per_page;
+											$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A' $mobile ORDER BY custID LIMIT " . $page_first_result . ',' . $results_per_page);
+											$number_of_page = ceil($Cust_Count / $results_per_page);
+										}
+										// PAGINATION - END
 
 
-			//START OF WHILE - CUSTOMER DETAILS
-			while ($row = mysqli_fetch_array($msql)) {
-				$i = $i + 1;
-				$exportdt .= "	<td class='center'>  $i</td>";
-				$exportdt .= "<td>" . $row['custID'] . "</td>";
-				$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
-				$Query = "SELECT * from pay_meth where status='A'AND b_id = " . $row['Type'];
-				$msql1 = mysqli_query($dbConn, $Query);
-				$row1 = mysqli_fetch_array($msql1);
+										//START OF WHILE - CUSTOMER DETAILS
+										while ($row = mysqli_fetch_array($msql)) {
+											$i = $i + 1;
+											$exportdt .= "	<td class='center'>  $i</td>";
+											$exportdt .= "<td>" . $row['custID'] . "</td>";
+											$exportdt .= "<td>" . $row['consignor_name'] . "</td>";
+											$Query = "SELECT * from pay_meth where status='A'AND b_id = " . $row['Type'];
+											$msql1 = mysqli_query($dbConn, $Query);
+											$row1 = mysqli_fetch_array($msql1);
 
-				$exportdt .= "<td>" . $row1['bname']  . "</td>";
-				// $exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
-				$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
-				$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
+											$exportdt .= "<td>" . $row1['bname']  . "</td>";
+											// $exportdt .= "<td>" . $row['consignor_gst'] . "</td>";
+											$exportdt .= "<td>" . $row['consignor_phone'] . "</td>";
+											$exportdt .= "<td>" . $row['consignor_add'] . "</td>";
 
-				// $exportdt .= "<td>" . $row['freight'] . "</td>";
-				// $exportdt .= "<td>" . $row['boxrate'] . "</td>";
-				// $exportdt .= "<td>" . $row['waych'] . "</td>";
-				// $exportdt .= "<td>" . $row['insch'] . "</td>";
-				// $exportdt .= "<td>" . $row['othch'] . "</td>";
-				// $exportdt .= "<td>" . $row['odach'] . "</td>";
-				// $exportdt .= "<td>" . $row['topaych'] . "</td>";
+											// $exportdt .= "<td>" . $row['freight'] . "</td>";
+											// $exportdt .= "<td>" . $row['boxrate'] . "</td>";
+											// $exportdt .= "<td>" . $row['waych'] . "</td>";
+											// $exportdt .= "<td>" . $row['insch'] . "</td>";
+											// $exportdt .= "<td>" . $row['othch'] . "</td>";
+											// $exportdt .= "<td>" . $row['odach'] . "</td>";
+											// $exportdt .= "<td>" . $row['topaych'] . "</td>";
 
-				$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
+											$exportdt .= "<td>" . $row['cre_dt'] . "</td>";
 
-				// OutStanding Balance Calc - START
-				// $SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
-				$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
-				$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+											// OutStanding Balance Calc - START
+											// $SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
+											$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+											$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
 
-				$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
-				$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+											$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
+											$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
 
-				$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
-				$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+											$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
+											$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
 
-				$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
-				if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
-					$Tran_Amt_Sum = 0;
-				}
-				// OutStanding Balance Calc - END
+											$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
+											if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
+												$Tran_Amt_Sum = 0;
+											}
+											// OutStanding Balance Calc - END
 
-				$exportdt .= "<td> Rs. " . $Tran_Amt_Sum . "/-</td>";
+											$exportdt .= "<td> Rs. " . $Tran_Amt_Sum . "/-</td>";
 
-				//START of IF - BRANCH ACCESS											
-				if ($user_type == "Branch") {
-					$exportdt .= "<td class='hidden-480'>";
+											//START of IF - BRANCH ACCESS											
+											if ($user_type == "Branch") {
+												$exportdt .= "<td class='hidden-480'>";
 
-					$exportdt .= "
+												$exportdt .= "
 						 <a href='add-customer.php?ty=edit&editid=$row[0]'><span class='btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>";
 
-					if ($Tran_Amt_Sum != 0) {
-						$exportdt .= "
+												if ($Tran_Amt_Sum != 0) {
+													$exportdt .= "
 							<!-- Customer Pending Payment - Repayment Button -->
 							<a href='add-customer.php?ty=repay&editid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>";
-					}
-					$exportdt .= "
+												}
+												$exportdt .= "
 						 </td>
 						</tr>";
-				} //END of IF - BRANCH ACCESS
-				else { //START of ELSE - HO ACCESS
-					$exportdt .= "<td class='hidden-480'>";
+											} //END of IF - BRANCH ACCESS
+											else { //START of ELSE - HO ACCESS
+												$exportdt .= "<td class='hidden-480'>";
 
-					$exportdt .= "
+												$exportdt .= "
 						<a href='add-customer.php?ty=edit&editid=$row[0]'><span class='w-15 btn btn-sm btn-primary bigger-110 '><i class='ace-icon fa fa-pencil bigger-110'></i>Edit</span></a>";
-					if ($Tran_Amt_Sum != 0) {
-						$exportdt .= "
+												if ($Tran_Amt_Sum != 0) {
+													$exportdt .= "
 						<!-- Customer Pending Payment - Repayment Button -->
 						<a href='add-customer.php?ty=repay&editid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Repay</span></a>";
-					}
-					$exportdt .= "
+												}
+												$exportdt .= "
 						<a href='customer_tariff.php?ty=add&cid=$row[1]'><span class='w-15 btn btn-sm btn-primary bigger-110'><i class='ace-icon fa fa-credit-card bigger-110'></i>Tariff</span></a>";
 
-					$exportdt .= "
-						<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[0]'><span class='w-15 btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>";
+												$exportdt .= "
+						<a id='Delete_Customer_Btn' href='add-customer.php?ty=del&delid=$row[1]'><span class='w-15 btn btn-sm btn-danger bigger-110'><i class='ace-icon fa fa-trash-o  bigger-110'></i>Delete</span></a>";
 
-					$exportdt .= "
+												$exportdt .= "
 						</td>
 						</tr>";
-				} //END of ELSE - HO ACCESS
+											} //END of ELSE - HO ACCESS
 
 
-			} //END OF WHILE - CUSTOMER DETAILS
+										} //END OF WHILE - CUSTOMER DETAILS
 
-			$exportdt .= '</tbody>
+										$exportdt .= '</tbody>
 			</table>
 		</div><!-- /.span -->
 	</div><!-- /.row -->';
-			?>
+										?>
 
-<form class="form-horizontal" method="POST" action="add-customer.php?ty=add#CD" name='SearchForm' id='SearchForm'>
-	<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
-		<div class="col-xs-12 col-sm-9">
-			<div class="clearfix">
-				<!-- onchange="document.getElementById('SearchForm').submit()"; -->
-				<select class="" id="Cust_Type_Edit" name="Cust_Type_Edit">
-					<?php
-					$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
-					?>
-					<option value="0">All</option>
-					<?php
-					while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-					?>
-						<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
-					<?php
-					}
-					?>
-				</select>
-			</div>
-		</div>
-	</div>
-	<?php
-	$cust="ALL";
-	$cu_type="ALL";
-	if(isset($_POST['search']))
-	{
-		if($_POST['mobile'] != "")
-		{
-			$cust=$_POST['mobile'];
-		}
-		if ((isset($_POST['Cust_Type_Edit']) && $_POST['Cust_Type_Edit'] != 0)) 
-		{
-			$cu_type=$_POST['Cust_Type_Edit'];
-		}
-	}
-		
-	?>
-	<div class="form-group">
-		<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mobile">Customer ID:</label>
-		<div class="col-xs-12 col-sm-9">
-			<div class="clearfix">
-				<input type="text" name="mobile" id="mobile" class="col-xs-12 col-sm-4 " />
-			</div>
-			<br>
-			<div class="clearfix">
-				<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-				<a href="export.php?ty=ch&cust_id=<?php echo $cust;?>&Type=<?php echo $cu_type;?>" class="btn btn-info">Export to excel</a>
-			</div>
-		</div>
-	</div>
-</div>
-</form>
-<?php echo $exportdt; ?>
+										<form class="form-horizontal" method="POST" action="add-customer.php?ty=add#CD" name='SearchForm' id='SearchForm'>
+											<div class="form-group">
+												<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
+												<div class="col-xs-12 col-sm-9">
+													<div class="clearfix">
+														<!-- onchange="document.getElementById('SearchForm').submit()"; -->
+														<select class="" id="Cust_Type_Edit" name="Cust_Type_Edit">
+															<?php
+															$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+															?>
+															<option value="0">All</option>
+															<?php
+															while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+															?>
+																<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+															<?php
+															}
+															?>
+														</select>
+													</div>
+												</div>
+											</div>
+											<?php
+											$cust = "ALL";
+											$cu_type = "ALL";
+											if (isset($_POST['search'])) {
+												if ($_POST['mobile'] != "") {
+													$cust = $_POST['mobile'];
+												}
+												if ((isset($_POST['Cust_Type_Edit']) && $_POST['Cust_Type_Edit'] != 0)) {
+													$cu_type = $_POST['Cust_Type_Edit'];
+												}
+											}
 
-<div class="modal-footer no-margin-top">
-	<!-- <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+											?>
+											<div class="form-group">
+												<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="mobile">Customer ID:</label>
+												<div class="col-xs-12 col-sm-9">
+													<div class="clearfix">
+														<input type="text" name="mobile" id="mobile" class="col-xs-12 col-sm-4 " />
+													</div>
+													<br>
+													<div class="clearfix">
+														<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
+														<a href="export.php?ty=ch&cust_id=<?php echo $cust; ?>&Type=<?php echo $cu_type; ?>" class="btn btn-info">Export to excel</a>
+													</div>
+												</div>
+											</div>
+									</div>
+									</form>
+									<?php echo $exportdt; ?>
+
+									<div class="modal-footer no-margin-top">
+										<!-- <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
 				<i class="ace-icon fa fa-times"></i>
 				Close
 			</button> -->
 
 
 
-	<ul class="pagination pull-right no-margin">
-		<li class="prev disabled">
-			<a href="#">
-				<i class="ace-icon fa fa-angle-double-left"></i>
-			</a>
-		</li>
-		<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
-			<li id="<?php echo 'PageNo' . $page; ?>">
+										<ul class="pagination pull-right no-margin">
+											<li class="prev disabled">
+												<a href="#">
+													<i class="ace-icon fa fa-angle-double-left"></i>
+												</a>
+											</li>
+											<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
+												<li id="<?php echo 'PageNo' . $page; ?>">
+													<?php
+													if ((isset($_POST['search']) && $_POST['mobile'] == "")) {
+														$ct = $_POST['Cust_Type_Edit'];
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $ct . '&#CD' . '">' . $page . ' </a>';
+													} else if (isset($_GET['ct']) && $_GET['ct'] != 0) {
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $_GET['ct'] . '&#CD' . '">' . $page . ' </a>';
+													} else {
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '#CD' . '">' . $page . ' </a>';
+													}
+													?>
+												</li>
+											<?php } ?>
+											<script>
+												function SetActivePage(page) {
+													for (var i = 0; i < 3; i++) {
+														var PageNum = "PageNo" + page;
+														document.getElementById(PageNum).className = "active";
+													}
+												}
+											</script>
+
+											<li class="next">
+												<a href="#">
+													<i class="ace-icon fa fa-angle-double-right"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+					</div>
+					<!-- END OF TYPE ADD CUSTOMER -->
 				<?php
-				if ((isset($_POST['search']) && $_POST['mobile'] == "")) {
-					$ct = $_POST['Cust_Type_Edit'];
-					echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $ct . '&#CD' . '">' . $page . ' </a>';
-				} 
-				else if(isset($_GET['ct']) && $_GET['ct']!=0){
-					echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '&ct=' . $_GET['ct'] . '&#CD' . '">' . $page . ' </a>';
+						}
+				?>
+
+				<?php
+				if (isset($_GET['ty'])) {
+					if ($_GET['ty'] == "repay") {
 
 
-				}
-				else {
-					echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "add-customer.php?ty=add&page=' . $page . '#CD' . '">' . $page . ' </a>';
+						// OutStanding Balance Calc - START
+						// $SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
+						$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" .  $_GET['editid'] . "' AND `Status`='A'";
+						$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" .  $_GET['editid'] . "' AND `Status`='A'";
+
+						$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
+						$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+
+						$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
+						$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+
+						$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
+						if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
+							$Tran_Amt_Sum = 0;
+						}
+						// OutStanding Balance Calc - END
+
+						$CustDetails = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM tbl_customer WHERE custID = '" . $_GET['editid'] . "'  AND Status = 'A' "));
+				?> <div class="page-content">
+							<!-- /.ace-settings-container -->
+							<div class="page-header">
+								<h1>
+									Repayment Section
+									<small>
+										<i class="ace-icon fa fa-angle-double-right"></i>
+										<?php echo $title; ?>
+									</small>
+								</h1>
+							</div><!-- /.page-header -->
+
+							<div class="row">
+								<div class="col-xs-12">
+									<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" method="POST" action="add-customer.php?ac=repay&ty=repay&editid=<?php echo $_GET['editid']; ?>">
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Id:</label>
+
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $CustDetails['custID']; ?>" readonly />
+												</div>
+											</div>
+										</div>
+
+										<div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Customer Name:</label>
+
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $CustDetails['consignor_name']; ?>" readonly />
+												</div>
+											</div>
+										</div>
+
+										<div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="outstanding">Current Outstanding:</label>
+
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="text" name="outstanding" id="outstanding" class="col-xs-12 col-sm-6" value="<?php echo $Tran_Amt_Sum; ?>" readonly />
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="payment">Payment:</label>
+
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="number" name="payment" id="payment" class="col-xs-12 col-sm-5 " value="0.00" />
+												</div>
+											</div>
+										</div>
+										<div class="space-2"></div>
+
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="balance">Balance:</label>
+
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="number" name="balance" id="balance" class="col-xs-12 col-sm-5 " value="0.00" />
+												</div>
+											</div>
+										</div>
+										<div>
+											<button class="btn btn-success btn-next" type="Submit"> Submit</button> <button class="btn btn-prev">Clear</button>
+										</div>
+									</form>
+								</div>
+							</div>
+
+						</div>
+				<?php
+					}
 				}
 				?>
-			</li>
-		<?php } ?>
-		<script>
-			function SetActivePage(page) {
-				for (var i = 0; i < 3; i++) {
-					var PageNum = "PageNo" + page;
-					document.getElementById(PageNum).className = "active";
-				}
-			}
-		</script>
+				<?php
+				if (isset($_GET['ty'])) {
+					// EDIT DETAILS OF CUSTOMER - START
+					if ($_GET['ty'] == "edit") {
+						$sqlms = mysqli_query($dbConn, "Select * from tbl_customer where cid = '" . $_GET['editid'] . "'");
+						$rowms = mysqli_fetch_array($sqlms);
+				?> <div class="page-content">
+							<!-- /.ace-settings-container -->
+							<div class="page-header">
+								<h1>
+									Edit Section
+									<small>
+										<i class="ace-icon fa fa-angle-double-right"></i>
+										<?php echo $title;
+										$CustDetails1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE b_id = '" . $rowms['Type'] . "'  AND Status = 'A' "));
+										?>
+									</small>
+								</h1>
+							</div><!-- /.page-header -->
 
-		<li class="next">
-			<a href="#">
-				<i class="ace-icon fa fa-angle-double-right"></i>
-			</a>
-		</li>
-	</ul>
-</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<!-- PAGE CONTENT BEGINS -->
+									<form class="form-horizontal" method="POST" action="add-customer.php?ac=upd&ty=edit&editid=<?php echo $_GET['editid']; ?>">
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Id:</label>
 
-</div>
-</div>
-</div>
-<!-- END OF TYPE ADD CUSTOMER -->
-<?php
-}
-?>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $rowms['custID']; ?>" />
+												</div>
+											</div>
+										</div>
+										<div class="space-2"></div>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Consignor's Name:</label>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $rowms['consignor_name']; ?>" />
+												</div>
+											</div>
+										</div>
 
-<?php
-if (isset($_GET['ty'])) {
-if ($_GET['ty'] == "repay") {
+										<!-- CUSTOMER TYPE DROP DOWN LIST START-->
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
 
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
+													<select class="col-xs-12 col-sm-3" id="Cust_Type_Edit" name="Cust_Type_Edit">
+														<?php
+														if ($user_type == "Branch") {
+															$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
+														} else {
+															$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
+														}
+														?>
+														<option value="<?php echo $rowms['Type']; ?>"><?php echo $CustDetails1['bname']; ?></option>
+														<?php
+														while ($rwtoi = mysqli_fetch_array($sqltoi)) {
+														?>
+															<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
+														<?php
+														}
+														?>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="space-2"></div>
+										<!-- CUSTOMER TYPE DROP DOWN LIST END-->
 
-	// OutStanding Balance Calc - START
-	// $SQL = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Cust_ID` = '" . $row['custID'] . "'";
-	$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" .  $_GET['editid'] . "' AND `Status`='A'";
-	$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" .  $_GET['editid'] . "' AND `Status`='A'";
+										<div class="space-2"></div>
 
-	$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
-	$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="gstincon">GSTTIN Number:</label>
 
-	$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
-	$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
 
-	$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
-	if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
-		$Tran_Amt_Sum = 0;
-	}
-	// OutStanding Balance Calc - END
+													<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6" value="<?php echo $rowms['consignor_gst']; ?>" />
+												</div>
+											</div>
+										</div>
 
-	$CustDetails = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM tbl_customer WHERE custID = '" . $_GET['editid'] . "'  AND Status = 'A' "));
-?> <div class="page-content">
-		<!-- /.ace-settings-container -->
-		<div class="page-header">
-			<h1>
-				Repayment Section
-				<small>
-					<i class="ace-icon fa fa-angle-double-right"></i>
-					<?php echo $title; ?>
-				</small>
-			</h1>
-		</div><!-- /.page-header -->
+										<div class="space-2"></div>
 
-		<div class="row">
-			<div class="col-xs-12">
-				<!-- PAGE CONTENT BEGINS -->
-				<form class="form-horizontal" method="POST" action="add-customer.php?ac=repay&ty=repay&editid=<?php echo $_GET['editid']; ?>">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Id:</label>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
 
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $CustDetails['custID']; ?>" readonly />
-							</div>
-						</div>
-					</div>
+											<div class="col-xs-12 col-sm-9">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="ace-icon fa fa-phone"></i>
+													</span>
 
-					<div class="space-2"></div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Customer Name:</label>
+													<input type="tel" id="phone" name="phone" value="<?php echo $rowms['consignor_phone']; ?>" />
+												</div>
+											</div>
+										</div>
 
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $CustDetails['consignor_name']; ?>" readonly />
-							</div>
-						</div>
-					</div>
+										<div class="space-2"></div>
 
-					<div class="space-2"></div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="outstanding">Current Outstanding:</label>
+										<div class="form-group">
+											<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cusAddrs">Address:</label>
 
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="text" name="outstanding" id="outstanding" class="col-xs-12 col-sm-6" value="<?php echo $Tran_Amt_Sum; ?>" readonly />
-							</div>
-						</div>
-					</div>
+											<div class="col-xs-12 col-sm-9">
+												<div class="clearfix">
+													<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs"><?php echo $rowms['consignor_add']; ?></textarea>
+												</div>
+											</div>
+										</div>
 
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="payment">Payment:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="number" name="payment" id="payment" class="col-xs-12 col-sm-5 " value="0.00" />
-							</div>
-						</div>
-					</div>
-					<div class="space-2"></div>
-
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="balance">Balance:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="number" name="balance" id="balance" class="col-xs-12 col-sm-5 " value="0.00" />
-							</div>
-						</div>
-					</div>
-					<div>
-						<button class="btn btn-success btn-next" type="Submit"> Submit</button> <button class="btn btn-prev">Clear</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-	</div>
-<?php
-}
-}
-?>
-<?php
-if (isset($_GET['ty'])) {
-// EDIT DETAILS OF CUSTOMER - START
-if ($_GET['ty'] == "edit") {
-	$sqlms = mysqli_query($dbConn, "Select * from tbl_customer where cid = '" . $_GET['editid'] . "'");
-	$rowms = mysqli_fetch_array($sqlms);
-?> <div class="page-content">
-		<!-- /.ace-settings-container -->
-		<div class="page-header">
-			<h1>
-				Edit Section
-				<small>
-					<i class="ace-icon fa fa-angle-double-right"></i>
-					<?php echo $title;
-					$CustDetails1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE b_id = '" . $rowms['Type'] . "'  AND Status = 'A' "));
-					?>
-				</small>
-			</h1>
-		</div><!-- /.page-header -->
-
-		<div class="row">
-			<div class="col-xs-12">
-				<!-- PAGE CONTENT BEGINS -->
-				<form class="form-horizontal" method="POST" action="add-customer.php?ac=upd&ty=edit&editid=<?php echo $_GET['editid']; ?>">
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Id:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" value="<?php echo $rowms['custID']; ?>" />
-							</div>
-						</div>
-					</div>
-					<div class="space-2"></div>
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignor">Consignor's Name:</label>
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<input type="text" name="consignor" id="consignor" class="col-xs-12 col-sm-6" value="<?php echo $rowms['consignor_name']; ?>" />
-							</div>
-						</div>
-					</div>
-
-					<!-- CUSTOMER TYPE DROP DOWN LIST START-->
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="custID">Customer Type:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<!-- <input type="text" name="custID" id="custID" class="col-xs-12 col-sm-6" placeholder="Ex:PLX123456" /> -->
-								<select class="col-xs-12 col-sm-3" id="Cust_Type_Edit" name="Cust_Type_Edit">
-									<?php
-									if ($user_type == "Branch") {
-										$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A' AND User_Access = 'Branch'");
-									} else {
-										$sqltoi = mysqli_query($dbConn, "SELECT * FROM pay_meth WHERE status= 'A'");
-									}
-									?>
-									<option value="<?php echo $rowms['Type']; ?>"><?php echo $CustDetails1['bname']; ?></option>
-									<?php
-									while ($rwtoi = mysqli_fetch_array($sqltoi)) {
-									?>
-										<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="space-2"></div>
-					<!-- CUSTOMER TYPE DROP DOWN LIST END-->
-
-					<div class="space-2"></div>
-
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="gstincon">GSTTIN Number:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-
-								<input type="text" id="gstincon" name="gstincon" class="col-xs-12 col-sm-6" value="<?php echo $rowms['consignor_gst']; ?>" />
-							</div>
-						</div>
-					</div>
-
-					<div class="space-2"></div>
-
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="phone">Phone Number:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="ace-icon fa fa-phone"></i>
-								</span>
-
-								<input type="tel" id="phone" name="phone" value="<?php echo $rowms['consignor_phone']; ?>" />
-							</div>
-						</div>
-					</div>
-
-					<div class="space-2"></div>
-
-					<div class="form-group">
-						<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="cusAddrs">Address:</label>
-
-						<div class="col-xs-12 col-sm-9">
-							<div class="clearfix">
-								<textarea class="input-xlarge" name="cusAddrs" id="cusAddrs"><?php echo $rowms['consignor_add']; ?></textarea>
-							</div>
-						</div>
-					</div>
-
-					<!-- <h3 class="lighter block green">Charges Details</h3>
+										<!-- <h3 class="lighter block green">Charges Details</h3>
 							<div class="hr hr-dotted"></div>
 
 							<div class="form-group">
@@ -984,565 +980,565 @@ if ($_GET['ty'] == "edit") {
 								</div>
 							</div> -->
 
-					<div>
-						<button class="btn btn-success btn-next" type="Submit">
-							Submit
+										<div>
+											<button class="btn btn-success btn-next" type="Submit">
+												Submit
 
-						</button>
-						<button class="btn btn-prev">
+											</button>
+											<button class="btn btn-prev">
 
-							Clear
-						</button>
-					</div>
-				</form>
+												Clear
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+
+						</div>
+				<?php
+					}
+				}
+				//  EDIT CUSTOMER DETAILS - END
+				?>
+				</div>
 			</div>
-		</div>
 
-	</div>
-<?php
-}
-}
-//  EDIT CUSTOMER DETAILS - END
-?>
-</div>
-</div>
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
+							&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
+						</span>
 
-<div class="footer">
-<div class="footer-inner">
-<div class="footer-content">
-	<span class="bigger-120">
-		<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
-		&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
-	</span>
+						&nbsp; &nbsp;
 
-	&nbsp; &nbsp;
+					</div>
+				</div>
+			</div>
 
-</div>
-</div>
-</div>
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+			</div><!-- /.main-container -->
 
-<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-</a>
-</div><!-- /.main-container -->
+			<!-- basic scripts -->
 
-<!-- basic scripts -->
+			<!--[if !IE]> -->
+			<script src="assets/js/jquery-2.1.4.min.js"></script>
 
-<!--[if !IE]> -->
-<script src="assets/js/jquery-2.1.4.min.js"></script>
+			<!-- <![endif]-->
 
-<!-- <![endif]-->
-
-<!--[if IE]>
+			<!--[if IE]>
 <script src="assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
-<script type="text/javascript">
-if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-</script>
-<script src="assets/js/bootstrap.min.js"></script>
-
-<!-- page specific plugin scripts -->
-<script src="assets/js/wizard.min.js"></script>
-<script src="assets/js/jquery.validate.min.js"></script>
-<script src="assets/js/jquery-additional-methods.min.js"></script>
-<script src="assets/js/bootbox.js"></script>
-<script src="assets/js/jquery.maskedinput.min.js"></script>
-<script src="assets/js/select2.min.js"></script>
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/daterangepicker.min.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-<script src="master/assets/js/daterangepicker.min.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- ace scripts -->
-<script src="assets/js/ace-elements.min.js"></script>
-<script src="assets/js/ace.min.js"></script>
-<script type="text/javascript">
-jQuery(function($) {
-
-$('[data-rel=tooltip]').tooltip();
-
-$('.select2').css('width', '200px').select2({
-		allowClear: true
-	})
-	.on('change', function() {
-		$(this).closest('form').validate().element($(this));
-	});
-
-
-var $validation = false;
-// $('#fuelux-wizard-container')
-// .ace_wizard({
-// //step: 2 //optional argument. wizard will jump to step "2" at first
-// //buttons: '.wizard-actions:eq(0)'
-// })
-// .on('actionclicked.fu.wizard' , function(e, info){
-// if(info.step == 1 && $validation) {
-// if(!$('#validation-form').valid()) e.preventDefault();
-// }
-// })
-// //.on('changed.fu.wizard', function() {
-// //})
-// .on('finished.fu.wizard', function(e) {
-// bootbox.dialog({
-// message: "Thank you! Your information was successfully saved!", 
-// buttons: {
-// "success" : {
-// "label" : "OK",
-// "className" : "btn-sm btn-primary"
-// }
-// }
-// });
-// }).on('stepclick.fu.wizard', function(e){
-// //e.preventDefault();//this will prevent clicking and selecting steps
-// });
-
-$(document).on("change", "#payment", function() {
-	calTot();
-});
-
-function calTot() {
-	var sgst = 0;
-	var subtot = 0.0;
-	var tot = 0.0;
-	sgst = $("#payment").val();
-	subtot = $("#outstanding").val();
-	tot = parseFloat(subtot) - parseFloat(sgst);
-	$('#balance').val(tot.toFixed(2));
-}
-
-//jump to a step
-/**
-var wizard = $('#fuelux-wizard-container').data('fu.wizard')
-wizard.currentStep = 3;
-wizard.setState();
-*/
-
-//determine selected step
-//wizard.selectedItem().step
-if (!ace.vars['old_ie']) $('#date-timepicker1').datetimepicker({
-	format: 'DD/MM/YYYY h:mm:ss A', //use this option to display seconds
-	icons: {
-		time: 'fa fa-clock-o',
-		date: 'fa fa-calendar',
-		up: 'fa fa-chevron-up',
-		down: 'fa fa-chevron-down',
-		previous: 'fa fa-chevron-left',
-		next: 'fa fa-chevron-right',
-		today: 'fa fa-arrows ',
-		clear: 'fa fa-trash',
-		close: 'fa fa-times'
-	}
-}).next().on(ace.click_event, function() {
-	$(this).prev().focus();
-});
-
+			<script type="text/javascript">
+				if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+			</script>
+			<script src="assets/js/bootstrap.min.js"></script>
+
+			<!-- page specific plugin scripts -->
+			<script src="assets/js/wizard.min.js"></script>
+			<script src="assets/js/jquery.validate.min.js"></script>
+			<script src="assets/js/jquery-additional-methods.min.js"></script>
+			<script src="assets/js/bootbox.js"></script>
+			<script src="assets/js/jquery.maskedinput.min.js"></script>
+			<script src="assets/js/select2.min.js"></script>
+			<script src="assets/js/moment.min.js"></script>
+			<script src="assets/js/daterangepicker.min.js"></script>
+			<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+			<script src="master/assets/js/daterangepicker.min.js"></script>
+			<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+
+			<!-- ace scripts -->
+			<script src="assets/js/ace-elements.min.js"></script>
+			<script src="assets/js/ace.min.js"></script>
+			<script type="text/javascript">
+				jQuery(function($) {
+
+					$('[data-rel=tooltip]').tooltip();
+
+					$('.select2').css('width', '200px').select2({
+							allowClear: true
+						})
+						.on('change', function() {
+							$(this).closest('form').validate().element($(this));
+						});
+
+
+					var $validation = false;
+					// $('#fuelux-wizard-container')
+					// .ace_wizard({
+					// //step: 2 //optional argument. wizard will jump to step "2" at first
+					// //buttons: '.wizard-actions:eq(0)'
+					// })
+					// .on('actionclicked.fu.wizard' , function(e, info){
+					// if(info.step == 1 && $validation) {
+					// if(!$('#validation-form').valid()) e.preventDefault();
+					// }
+					// })
+					// //.on('changed.fu.wizard', function() {
+					// //})
+					// .on('finished.fu.wizard', function(e) {
+					// bootbox.dialog({
+					// message: "Thank you! Your information was successfully saved!", 
+					// buttons: {
+					// "success" : {
+					// "label" : "OK",
+					// "className" : "btn-sm btn-primary"
+					// }
+					// }
+					// });
+					// }).on('stepclick.fu.wizard', function(e){
+					// //e.preventDefault();//this will prevent clicking and selecting steps
+					// });
+
+					$(document).on("change", "#payment", function() {
+						calTot();
+					});
+
+					function calTot() {
+						var sgst = 0;
+						var subtot = 0.0;
+						var tot = 0.0;
+						sgst = $("#payment").val();
+						subtot = $("#outstanding").val();
+						tot = parseFloat(subtot) - parseFloat(sgst);
+						$('#balance').val(tot.toFixed(2));
+					}
+
+					//jump to a step
+					/**
+					var wizard = $('#fuelux-wizard-container').data('fu.wizard')
+					wizard.currentStep = 3;
+					wizard.setState();
+					*/
+
+					//determine selected step
+					//wizard.selectedItem().step
+					if (!ace.vars['old_ie']) $('#date-timepicker1').datetimepicker({
+						format: 'DD/MM/YYYY h:mm:ss A', //use this option to display seconds
+						icons: {
+							time: 'fa fa-clock-o',
+							date: 'fa fa-calendar',
+							up: 'fa fa-chevron-up',
+							down: 'fa fa-chevron-down',
+							previous: 'fa fa-chevron-left',
+							next: 'fa fa-chevron-right',
+							today: 'fa fa-arrows ',
+							clear: 'fa fa-trash',
+							close: 'fa fa-times'
+						}
+					}).next().on(ace.click_event, function() {
+						$(this).prev().focus();
+					});
+
 
 
 
-//hide or show the other form which requires validation
-//this is for demo only, you usullay want just one form in your application
-$('#skip-validation').removeAttr('checked').on('click', function() {
-	$validation = this.checked;
-	if (this.checked) {
-		$('#sample-form').hide();
-		$('#validation-form').removeClass('hide');
-	} else {
-		$('#validation-form').addClass('hide');
-		$('#sample-form').show();
-	}
-})
-
-
-
-//documentation : http://docs.jquery.com/Plugins/Validation/validate
-
-
-$.mask.definitions['~'] = '[+-]';
-$('#phone').mask('999 999 9999');
-
-jQuery.validator.addMethod("phone", function(value, element) {
-	return this.optional(element) || /^\d{3}\ \d{3}\ \d{4}( x\d{1,6})?$/.test(value);
-}, "Enter a valid phone number.");
-
-$('#validation-form').validate({
-	errorElement: 'div',
-	errorClass: 'help-block',
-	focusInvalid: false,
-	ignore: "",
-	rules: {
-		email: {
-			required: true,
-			email: true
-		},
-		password: {
-			required: true,
-			minlength: 5
-		},
-		password2: {
-			required: true,
-			minlength: 5,
-			equalTo: "#password"
-		},
-		name: {
-			required: true
-		},
-		phone: {
-			required: true,
-			phone: 'required'
-		},
-		url: {
-			required: true,
-			url: true
-		},
-		comment: {
-			required: true
-		},
-		state: {
-			required: true
-		},
-		platform: {
-			required: true
-		},
-		subscription: {
-			required: true
-		},
-		gender: {
-			required: true,
-		},
-		agree: {
-			required: true,
-		}
-	},
-
-	messages: {
-		email: {
-			required: "Please provide a valid email.",
-			email: "Please provide a valid email."
-		},
-		password: {
-			required: "Please specify a password.",
-			minlength: "Please specify a secure password."
-		},
-		state: "Please choose state",
-		subscription: "Please choose at least one option",
-		gender: "Please choose weight choice",
-		agree: "Please accept our policy"
-	},
-
-
-	highlight: function(e) {
-		$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-	},
-
-	success: function(e) {
-		$(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
-		$(e).remove();
-	},
-
-	errorPlacement: function(error, element) {
-		if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-			var controls = element.closest('div[class*="col-"]');
-			if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
-			else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-		} else if (element.is('.select2')) {
-			error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-		} else if (element.is('.chosen-select')) {
-			error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-		} else error.insertAfter(element.parent());
-	},
-
-	submitHandler: function(form) {},
-	invalidHandler: function(form) {}
-});
-
-
-
-
-$('#modal-wizard-container').ace_wizard();
-$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
-
-
-/**
-$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
-	$(this).closest('form').validate().element($(this));
-});
-
-$('#mychosen').chosen().on('change', function(ev) {
-	$(this).closest('form').validate().element($(this));
-});
-*/
-
-
-$(document).one('ajaxloadstart.page', function(e) {
-	//in ajax mode, remove remaining elements before leaving page
-	$('[class*=select2]').remove();
-	$('.bootstrap-datetimepicker-widget.dropdown-menu').remove();
-});
-})
-</script>
-<script src="assets/js/jquery.dataTables.min.js"></script>
-<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
-<script src="assets/js/dataTables.buttons.min.js"></script>
-<script src="assets/js/buttons.flash.min.js"></script>
-<script src="assets/js/buttons.html5.min.js"></script>
-<script src="assets/js/buttons.print.min.js"></script>
-<script src="assets/js/buttons.colVis.min.js"></script>
-<script src="assets/js/dataTables.select.min.js"></script>
-
-<!-- ace scripts -->
-<script src="assets/js/ace-elements.min.js"></script>
-<script src="assets/js/ace.min.js"></script>
-
-<!-- inline scripts related to this page -->
-<script type="text/javascript">
-jQuery(function($) {
-//initiate dataTables plugin
-var myTable =
-	$('#dynamic-table')
-	//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-	.DataTable({
-		bAutoWidth: false,
-		"aoColumns": [{
-				"bSortable": false
-			},
-			null, null, null, null, null,
-			{
-				"bSortable": false
-			}
-		],
-		"aaSorting": [],
-
-
-		//"bProcessing": true,
-		//"bServerSide": true,
-		//"sAjaxSource": "http://127.0.0.1/table.php"	,
-
-		//,
-		//"sScrollY": "200px",
-		//"bPaginate": false,
-
-		//"sScrollX": "100%",
-		//"sScrollXInner": "120%",
-		//"bScrollCollapse": true,
-		//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-		//you may want to wrap the table inside a "div.dataTables_borderWrap" element
-
-		//"iDisplayLength": 50
-
-
-		select: {
-			style: 'multi'
-		}
-	});
-
-
-
-$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
-
-new $.fn.dataTable.Buttons(myTable, {
-	buttons: [{
-			"extend": "colvis",
-			"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-			"className": "btn btn-white btn-primary btn-bold",
-			columns: ':not(:first):not(:last)'
-		},
-		{
-			"extend": "copy",
-			"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "csv",
-			"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "excel",
-			"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "pdf",
-			"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
-			"className": "btn btn-white btn-primary btn-bold"
-		},
-		{
-			"extend": "print",
-			"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-			"className": "btn btn-white btn-primary btn-bold",
-			autoPrint: false,
-			message: 'This print was produced using the Print button for DataTables'
-		}
-	]
-});
-myTable.buttons().container().appendTo($('.tableTools-container'));
-
-//style the message box
-var defaultCopyAction = myTable.button(1).action();
-myTable.button(1).action(function(e, dt, button, config) {
-	defaultCopyAction(e, dt, button, config);
-	$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-});
-
-
-var defaultColvisAction = myTable.button(0).action();
-myTable.button(0).action(function(e, dt, button, config) {
-
-	defaultColvisAction(e, dt, button, config);
-
-
-	if ($('.dt-button-collection > .dropdown-menu').length == 0) {
-		$('.dt-button-collection')
-			.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-			.find('a').attr('href', '#').wrap("<li />")
-	}
-	$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-});
-
-////
-
-setTimeout(function() {
-	$($('.tableTools-container')).find('a.dt-button').each(function() {
-		var div = $(this).find(' > div').first();
-		if (div.length == 1) div.tooltip({
-			container: 'body',
-			title: div.parent().text()
-		});
-		else $(this).tooltip({
-			container: 'body',
-			title: $(this).text()
-		});
-	});
-}, 500);
-
-
-
-
-
-myTable.on('select', function(e, dt, type, index) {
-	if (type === 'row') {
-		$(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
-	}
-});
-myTable.on('deselect', function(e, dt, type, index) {
-	if (type === 'row') {
-		$(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-	}
-});
-
-
-
-
-/////////////////////////////////
-//table checkboxes
-$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-
-//select/deselect all rows according to table header checkbox
-$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function() {
-	var th_checked = this.checked; //checkbox inside "TH" table header
-
-	$('#dynamic-table').find('tbody > tr').each(function() {
-		var row = this;
-		if (th_checked) myTable.row(row).select();
-		else myTable.row(row).deselect();
-	});
-});
-
-//select/deselect a row when the checkbox is checked/unchecked
-$('#dynamic-table').on('click', 'td input[type=checkbox]', function() {
-	var row = $(this).closest('tr').get(0);
-	if (this.checked) myTable.row(row).deselect();
-	else myTable.row(row).select();
-});
-
-
-
-$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
-	e.stopImmediatePropagation();
-	e.stopPropagation();
-	e.preventDefault();
-});
-
-
-
-//And for the first simple table, which doesn't have TableTools or dataTables
-//select/deselect all rows according to table header checkbox
-var active_class = 'active';
-$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
-	var th_checked = this.checked; //checkbox inside "TH" table header
-
-	$(this).closest('table').find('tbody > tr').each(function() {
-		var row = this;
-		if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
-		else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
-	});
-});
-
-//select/deselect a row when the checkbox is checked/unchecked
-$('#simple-table').on('click', 'td input[type=checkbox]', function() {
-	var $row = $(this).closest('tr');
-	if ($row.is('.detail-row ')) return;
-	if (this.checked) $row.addClass(active_class);
-	else $row.removeClass(active_class);
-});
-
-
-
-/********************************/
-//add tooltip for small view action buttons in dropdown menu
-$('[data-rel="tooltip"]').tooltip({
-	placement: tooltip_placement
-});
-
-//tooltip placement on right or left
-function tooltip_placement(context, source) {
-	var $source = $(source);
-	var $parent = $source.closest('table')
-	var off1 = $parent.offset();
-	var w1 = $parent.width();
-
-	var off2 = $source.offset();
-	//var w2 = $source.width();
-
-	if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-	return 'left';
-}
-
-
-
-
-/***************/
-$('.show-details-btn').on('click', function(e) {
-	e.preventDefault();
-	$(this).closest('tr').next().toggleClass('open');
-	$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-});
-/***************/
-
-
-
-
-
-/**
-//add horizontal scrollbars to a simple table
-$('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
-  {
-	horizontal: true,
-	styleClass: 'scroll-top scroll-dark scroll-visible',//show the scrollbars on top(default is bottom)
-	size: 2000,
-	mouseWheelLock: true
-  }
-).css('padding-top', '12px');
-*/
-
-
-})
-</script>
-</body>
+					//hide or show the other form which requires validation
+					//this is for demo only, you usullay want just one form in your application
+					$('#skip-validation').removeAttr('checked').on('click', function() {
+						$validation = this.checked;
+						if (this.checked) {
+							$('#sample-form').hide();
+							$('#validation-form').removeClass('hide');
+						} else {
+							$('#validation-form').addClass('hide');
+							$('#sample-form').show();
+						}
+					})
+
+
+
+					//documentation : http://docs.jquery.com/Plugins/Validation/validate
+
+
+					$.mask.definitions['~'] = '[+-]';
+					$('#phone').mask('999 999 9999');
+
+					jQuery.validator.addMethod("phone", function(value, element) {
+						return this.optional(element) || /^\d{3}\ \d{3}\ \d{4}( x\d{1,6})?$/.test(value);
+					}, "Enter a valid phone number.");
+
+					$('#validation-form').validate({
+						errorElement: 'div',
+						errorClass: 'help-block',
+						focusInvalid: false,
+						ignore: "",
+						rules: {
+							email: {
+								required: true,
+								email: true
+							},
+							password: {
+								required: true,
+								minlength: 5
+							},
+							password2: {
+								required: true,
+								minlength: 5,
+								equalTo: "#password"
+							},
+							name: {
+								required: true
+							},
+							phone: {
+								required: true,
+								phone: 'required'
+							},
+							url: {
+								required: true,
+								url: true
+							},
+							comment: {
+								required: true
+							},
+							state: {
+								required: true
+							},
+							platform: {
+								required: true
+							},
+							subscription: {
+								required: true
+							},
+							gender: {
+								required: true,
+							},
+							agree: {
+								required: true,
+							}
+						},
+
+						messages: {
+							email: {
+								required: "Please provide a valid email.",
+								email: "Please provide a valid email."
+							},
+							password: {
+								required: "Please specify a password.",
+								minlength: "Please specify a secure password."
+							},
+							state: "Please choose state",
+							subscription: "Please choose at least one option",
+							gender: "Please choose weight choice",
+							agree: "Please accept our policy"
+						},
+
+
+						highlight: function(e) {
+							$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+						},
+
+						success: function(e) {
+							$(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
+							$(e).remove();
+						},
+
+						errorPlacement: function(error, element) {
+							if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+								var controls = element.closest('div[class*="col-"]');
+								if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+								else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+							} else if (element.is('.select2')) {
+								error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+							} else if (element.is('.chosen-select')) {
+								error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+							} else error.insertAfter(element.parent());
+						},
+
+						submitHandler: function(form) {},
+						invalidHandler: function(form) {}
+					});
+
+
+
+
+					$('#modal-wizard-container').ace_wizard();
+					$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+					/**
+					$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+						$(this).closest('form').validate().element($(this));
+					});
+
+					$('#mychosen').chosen().on('change', function(ev) {
+						$(this).closest('form').validate().element($(this));
+					});
+					*/
+
+
+					$(document).one('ajaxloadstart.page', function(e) {
+						//in ajax mode, remove remaining elements before leaving page
+						$('[class*=select2]').remove();
+						$('.bootstrap-datetimepicker-widget.dropdown-menu').remove();
+					});
+				})
+			</script>
+			<script src="assets/js/jquery.dataTables.min.js"></script>
+			<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>
+			<script src="assets/js/dataTables.buttons.min.js"></script>
+			<script src="assets/js/buttons.flash.min.js"></script>
+			<script src="assets/js/buttons.html5.min.js"></script>
+			<script src="assets/js/buttons.print.min.js"></script>
+			<script src="assets/js/buttons.colVis.min.js"></script>
+			<script src="assets/js/dataTables.select.min.js"></script>
+
+			<!-- ace scripts -->
+			<script src="assets/js/ace-elements.min.js"></script>
+			<script src="assets/js/ace.min.js"></script>
+
+			<!-- inline scripts related to this page -->
+			<script type="text/javascript">
+				jQuery(function($) {
+					//initiate dataTables plugin
+					var myTable =
+						$('#dynamic-table')
+						//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+						.DataTable({
+							bAutoWidth: false,
+							"aoColumns": [{
+									"bSortable": false
+								},
+								null, null, null, null, null,
+								{
+									"bSortable": false
+								}
+							],
+							"aaSorting": [],
+
+
+							//"bProcessing": true,
+							//"bServerSide": true,
+							//"sAjaxSource": "http://127.0.0.1/table.php"	,
+
+							//,
+							//"sScrollY": "200px",
+							//"bPaginate": false,
+
+							//"sScrollX": "100%",
+							//"sScrollXInner": "120%",
+							//"bScrollCollapse": true,
+							//Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+							//you may want to wrap the table inside a "div.dataTables_borderWrap" element
+
+							//"iDisplayLength": 50
+
+
+							select: {
+								style: 'multi'
+							}
+						});
+
+
+
+					$.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+					new $.fn.dataTable.Buttons(myTable, {
+						buttons: [{
+								"extend": "colvis",
+								"text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+								"className": "btn btn-white btn-primary btn-bold",
+								columns: ':not(:first):not(:last)'
+							},
+							{
+								"extend": "copy",
+								"text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+								"className": "btn btn-white btn-primary btn-bold"
+							},
+							{
+								"extend": "csv",
+								"text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
+								"className": "btn btn-white btn-primary btn-bold"
+							},
+							{
+								"extend": "excel",
+								"text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+								"className": "btn btn-white btn-primary btn-bold"
+							},
+							{
+								"extend": "pdf",
+								"text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+								"className": "btn btn-white btn-primary btn-bold"
+							},
+							{
+								"extend": "print",
+								"text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+								"className": "btn btn-white btn-primary btn-bold",
+								autoPrint: false,
+								message: 'This print was produced using the Print button for DataTables'
+							}
+						]
+					});
+					myTable.buttons().container().appendTo($('.tableTools-container'));
+
+					//style the message box
+					var defaultCopyAction = myTable.button(1).action();
+					myTable.button(1).action(function(e, dt, button, config) {
+						defaultCopyAction(e, dt, button, config);
+						$('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+					});
+
+
+					var defaultColvisAction = myTable.button(0).action();
+					myTable.button(0).action(function(e, dt, button, config) {
+
+						defaultColvisAction(e, dt, button, config);
+
+
+						if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+							$('.dt-button-collection')
+								.wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+								.find('a').attr('href', '#').wrap("<li />")
+						}
+						$('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+					});
+
+					////
+
+					setTimeout(function() {
+						$($('.tableTools-container')).find('a.dt-button').each(function() {
+							var div = $(this).find(' > div').first();
+							if (div.length == 1) div.tooltip({
+								container: 'body',
+								title: div.parent().text()
+							});
+							else $(this).tooltip({
+								container: 'body',
+								title: $(this).text()
+							});
+						});
+					}, 500);
+
+
+
+
+
+					myTable.on('select', function(e, dt, type, index) {
+						if (type === 'row') {
+							$(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+						}
+					});
+					myTable.on('deselect', function(e, dt, type, index) {
+						if (type === 'row') {
+							$(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
+						}
+					});
+
+
+
+
+					/////////////////////////////////
+					//table checkboxes
+					$('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+					//select/deselect all rows according to table header checkbox
+					$('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function() {
+						var th_checked = this.checked; //checkbox inside "TH" table header
+
+						$('#dynamic-table').find('tbody > tr').each(function() {
+							var row = this;
+							if (th_checked) myTable.row(row).select();
+							else myTable.row(row).deselect();
+						});
+					});
+
+					//select/deselect a row when the checkbox is checked/unchecked
+					$('#dynamic-table').on('click', 'td input[type=checkbox]', function() {
+						var row = $(this).closest('tr').get(0);
+						if (this.checked) myTable.row(row).deselect();
+						else myTable.row(row).select();
+					});
+
+
+
+					$(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+						e.stopImmediatePropagation();
+						e.stopPropagation();
+						e.preventDefault();
+					});
+
+
+
+					//And for the first simple table, which doesn't have TableTools or dataTables
+					//select/deselect all rows according to table header checkbox
+					var active_class = 'active';
+					$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
+						var th_checked = this.checked; //checkbox inside "TH" table header
+
+						$(this).closest('table').find('tbody > tr').each(function() {
+							var row = this;
+							if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+							else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+						});
+					});
+
+					//select/deselect a row when the checkbox is checked/unchecked
+					$('#simple-table').on('click', 'td input[type=checkbox]', function() {
+						var $row = $(this).closest('tr');
+						if ($row.is('.detail-row ')) return;
+						if (this.checked) $row.addClass(active_class);
+						else $row.removeClass(active_class);
+					});
+
+
+
+					/********************************/
+					//add tooltip for small view action buttons in dropdown menu
+					$('[data-rel="tooltip"]').tooltip({
+						placement: tooltip_placement
+					});
+
+					//tooltip placement on right or left
+					function tooltip_placement(context, source) {
+						var $source = $(source);
+						var $parent = $source.closest('table')
+						var off1 = $parent.offset();
+						var w1 = $parent.width();
+
+						var off2 = $source.offset();
+						//var w2 = $source.width();
+
+						if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+						return 'left';
+					}
+
+
+
+
+					/***************/
+					$('.show-details-btn').on('click', function(e) {
+						e.preventDefault();
+						$(this).closest('tr').next().toggleClass('open');
+						$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+					});
+					/***************/
+
+
+
+
+
+					/**
+					//add horizontal scrollbars to a simple table
+					$('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
+					  {
+						horizontal: true,
+						styleClass: 'scroll-top scroll-dark scroll-visible',//show the scrollbars on top(default is bottom)
+						size: 2000,
+						mouseWheelLock: true
+					  }
+					).css('padding-top', '12px');
+					*/
+
+
+				})
+			</script>
+		</body>
 <?php
-// }
-// redirecting to dashboard  
+		// }
+		// redirecting to dashboard  
 
-}
+	}
 } ?>

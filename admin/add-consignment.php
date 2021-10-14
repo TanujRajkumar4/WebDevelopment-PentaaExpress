@@ -23,7 +23,8 @@
 						// echo $qry;
 						$trksql = mysqli_query($dbConn, $qry1);
 						$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-						$cust_bal = $selbal['bala']*1 + $_POST['tot'];
+						$selbal['bala']=0;
+						$cust_bal = $selbal['bala'] * 1 + $_POST['tot'];
 						$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
 						if ($_POST['platform'] == '1') {
 							$TranType = "Dr";
@@ -317,7 +318,7 @@
 																						<i class="ace-icon fa fa-phone"></i>
 																					</span>
 
-																					<input type="tel" id="phone" name="phone" required maxlength="10"/>
+																					<input type="tel" id="phone" name="phone" required/>
 																				</div>
 																			</div>
 																		</div>
@@ -369,7 +370,7 @@
 																						<i class="ace-icon fa fa-phone"></i>
 																					</span>
 
-																					<input type="tel" id="consigneephone" name="consigneephone" required maxlength="10"/>
+																					<input type="tel" id="consigneephone" name="consigneephone" required maxlength="10" />
 																				</div>
 																			</div>
 																		</div>
@@ -386,7 +387,7 @@
 																						<i class="ace-icon fa fa-map-marker"></i>
 																					</span>
 
-																					<input type="text" id="pincode" name="pincode" required maxlength="6"/>
+																					<input type="text" id="pincode" name="pincode" required maxlength="6" />
 																				</div>
 																			</div>
 																		</div>
