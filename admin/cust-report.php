@@ -6,17 +6,31 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 	$id = $_SESSION['uid'];
 	if (isset($_POST['search']) and isset($_POST['cus_type'])) {
 		if ($_POST['cus_type'] == 1) {
-			$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select  SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_POST['cus_type'] . "' "));
 			$total = $debit['Debit_Total'];
 		} elseif ($_POST['cus_type'] == 2) {
-			$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
-			$debit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Debit_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Debit_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
 			$total = $credit['Credit_Total'] - $debit['Debit_Total'];
 		} elseif ($_POST['cus_type'] == 3) {
-			$credit = mysqli_fetch_array(mysqli_query($dbConn, "Select sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
 			$total = $credit['Topay_Total'];
 		}
 	}
+	else if ((isset($_GET['ct']) && isset($_GET['b']) && isset($_GET['d1']) && isset($_GET['d2']))) {
+		if ($_GET['ct'] == 1) {
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT SUM(`Tran_Amt`) AS Debit_Total from tbl_transactions where `Tran_Type` = 'Dr' and `Pay_Meth_ID` ='" . $_GET['ct'] . "' "));
+			$total = $debit['Debit_Total'];
+		} elseif ($_GET['ct'] == 2) {
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Credit_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_GET['ct'] . "' "));
+			$debit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Debit_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_GET['ct'] . "' "));
+			$total = $credit['Credit_Total'] - $debit['Debit_Total'];
+		} elseif ($_GET['ct'] == 3) {
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_GET['ct'] . "' "));
+			$total = $credit['Topay_Total'];
+		}
+	}
+
 ?>
 
 	<!DOCTYPE html>
@@ -305,7 +319,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														<?php
 														$number_of_page = 0;
 														$filters = "";
-														if (isset($_POST['search']) and isset($_POST['cus_type'])) {
+														if ((isset($_POST['search']) && isset($_POST['cus_type'])) || (isset($_GET['ct']) && isset($_GET['b']) && isset($_GET['d1']) && isset($_GET['d2']))) {
 															$i = 0;
 															$credit = 0;
 															// pagination
@@ -313,8 +327,17 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																$page = 1;
 															} else {
 																$page = $_GET['page'];
+																if ($page > 1) {
+																	$i = ($page-1) * 10;
+																}
 															}
-															$query = "SELECT * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and tbl_transactions.Branch_id='" . $_POST['branch'] . "' and tbl_transactions.Pay_Meth_ID='" . $_POST['cus_type'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
+															$query = "";
+															if (isset($_POST['search'])) {
+																$query = "SELECT * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_POST['id-date-picker-1'] . "' and '" . $_POST['id-date-picker-2'] . "' and tbl_transactions.Branch_id='" . $_POST['branch'] . "' and tbl_transactions.Pay_Meth_ID='" . $_POST['cus_type'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
+															}
+															if (isset($_GET['ct']) && isset($_GET['b']) && isset($_GET['d1']) && isset($_GET['d2'])) {
+																$query = "SELECT * from tbl_transactions,tbl_customer where tbl_transactions.Tran_Date between '" . $_GET['d1'] . "' AND '" . $_GET['d2'] . "' and tbl_transactions.Branch_id='" . $_GET['b'] . "' and tbl_transactions.Pay_Meth_ID='" . $_GET['ct'] . "' and tbl_transactions.status='A'and tbl_transactions.Cust_ID=tbl_customer.custID";
+															}
 															$result_per_page = 10;
 															$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $query));
 															$page_first_result = ($page - 1) * $result_per_page;
@@ -343,13 +366,26 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														<i class="ace-icon fa fa-angle-double-left"></i>
 													</a>
 												</li>
-												<?php for ($page = 1; $page <= $number_of_page; $page++) {
-													 
-													
-													
-													?>
+												<?php
+
+												if (isset($_POST['search'])) {
+													$ct = $_POST['cus_type'];
+													$b = $_POST['branch'];
+													$d1 = $_POST['id-date-picker-1'];
+													$d2 = $_POST['id-date-picker-2'];
+												}
+												if (isset($_GET['ct']) && isset($_GET['b']) && isset($_GET['d1']) && isset($_GET['d2'])) {
+													$ct = $_GET['ct'];
+													$b = $_GET['b'];
+													$d1 = $_GET['d1'];
+													$d2 = $_GET['d2'];
+												}
+												for ($page = 1; $page <= $number_of_page; $page++) {
+												?>
 													<li id="<?php echo 'PageNo' . $page; ?>">
-														<?php echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "cust-report.php?&page=' . $page . '">' . $page . ' </a>'; ?>
+														<?php
+														echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "cust-report.php?&page=' . $page . '&ct=' . $ct . '&b=' . $b . '&d1=' . $d1 . '&d2=' . $d2 . '">' . $page . ' </a>';
+														?>
 													</li>
 
 												<?php } ?>
