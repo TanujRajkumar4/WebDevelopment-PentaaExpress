@@ -207,7 +207,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<td><a href="#"><?php echo $row['waybillno']; ?></a></td>
 															<td><a href="#"><?php echo $ConsignmentStatusName ?></a></td>
 
-															<td><a href="#"><?php echo $row['consignor_name'] . "," . $row['consignor_phone'] . "," . $row['consignor_add'] ?></a></td>
+															<td><a href="#"><?php echo $row['Cust_ID'].", ".$row['consignor_name'] . ", " . $row['consignor_phone'] . "," . $row['consignor_add'] ?></a></td>
 															<td><a href="#"><?php echo $row['consignee_name'] . "," . $row['consignee_phone'] . "," . $row['consignee_add']; ?></a></td>
 															<td><a href="#"><?php $dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from tbl_offices where id='$row[dest_off]' and status='A'"));
 																			echo $dsql['off_name']; ?></a></td>

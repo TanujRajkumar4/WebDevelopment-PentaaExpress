@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2021 at 10:39 AM
+-- Generation Time: Oct 14, 2021 at 10:58 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -247,6 +247,7 @@ INSERT INTO `tariff` (`tariff_id`, `Remarks`, `branch_id`, `city_id`, `price_per
 CREATE TABLE `tbl_courier` (
   `cid` int(10) NOT NULL,
   `waybillno` varchar(100) NOT NULL,
+  `Cust_ID` varchar(12) NOT NULL,
   `consignor_name` varchar(100) NOT NULL,
   `consignor_gst` varchar(50) NOT NULL,
   `consignor_phone` varchar(12) NOT NULL,
@@ -304,12 +305,10 @@ CREATE TABLE `tbl_courier` (
 -- Dumping data for table `tbl_courier`
 --
 
-INSERT INTO `tbl_courier` (`cid`, `waybillno`, `consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`, `bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`, `dest_city`, `org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`, `cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES
-(10, '000006', 'crystal knitters private ltd', '33AABCC5572D1Z1', '822 001 3199', 'no-19, new no 41 Nehru street, Tirupur-641601', 'Rikab Agencies', '33AAIPM4051B1Z9', '044-24525562', '600041', 'no-3 l.b road, 1st floor, b-wing\r\ntiruvanmiyur, chennai', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '4', '35', 4, '1', '819-100899', '81194', 'knitted garments', '3', '22/10/2018 6:00:00 PM', '3', 3, '1', 720, '0.00', '0.00', '0.00', '0.00', '0.00', '720.00', '0.00', '0.00', '720.00', '', '3', 'A', '2018-10-22'),
-(161, '000012', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'GST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '7', 0, '', '', '', '', '2', '12/10/2021 7:00:00 PM', '6', 0, '10', 700, '50', '0.00', '0.00', '0.00', '0.00', '750.00', '9', '9', '885.00', 'TEST COMMENT', '1', 'A', '2021-10-13'),
-(162, '000013', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'xdff', 'hfghfg', '9876543210', '641603', 'ADD', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '21/10/2021 12:00:00 AM', '10', 0, '1', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
-(163, '000020', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 10, '1', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
-(164, '000020', 'Go Fashion India Pvt. Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd 8/60 def mahavishnu nagar Angeriplayam road Angeriplayam Tirupur-641603 ', 'TEST', 'TEST', '9876543210', '641603', 'TEST', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13');
+INSERT INTO `tbl_courier` (`cid`, `waybillno`, `Cust_ID`, `consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `consignee_name`, `consignee_gst`, `consignee_phone`, `consignee_pincode`, `consignee_add`, `toi`, `weight`, `actwgt`, `volh`, `volw`, `voll`, `volq`, `volh1`, `volw1`, `voll1`, `volq1`, `volh2`, `volw2`, `voll2`, `volq2`, `cubft`, `boxes`, `bxpkg`, `qty`, `units`, `invoice_no`, `invoice_val`, `setto`, `pay_mode`, `pick_date`, `dest_off`, `dest_city`, `org_off`, `freight`, `insurance`, `waych`, `othch`, `odach`, `topaych`, `subtot`, `sgst`, `cgst`, `tot`, `comments`, `book_status`, `status`, `book_date`) VALUES
+(161, '000012', 'PLX000003', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'GST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '7', 0, '', '', '', '', '2', '12/10/2021 7:00:00 PM', '6', 0, '10', 700, '50', '0.00', '0.00', '0.00', '0.00', '750.00', '9', '9', '885.00', 'TEST COMMENT', '1', 'A', '2021-10-13'),
+(162, '000013', 'PLX000005', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'xdff', 'hfghfg', '9876543210', '641603', 'ADD', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '21/10/2021 12:00:00 AM', '10', 0, '1', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
+(163, '000020', 'PLX000002', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 10, '1', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13');
 
 -- --------------------------------------------------------
 
@@ -362,7 +361,6 @@ CREATE TABLE `tbl_courier_track` (
 --
 
 INSERT INTO `tbl_courier_track` (`id`, `cons_no`, `current_city`, `bk_status`, `comments`, `bk_time`, `status`) VALUES
-(4, '000006', '10', '2', '', '2021-10-02', 'A'),
 (155, '000012', '10', '2', 'TEST COMMENT', '2021-10-13', 'A'),
 (156, '000013', '1', '1', '', '2021-10-13', 'A'),
 (157, '000020', '10', '1', '', '2021-10-13', 'A');
