@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2021 at 07:29 PM
+-- Generation Time: Oct 14, 2021 at 10:39 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -308,7 +308,8 @@ INSERT INTO `tbl_courier` (`cid`, `waybillno`, `consignor_name`, `consignor_gst`
 (10, '000006', 'crystal knitters private ltd', '33AABCC5572D1Z1', '822 001 3199', 'no-19, new no 41 Nehru street, Tirupur-641601', 'Rikab Agencies', '33AAIPM4051B1Z9', '044-24525562', '600041', 'no-3 l.b road, 1st floor, b-wing\r\ntiruvanmiyur, chennai', '2', 2, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '4', '35', 4, '1', '819-100899', '81194', 'knitted garments', '3', '22/10/2018 6:00:00 PM', '3', 3, '1', 720, '0.00', '0.00', '0.00', '0.00', '0.00', '720.00', '0.00', '0.00', '720.00', '', '3', 'A', '2018-10-22'),
 (161, '000012', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'GST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '7', 0, '', '', '', '', '2', '12/10/2021 7:00:00 PM', '6', 0, '10', 700, '50', '0.00', '0.00', '0.00', '0.00', '750.00', '9', '9', '885.00', 'TEST COMMENT', '1', 'A', '2021-10-13'),
 (162, '000013', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'xdff', 'hfghfg', '9876543210', '641603', 'ADD', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '21/10/2021 12:00:00 AM', '10', 0, '1', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
-(163, '000020', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 10, '1', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13');
+(163, '000020', 'Go Fashion India  Pvt.  Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd\r\n 8/60 def mahavishnu nagar\r\n  Angeriplayam road\r\n  Angeriplayam\r\n  Tirupur-641603\r\n', 'TEST', 'TEST', '9876543210', '641603', 'ADDRESS', '1', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 10, '1', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13'),
+(164, '000020', 'Go Fashion India Pvt. Ltd.', '33AADCG9557C1ZO', '958 531 0275', ' M/s. Go Fashions India Pvt ltd 8/60 def mahavishnu nagar Angeriplayam road Angeriplayam Tirupur-641603 ', 'TEST', 'TEST', '9876543210', '641603', 'TEST', '', 1, '100', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 0, '0', '0', '5', 0, '', '', '', '', '1', '13/10/2021 12:00:00 AM', '6', 0, '10', 500, '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '9', '9', '590.00', '', '1', 'A', '2021-10-13');
 
 -- --------------------------------------------------------
 
@@ -639,6 +640,12 @@ ALTER TABLE `book_status`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `city`
+--
+ALTER TABLE `city`
+  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `customer_tariff`
 --
 ALTER TABLE `customer_tariff`
@@ -684,7 +691,7 @@ ALTER TABLE `tariff`
 -- AUTO_INCREMENT for table `tbl_courier`
 --
 ALTER TABLE `tbl_courier`
-  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `cid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `tbl_courier_officers`
