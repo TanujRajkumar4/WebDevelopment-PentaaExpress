@@ -476,7 +476,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 				$msql = mysqli_query($dbConn, "SELECT * FROM tbl_customer where status='A' $mobile ");
 				$Cust_Count = mysqli_num_rows($msql);
 				$page_first_result = ($page - 1) * $results_per_page;
-				$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A' $mobile LIMIT " . $page_first_result . ',' . $results_per_page);
+				$msql = mysqli_query($dbConn, "SELECT * from tbl_customer where status='A' $mobile ORDER BY custID LIMIT " . $page_first_result . ',' . $results_per_page);
 				$number_of_page = ceil($Cust_Count / $results_per_page);
 			}
 			// PAGINATION - END
