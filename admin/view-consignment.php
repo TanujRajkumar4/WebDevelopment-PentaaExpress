@@ -185,7 +185,11 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														$page = $_GET['page'];
 													}
 													$results_per_page = 10;
-													$SQL = "SELECT * from tbl_courier where status='A' ORDER BY waybillno DESC";
+													if ($_SESSION['uid'] == 10) {
+														$SQL = "SELECT * from tbl_courier where status='A' ORDER BY waybillno DESC";
+													} else {
+														$SQL = "SELECT * from tbl_courier where status='A' AND (dest_off=$_SESSION[uid] OR org_off=$_SESSION[uid]) ORDER BY waybillno DESC";
+													}
 													$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $SQL));
 													$page_first_result = ($page - 1) * $results_per_page;
 													$msql = mysqli_query($dbConn, $SQL . " LIMIT " . $page_first_result . ',' . $results_per_page);
@@ -212,9 +216,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<td><a href="#"><?php echo $row['Cust_ID'] . ", " . $row['consignor_name'] . ", " . $row['consignor_phone'] . "," . $row['consignor_add'] ?></a></td>
 															<td><a href="#"><?php echo $row['consignee_name'] . "," . $row['consignee_phone'] . "," . $row['consignee_add']; ?></a></td>
 															<td class="center"><a href="#"><?php $dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from tbl_offices where id='$row[dest_off]' and status='A'"));
-																			echo $dsql['off_name']; ?></a></td>
+																							echo $dsql['off_name']; ?></a></td>
 															<td class="center"><a href="#"><?php $dsql1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$row[dest_city]' and status='A'"));
-																			echo $dsql1['bname']; ?></a></td>
+																							echo $dsql1['bname']; ?></a></td>
 															<td class="hidden-480 center">
 																<a href="add-consignment.php?ty=edit&editid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-primary bigger-110"><i class="ace-icon fa fa-pencil bigger-110"></i>Edit</span></a>
