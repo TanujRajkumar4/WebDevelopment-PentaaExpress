@@ -25,13 +25,26 @@ if ($_GET['ty'] == 'ch') {
 	<th align = "center">Created Date</th>
 	</tr>';
 	while ($excel = mysqli_fetch_assoc($result)) {
+		$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+		$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+
+		$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
+		$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+
+		$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
+		$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+
+		$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
+		if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
+			$Tran_Amt_Sum = 0;
+		}
 		$output .= '<tr>
 		<td align = "center">' . $i . '</td>
 		<td align = "left">' . $excel['custID'] . '</td>
 		<td align = "left">' . $excel['consignor_name'] . '</td>
 		<td align = "right">' . $excel['consignor_phone'] . '</td>
 		<td align = "left">' . $excel['consignor_add'] . '</td>
-		<td align = "right">' . $excel['bala'] . '</td>
+		<td align = "right">' . $Tran_Amt_Sum . '</td>
 		<td align = "left">' . $excel['bname'] . '</td>
 		<td align = "right">' . $excel['cre_dt'] . '</td>
 		</tr>';
@@ -116,3 +129,62 @@ if ($_GET['ty'] == 'ch') {
 	header('Content-Disposition:attachment;filename=' . $filename);
 	echo $output;
 }
+elseif ($_GET['ty'] == 'hc') {
+	$i = 1;
+	$query = "SELECT * FROM tbl_customer,pay_meth where tbl_customer.Type=pay_meth.b_id and tbl_customer.status='A'";
+	if ($_GET['cust_id'] != "ALL") {
+		$query = $query . " and tbl_customer.custID='" . $_GET['cust_id'] . "'";
+	}
+	$result = mysqli_query($dbConn, $query);
+	$output = '<table border="1">
+	<tr><th colspan="8">Customer Details</th></tr>
+	<tr></tr>
+	<tr>
+	<th align = "center">SNO</th>
+	<th align = "center">Customer ID</th>
+	<th align = "center">Customer Name</th>
+	<th align = "center">Customer Type</th>
+	<th align = "center">GSTIN No.</th>
+	<th align = "center">Customer Phone</th>
+	<th align = "center">Customer Address</th>
+	<th align = "center">Payments</th>
+	<th align = "center">Outstanding</th>
+	<th align = "center">Repayment Date</th>
+	</tr>';
+	while ($excel = mysqli_fetch_assoc($result)) {
+		
+	$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" .  $row['custID'] . "' AND `Status`='A'";
+	$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount, MAX(`Tran_Date`) AS LDate FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $excel['custID'] . "' AND `Status`='A'";
+
+	$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
+	$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));
+
+	$Tran_Amt_Sum_Dr = $Tran_Sum_Dr['Amount'];
+	$Tran_Amt_Sum_Cr = $Tran_Sum_Cr['Amount'];
+
+	$Tran_Amt_Sum = $Tran_Amt_Sum_Dr - $Tran_Amt_Sum_Cr;
+	if ($Tran_Amt_Sum == NULL || $Tran_Amt_Sum_Dr == 0) {
+		$Tran_Amt_Sum = 0;
+	}
+		$output .= '<tr>
+		<td align = "center">' . $i . '</td>
+		<td align = "left">' . $excel['custID'] . '</td>
+		<td align = "left">' . $excel['consignor_name'] . '</td>
+		<td align = "left">' . $excel['bname'] . '</td>
+		<td align = "right">' . $excel['consignor_gst'] . '</td>
+		<td align = "right">' . $excel['consignor_phone'] . '</td>
+		<td align = "left">' . $excel['consignor_add'] . '</td>
+		<td align = "right">' . $Tran_Amt_Sum_Cr. '</td>
+		<td align = "right">' . $Tran_Amt_Sum . '</td>
+		<td align = "right">' . $Tran_Sum_Cr['LDate'] . '</td>
+		</tr>';
+		$i++;
+	}
+	$output .= '</table>';
+	$t_dy = date("d-m-Y");
+	$filename = 'Customer-History-As-On ' . $t_dy . '.xls';
+	header('Content-Type:aplication/xls');
+	header('Content-Disposition:attachment;filename=' . $filename);
+	echo $output;
+}
+?>

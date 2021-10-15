@@ -12,55 +12,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 	// 	exit();
 	// }
-	if (isset($_POST['export_data'])) {
-		// --------------------------------------------------------------------------- start export excel --------------------------------------------------------------------------------
-		//error_reporting (E_ALL ^ E_NOTICE); 
-		require_once("excelwriter.class.php");
-		$rec = array();
-		$excel = new ExcelWriter("customerpaymentdetails.xls");
-		if ($excel == false)
-			echo $excel->error;
-		$myArr = array("");
-		$myArr = array("CUSTOMER PAYMENT DETAILS");
-		$excel->writeLine($myArr);
-		$myArr = array("");
-		$excel->writeLine($myArr);
-		$myArr = array("SNo", "Customer Id", "Customer Name", "GSTIN No", "Phone No.", "Address", "Payments", "Outstanding", "Repayment Date");
-		$excel->writeLine($myArr);
-		//echo "SELECT * from classified inner join district $condition";
-		//$qry = mysqli_query($dbConn,"SELECT * from tbl_customer where status='A'");
-		if ($_POST['mobile'] != "" || $_POST['mobile1'] != "") {
-			$mobile = " And tbl_customer.consignor_phone ='" . $_POST['mobile'] . "' or tbl_customer.consignor_phone='" . $_POST['mobile1'] . "'";
-			$qry = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id $mobile");
-		} else {
-			$qry = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id");
-		}
-		if ($qry != false) {
-			$i = 1;
-			while ($res = mysqli_fetch_array($qry)) {
-
-				$myArr = array($i, $res['custID'], $res['consignor_name'], $res['consignor_gst'], $res['consignor_phone'], $res['consignor_add'], $res['repaid'], $res['outstanding'], $res['repaydt']);
-				array_push($rec, $myArr);
-				$excel->writeLine($myArr);
-				$i++;
-			}
-		}
-
-
-
-		$file = "customerpaymentdetails.xls";
-		header('Content-Description: File Transfer');
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename=' . basename($file));
-		header('Content-Transfer-Encoding: binary');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Pragma: public');
-		header('Content-Length: ' . filesize($file));
-		ob_clean();
-		flush();
-		readfile($file);
-	}
 ?>
 
 	<!DOCTYPE html>
@@ -223,7 +174,17 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
-
+<?php
+	$cust="ALL";
+	if(isset($_POST['search']))
+	{
+		if($_POST['mobile'] != "")
+		{
+			$cust=$_POST['mobile'];
+		}
+	}
+		
+?>
 						<div class="row">
 							<div class="col-xs-12">
 								<h3 class="lighter block green">Customer Details</h3>
@@ -239,7 +200,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												<div class="col-xs-12 col-sm-5">
 													<div class="clearfix">
 														<button class="btn btn-success btn-next" type="Submit" name="search" id="search">Search</button>
-														<button class="btn btn-success btn-next" type="Submit" name="export_data" id="export_data">Export to Excel</button>
+														<a class="btn btn-success btn-next" href="export.php?ty=hc&cust_id=<?php echo $cust;?>">Export to Excel</a>
 														<a class="btn btn-success btn-next" href="" name="print-data" onclick="printpage('table');">Print</a>
 													</div>
 
@@ -251,6 +212,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 									</div>
 
 								</form>
+
 								<div id="table">
 									<table id="simple-table" class="table  table-bordered table-hover">
 										<thead>
