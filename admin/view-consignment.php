@@ -220,7 +220,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 															<td class="center"><a href="#"><?php $dsql1 = mysqli_fetch_array(mysqli_query($dbConn, "SELECT * from city where b_id='$row[dest_city]' and status='A'"));
 																							echo $dsql1['bname']; ?></a></td>
 															<td class="hidden-480 center">
-																<a onclick="return confirm('Are you sure want to edit?');" href="add-consignment.php?ty=edit&editid=<?php echo $row[0]; ?>">
+																<a onclick="return confirm('Please note that only certain Consignment Details are Editable... Do you still want to proceed?');" href="add-consignment.php?ty=edit&editid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-primary bigger-110"><i class="ace-icon fa fa-pencil bigger-110"></i>Edit</span></a>
 																<!-- <a href="add-consignment.php?ty=status&editid=<?php echo $row[0]; ?>">
 																	<span class="btn btn-sm btn-success bigger-110"><i class="ace-icon fa fa-fire bigger-110"></i>Update</span></a> -->
