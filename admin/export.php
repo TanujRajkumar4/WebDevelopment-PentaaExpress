@@ -41,36 +41,84 @@ if ($_GET['ty'] == 'ch')
 		</tr>';
 		$i++;
 	}
-	$output.='</table>';	
+	$output.='</table>';$t_dy=date("d-m-Y");
+	$filename='Customer-Details-As-On '.$t_dy.'.xls';	
 	header('Content-Type:aplication/xls');
-	header('Content-Disposition:attachment;filename=customerdetails.xls');
+	header('Content-Disposition:attachment;filename='.$filename);
 	echo $output;
- } elseif ($_GET['ty'] == 'cd') {
-        $qry = mysqli_query($dbConn, "Select * from tbl_customer,cust_trans where tbl_customer.status='A' and tbl_customer.custID=cust_trans.cust_id");
-        $title = '<table><tr><td></td><td></td><td></td><td></td><td></td><td></td><td>CUSTOMER PAYMENT DETAILS</td><td></td><td></td></tr></table>';
-        $empty = '<table><tr><td></td></tr></table>';
-        $table = '<table><tr><td>SNo</td><td>Customer Id</td><td>Customer Name</td><td>GSTIN No</td><td>Phone No.</td><td>Address</td><td>Payments</td><td>Outstanding</td><td>Repayment Date</td></tr>';
-        $i = 1;
-        while ($res = mysqli_fetch_assoc($qry)) {
-            $table .= '<tr><td>' . $i . '</td><td>' . $res['custID'] . '</td><td>' . $res['consignor_name'] . '</td><td>' . $res['consignor_gst'] . '</td><td>' . $res['consignor_phone'] . '</td><td>' . $res['consignor_add'] . '</td><td>' . $res['repaid'] . '</td><td>' . $res['outstanding'] . '</td><td>' . $res['repaydt'] . '</td></tr>';
-            $i++;
-        }
-        $table .= '</table>';
-        $file = "customerpaymentdetails.xls";
+ } 
+ elseif ($_GET['ty'] == 'vc') {
+$i=1;
+	$query="SELECT * from tbl_courier,book_status where tbl_courier.book_status=book_status.b_id and tbl_courier.status='A' ORDER BY tbl_courier.book_date ASC";	
+	$result = mysqli_query($dbConn, $query);
+	$output ='<table border="1">
+	<tr><th colspan="6">Consignment Details</th></tr>
+	<tr></tr>
+	<tr>
+		<th>SNo</th>
+		<th>Waybill No</th>
+		<th>Status</th>
+		<th>Consignors Details</th>
+		<th>Consignees Details</th>
+		<th>Destination Office</th>
+	</tr>';
+	
+	while ($excel = mysqli_fetch_assoc($result)) 
+	{
+		$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from tbl_offices where id='".$excel['dest_off']."' and status='A'"));
+		$output.='<tr>
+		<td align = "center">'.$i.'</td>
+		<td align = "right">'.strval($excel['waybillno']).'</td>
+		<td align = "left">'.$excel['bname'].'</td>
+		<td align = "left">'.$excel['consignor_name'] . ", " . $excel['consignor_phone'] . "," . $excel['consignor_add'].'</td>
+		<td align = "left">'.$excel['consignor_name'] . ", " . $excel['consignor_phone'] . "," . $excel['consignor_add'].'</td>
+		<td align = "left">'.$dsql['off_name'].'</td>
+		</tr>';
+		$i++;
+	}
+	$output.='</table>';
+	$t_dy=date("d-m-Y");
+	$filename='Consignment-Details-As-On '.$t_dy.'.xls';	
+	header('Content-Type:aplication/xls');
+	header('Content-Disposition:attachment;filename='.$filename);
+	echo $output;
     }
-    elseif ($_GET['ty'] == 'ts') {
-        $qry = mysqli_query($dbConn, "Select * from tbl_courier,tbl_courier_track where tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier_track.current_city='" . $_SESSION['orgid'] . "'and tbl_courier_track.bk_status='1' and tbl_courier_track.status='A'");
-        $title = '<table><tr><td></td><td></td><td></td><td></td><td></td><td>TRIP SHEET</td><td></td><td></td></tr></table>';
-        $empty = '<table><tr><td></td></tr></table>';
-        $table = '<table><tr><td>SNo</td><td>Waybill No</td><td>Consignor Name</td><td>Consignor Phone No</td><td>Consignor Address</td><td>Consignee Name</td><td>Consignee Phone No</td><td>Consignee Address</td><td>Destination Office</td><td>Qty</td></tr>';
-        $i = 1;
-        while ($res = mysqli_fetch_assoc($qry)) {
-            $dsql = mysqli_fetch_assoc(mysqli_query($dbConn, "Select * from tbl_offices where id='$res[dest_off]' and status='A'"));
-            $table .= '<tr><td>' . $i . '</td><td>' . $res['waybillno'] . '</td><td>' . $res['consignor_name'] . '</td><td>' . $res['consignor_phone'] . '</td><td>' . $res['consignor_add'] . '</td><td>' . $res['consignee_name'] . '</td><td>' . $res['consignee_phone'] . '</td><td>' . $res['consignee_add'] . '</td><td>' . $dsql['off_name'] . '</td><td>' . $res['qty'] . '</td></tr>';
-            $i++;
-        }
-        $table .= '</table>';
-        $file = "tripsheet.xls";
+    elseif ($_GET['ty'] == 'ts') 
+	{
+        $i=1;
+	$query="Select * from tbl_courier,tbl_courier_track where tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier_track.current_city='" . $_SESSION['orgid'] . "'and tbl_courier_track.bk_status='1' and tbl_courier_track.status='A' ORDER BY tbl_courier.book_date ASC";	
+	$result = mysqli_query($dbConn, $query);
+	$output ='<table border="1">
+	<tr><th colspan="6">Consignment Details</th></tr>
+	<tr></tr>
+	<tr>
+		<th>SNo</th>
+		<th>Waybill No</th>
+		<th>Consignors Details</th>
+		<th>Consignees Details</th>
+		<th>Destination Office</th>
+		<th>Quantity</th>
+	</tr>';
+	
+	while ($excel = mysqli_fetch_assoc($result)) 
+	{
+		$dsql = mysqli_fetch_array(mysqli_query($dbConn, "Select * from tbl_offices where id='".$excel['dest_off']."' and status='A'"));
+		$output.='<tr>
+		<td align = "center">'.$i.'</td>
+		<td align = "right">'.strval($excel['waybillno']).'</td>
+		<td align = "left">'.$excel['consignor_name'] . ", " . $excel['consignor_phone'] . "," . $excel['consignor_add'].'</td>
+		<td align = "left">'.$excel['consignor_name'] . ", " . $excel['consignor_phone'] . "," . $excel['consignor_add'].'</td>
+		<td align = "left">'.$dsql['off_name'].'</td>
+		<td align = "left">'.$excel['qty'].'</td>
+		</tr>';
+		$i++;
+	}
+	$output.='</table>';
+	$t_dy=date("d-m-Y");
+	$filename='Trip-Sheet-As-On '.$t_dy.'.xls';	
+	header('Content-Type:aplication/xls');
+	header('Content-Disposition:attachment;filename='.$filename);
+	echo $output;
     }
 	?>
 

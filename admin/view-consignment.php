@@ -155,6 +155,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
+								<a href="export.php?ty=vc" class="btn btn-info" style="float:right;">Export to excel</a>
 								<div class="row">
 									<div class="col-xs-12">
 										<table id="simple-table" class="table  table-bordered table-hover">
