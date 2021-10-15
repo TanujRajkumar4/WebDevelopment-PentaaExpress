@@ -25,8 +25,8 @@ if ($_GET['ty'] == 'ch') {
 	<th align = "center">Created Date</th>
 	</tr>';
 	while ($excel = mysqli_fetch_assoc($result)) {
-		$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
-		$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $row['custID'] . "' AND `Status`='A'";
+		$SQL_Dr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Dr' AND `Cust_ID` = '" . $excel['custID'] . "' AND `Status`='A'";
+		$SQL_Cr = "SELECT `Cust_ID`, SUM(`Tran_Amt`) AS Amount FROM tbl_transactions WHERE `Tran_Type` = 'Cr' AND `Cust_ID` = '" . $excel['custID'] . "' AND `Status`='A'";
 
 		$Tran_Sum_Dr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Dr));
 		$Tran_Sum_Cr = mysqli_fetch_array(mysqli_query($dbConn, $SQL_Cr));

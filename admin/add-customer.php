@@ -35,7 +35,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 				// ADD NEW CUSTOMER INTO TBL_CUSTOMER
 				$qry = "INSERT INTO `tbl_customer`(`cid`,`custID`,`consignor_name`, `consignor_gst`, `consignor_phone`, `consignor_add`, `freight`,`boxrate`, `waych`,`insch`, `othch`, `odach`, `topaych`,`bala`,`cre_dt`,`status`,`Type`,`User_Access`) VALUES (NULL,'" . $_POST['custID'] . "','" . $_POST['consignor'] . "','" . $_POST['gstincon'] . "','" . $_POST['phone'] . "','" . $_POST['cusAddrs'] . "','" . $_POST['freight'] . "','" . $_POST['boxrate'] . "','" . $_POST['waybillch'] . "','" . $_POST['insurch'] . "','" . $_POST['otherch'] . "','" . $_POST['oda'] . "','" . $_POST['topay'] . "','','" . $today . "','A','" . $_POST['Cust_Type'] .  "','" . $user_type . "')";
 				$sql = mysqli_query($dbConn, $qry);
-				echo $qry;
+				// echo $qry;
 				if ($sql) {
 					echo "<script>alert('Inserted Successfully');window.location.href = 'add-customer.php?ty=$_GET[ty]';</script>";
 				} else {
@@ -44,9 +44,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 				// window.location.href = 'add-customer.php?ty=$_GET[ty]';
 			}
 			if ($_GET['ac'] == "upd") {
-				$sql = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `custID`='" . $_POST['custID'] . "',`consignor_name`='" . $_POST['consignor'] . "',`Type`='" . $_POST['Cust_Type_Edit'] . "',`consignor_gst`='" . $_POST['gstincon'] . "', `consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "',`freight`='" . $_POST['freight'] . "',`boxrate`='" . $_POST['boxrate'] . "', `waych`='" . $_POST['waybillch'] . "',`insch`='" . $_POST['insurch'] . "', `othch`='" . $_POST['otherch'] . "', `odach`='" . $_POST['oda'] . "',`topaych`='" . $_POST['topay'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
+				$sql = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `custID`='" . $_POST['custID'] . "',`consignor_name`='" . $_POST['consignor'] . "',`Type`='" . $_POST['Cust_Type_Edit'] . "',`consignor_gst`='" . $_POST['gstincon'] . "', `consignor_phone`='" . $_POST['phone'] . "',`consignor_add`='" . $_POST['cusAddrs'] . "' WHERE `cid`='" . $_GET['editid'] . "' and `status`='A'");
 				// $sql = mysqli_query($dbConn, "UPDATE 'tbl_customer' SET 'custID'='" . $_POST['custID'] . "','consignor_name'='" . $_POST['consignor'] . "','consignor_gst'='" . $_POST['gstincon'] . "', 'consignor_phone'='" . $_POST['phone'] . "','consignor_add'='" . $_POST['cusAddrs'] . "','freight'='" . $_POST['freight'] . "','boxrate'='" . $_POST['boxrate'] . "', 'waych'='" . $_POST['waybillch'] . "','insch'='" . $_POST['insurch'] . "', 'othch'='" . $_POST['otherch'] . "', 'odach'='" . $_POST['oda'] . "','topaych'='" . $_POST['topay'] . "' WHERE 'cid'='" . $_GET['editid'] . "' and 'status'='A'");
-				echo $sql;
+				// echo $sql;
 				if ($sql) {
 					echo "<script>alert('Updated Successfully');window.location.href = 'add-customer.php?ty=add';</script>";
 				} else {
@@ -405,7 +405,8 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																			Submit
 
 																		</button>
-																		<button class="btn btn-prev">
+
+																		<button class="btn" type="reset">
 
 																			Clear
 																		</button>
@@ -772,7 +773,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 											</div>
 										</div>
 										<div>
-											<button class="btn btn-success btn-next" type="Submit"> Submit</button> <button class="btn btn-prev">Clear</button>
+											<button class="btn btn-success btn-next" type="Submit"> Submit</button> <button class="btn btn-prev" type="reset">Clear</button>
 										</div>
 									</form>
 								</div>
@@ -985,7 +986,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 												Submit
 
 											</button>
-											<button class="btn btn-prev">
+											<button class="btn btn-prev" type="reset">
 
 												Clear
 											</button>

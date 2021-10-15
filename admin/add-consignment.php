@@ -23,7 +23,7 @@
 						// echo $qry;
 						$trksql = mysqli_query($dbConn, $qry1);
 						$selbal = mysqli_fetch_array(mysqli_query($dbConn, "SELECT bala from tbl_customer where `custID`='" . $_POST['custID'] . "' and status='A'"));
-						$selbal['bala']=0;
+						$selbal['bala'] = 0;
 						$cust_bal = $selbal['bala'] * 1 + $_POST['tot'];
 						$ins = mysqli_query($dbConn, "UPDATE `tbl_customer` SET `bala`='" . $cust_bal . "' where `custID`='" . $_POST['custID'] . "' and status='A'");
 						if ($_POST['platform'] == '1') {
@@ -318,7 +318,7 @@
 																						<i class="ace-icon fa fa-phone"></i>
 																					</span>
 
-																					<input type="tel" id="phone" name="phone" required/>
+																					<input type="tel" id="phone" name="phone" required />
 																				</div>
 																			</div>
 																		</div>
@@ -795,7 +795,7 @@
 																				Submit
 
 																			</button>
-																			<button class="btn btn-prev">
+																			<button class="btn " type="reset">
 
 																				Clear
 																			</button>
@@ -1422,7 +1422,7 @@
 														<button class="btn btn-success btn-next" type="Submit">
 															Submit
 														</button>
-														<button class="btn btn-prev">
+														<button class="btn " type="reset">
 															Clear
 														</button>
 													</div>
@@ -2009,7 +2009,7 @@
 														<button class="btn btn-success btn-next" type="Submit">
 															Submit
 														</button>
-														<button class="btn btn-prev">
+														<button class="btn " type="reset">
 															Clear
 														</button>
 													</div>

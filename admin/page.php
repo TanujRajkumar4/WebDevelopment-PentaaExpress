@@ -1,12 +1,11 @@
-<?php 
+<?php
 
 session_start();
 
 include("database.php");
 
-if((isset($_SESSION)) && (isset($_SESSION['uid']))) 
-{
-	$user_type=$_SESSION['type'];
+if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
+	$user_type = $_SESSION['type'];
 	if ($user_type == "Branch") {
 		// echo '<script>		
 		// 	alert("You do not have access to this page, you will be redirected to the dashboard...");			
@@ -14,73 +13,47 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		header("Refresh: 0; url= error-403.php");
 
 		exit();
-	}	
-if(isset($_GET['ac']))
-
-{
-
-if($_GET['ac'] == 'upd')
-
-{
-
-	$dbConntent=addslashes($_POST['content']);
-	$qry="UPDATE pages SET page_content='$dbConntent' WHERE page_id=1 and status='A'";
-
-	$sql=mysqli_query($dbConn,$qry);
-	
-	if($sql)
-
-	{
-
-		echo "<script>alert(' Updated Successfully');window.location.href = 'page.php';</script>";
-
 	}
+	if (isset($_GET['ac'])) {
 
-	else
+		if ($_GET['ac'] == 'upd') {
 
-	{
+			$dbConntent = addslashes($_POST['content']);
+			$qry = "UPDATE pages SET page_content='$dbConntent' WHERE page_id=1 and status='A'";
 
-		echo "<script>alert('Not Updated');</script>";
+			$sql = mysqli_query($dbConn, $qry);
 
-	}
+			if ($sql) {
 
+				echo "<script>alert(' Updated Successfully');window.location.href = 'page.php';</script>";
+			} else {
 
+				echo "<script>alert('Not Updated');</script>";
+			}
+		}
 
-}
+		if ($_GET['ac'] == 'del') {
 
-if($_GET['ac'] == 'del')
+			$sql = "DELETE from pagess WHERE page_id='$_GET[id]'";
 
-{
+			if (mysqli_query($dbConn, $sql)) {
 
-	$sql="DELETE from pagess WHERE page_id='$_GET[id]'";
-
-	if(mysqli_query($dbConn,$sql))
-
-	{
-
-		echo "<script>alert('Record Deleted Successfully');
+				echo "<script>alert('Record Deleted Successfully');
 
 		window.location.href = 'page.php';</script>";
+			} else {
 
-	}
-
-	else
-
-	{
-
-		echo "<script>alert('Error in Deleting the record');
+				echo "<script>alert('Error in Deleting the record');
 
 		window.location.href = 'page.php';</script>";
-
+			}
+		}
 	}
-
-}
-
-}	
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+	<!DOCTYPE html>
+	<html lang="en">
+
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
@@ -153,7 +126,7 @@ if($_GET['ac'] == 'del')
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									<?php echo $_SESSION['username'];?>
+									<?php echo $_SESSION['username']; ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -181,16 +154,20 @@ if($_GET['ac'] == 'del')
 
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
-				try{ace.settings.loadState('main-container')}catch(e){}
+				try {
+					ace.settings.loadState('main-container')
+				} catch (e) {}
 			</script>
 
 			<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
 				<script type="text/javascript">
-					try{ace.settings.loadState('sidebar')}catch(e){}
+					try {
+						ace.settings.loadState('sidebar')
+					} catch (e) {}
 				</script>
 
 				<!-- /.sidebar-shortcuts -->
-				<?php 
+				<?php
 				include("sidebar.php");
 				?>
 				<!-- /.nav-list -->
@@ -211,7 +188,7 @@ if($_GET['ac'] == 'del')
 							<li class="active">About Us</li>
 						</ul><!-- /.breadcrumb -->
 
-<!-- /.nav-search -->
+						<!-- /.nav-search -->
 					</div>
 
 
@@ -221,78 +198,75 @@ if($_GET['ac'] == 'del')
 
 						<?php
 
-						if(isset($_GET['ac']) && $_GET['ac']== 'edit')
+						if (isset($_GET['ac']) && $_GET['ac'] == 'edit') {
 
-						{
+							$res = mysqli_query($dbConn, "select * from pages where page_id='$_GET[id]'");
 
-							$res=mysqli_query($dbConn, "select * from pages where page_id='$_GET[id]'");
-
-							while($rw=mysqli_fetch_array($res)){
+							while ($rw = mysqli_fetch_array($res)) {
 
 						?>
 
-							<div class="row">
+								<div class="row">
 
-							<div class="col-xs-12">
+									<div class="col-xs-12">
 
-							<form class="form-horizontal" role="form" action="page.php?ac=upd" method="POST">
+										<form class="form-horizontal" role="form" action="page.php?ac=upd" method="POST">
 
-									<div class="form-group">
+											<div class="form-group">
 
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Page Content</label>
-
-
-
-										<div class="col-sm-9">
-
-										<textarea rows="10"  id="content" name="content" class="jqte-test" value=""  required><?php echo $rw['page_content']?></textarea>
-
-										</div>
-
-									</div>
-
-										
-
-										<div class="col-md-offset-3 col-md-9">
-
-											<button class="btn btn-info" type="submit">
-
-												<i class="ace-icon fa fa-check bigger-110"></i>
-
-												Submit
-
-											</button>
+												<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Page Content</label>
 
 
 
-											&nbsp; &nbsp; &nbsp;
+												<div class="col-sm-9">
 
-											<button class="btn" type="reset">
+													<textarea rows="10" id="content" name="content" class="jqte-test" value="" required><?php echo $rw['page_content'] ?></textarea>
 
-												<i class="ace-icon fa fa-undo bigger-110"></i>
+												</div>
 
-												Reset
+											</div>
 
-											</button>
 
-										</div>
 
-								
+											<div class="col-md-offset-3 col-md-9">
 
-									</form>
+												<button class="btn btn-info" type="submit">
 
-								
+													<i class="ace-icon fa fa-check bigger-110"></i>
 
-								<!-- PAGE CONTENT ENDS -->
+													Submit
 
-							</div><!-- /.col -->
+												</button>
 
-						</div><!-- /.row -->
+
+
+												&nbsp; &nbsp; &nbsp;
+
+												<!-- <button class="btn" type="reset" onclick="document.getElementById('content').innerHTML('Hi');">
+
+													<i class="ace-icon fa fa-undo bigger-110"></i>
+
+													Reset
+
+												</button> -->
+
+											</div>
+
+
+
+										</form>
+
+
+
+										<!-- PAGE CONTENT ENDS -->
+
+									</div><!-- /.col -->
+
+								</div><!-- /.row -->
 
 						<?php
 
-						}
-
+							}
 						}
 
 						?>
@@ -305,119 +279,123 @@ if($_GET['ac'] == 'del')
 
 						<div class="portlet box green-haze">
 
-						<div class="portlet-title">
+							<div class="portlet-title">
 
-							<div class="page-header">
+								<div class="page-header">
 
-							<h1>About Us </h1>
+									<h1>About Us </h1>
 
-						</div>
+								</div>
 
-							<div class="tools">
+								<div class="tools">
 
-								<a href="javascript:;" class="reload" data-original-title="" title="">
+									<a href="javascript:;" class="reload" data-original-title="" title="">
 
-								</a>
+									</a>
 
-								<a href="javascript:;" class="remove" data-original-title="" title="">
+									<a href="javascript:;" class="remove" data-original-title="" title="">
 
-								</a>
+									</a>
+
+								</div>
 
 							</div>
 
-						</div>
+							<div class="portlet-body">
 
-						<div class="portlet-body">
 
-							
 
-                                
 
-                                
 
-                                
 
-                                <div class=""><table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_2" role="grid" aria-describedby="sample_2_info">
 
-							<thead>
 
-							<tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
+
+								<div class="">
+									<table class="table table-striped table-bordered table-hover dataTable no-footer" id="sample_2" role="grid" aria-describedby="sample_2_info">
+
+										<thead>
+
+											<tr role="row">
+												<th class="sorting_asc" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
 
 									 Rendering engine
 
 								: activate to sort column ascending" style="width: 191px;">
 
-									Page Name
+													Page Name
 
-								</th>
+												</th>
 
-									
 
-							   <th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-label="
+
+												<th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-label="
 
 									 Platform(s)
 
 								: activate to sort column ascending" style="width: 243px;">
 
-									Content
+													Content
 
-								</th>
+												</th>
 
-							      <th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-label="
+												<th class="sorting" tabindex="0" aria-controls="sample_2" rowspan="1" colspan="1" aria-label="
 
 									 CSS grade
 
 								: activate to sort column ascending" style="width: 114px;">
 
-									 Action
+													Action
 
-								</th></tr>
+												</th>
+											</tr>
 
-							</thead>
+										</thead>
 
-							<tbody>
-
-
-
-<?php    
-
-    $result=mysqli_query($dbConn, "select * from pages where status='A' and page_id=1 ");
-
-	while($row=mysqli_fetch_array($result)){
-
-?>                            
-
-							<tr role="row" class="odd">
-
-								<td class="sorting_1"><?php echo $row['page_name'];?></td>
-
-								<td><?php echo $row['page_content'];?></td>
-
-                              <td><a href="page.php?id=<?php echo $row['page_id'];?>&ac=edit"><span class="btn btn-app btn-primary btn-xs"><i class="ace-icon fa fa-pencil bigger-120"></i></span> </a>
-
-								
-
-								</td>
-
-							</tr>
+										<tbody>
 
 
 
-<?php } ?>                            
+											<?php
 
-                            
+											$result = mysqli_query($dbConn, "select * from pages where status='A' and page_id=1 ");
 
-                            </tbody>
+											while ($row = mysqli_fetch_array($result)) {
 
-							</table></div>
+											?>
 
-                            
+												<tr role="row" class="odd">
 
-                          
+													<td class="sorting_1"><?php echo $row['page_name']; ?></td>
+
+													<td><?php echo $row['page_content']; ?></td>
+
+													<td><a href="page.php?id=<?php echo $row['page_id']; ?>&ac=edit"><span class="btn btn-app btn-primary btn-xs"><i class="ace-icon fa fa-pencil bigger-120"></i></span> </a>
+
+
+
+													</td>
+
+												</tr>
+
+
+
+											<?php } ?>
+
+
+
+										</tbody>
+
+									</table>
+								</div>
+
+
+
+
+
+							</div>
 
 						</div>
-
-					</div>
 
 					</div><!-- /.page-content -->
 
@@ -430,11 +408,11 @@ if($_GET['ac'] == 'del')
 					<div class="footer-content">
 						<span class="bigger-120">
 							<span class="blue bolder">PENTA LOGISTICS (XPRESS CARGO)</span>
-							&copy; <?php echo date('Y');?>  Shakthisoftsolutions
+							&copy; <?php echo date('Y'); ?> Shakthisoftsolutions
 						</span>
 
 						&nbsp; &nbsp;
-					
+
 					</div>
 				</div>
 			</div>
@@ -455,7 +433,7 @@ if($_GET['ac'] == 'del')
 <script src="assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 		</script>
 		<script src="assets/js/bootstrap.min.js"></script>
 
@@ -478,38 +456,31 @@ if($_GET['ac'] == 'del')
 
 
 		<!-- page specific plugin scripts -->
-<link type="text/css" rel="stylesheet" href="texteditor/jquery-te-1.4.0.css">
-<script type="text/javascript" src="texteditor/jquery-te-1.4.0.min.js" charset="utf-8"></script>
-<script>
-	$('.jqte-test').jqte();
-	
-	// settings of status
-	var jqteStatus = true;
-	$(".status").click(function()
-	{
-		jqteStatus = jqteStatus ? false : true;
-		$('.jqte-test').jqte({"status" : jqteStatus})
-	});
-</script>
+		<link type="text/css" rel="stylesheet" href="texteditor/jquery-te-1.4.0.css">
+		<script type="text/javascript" src="texteditor/jquery-te-1.4.0.min.js" charset="utf-8"></script>
+		<script>
+			$('.jqte-test').jqte();
+
+			// settings of status
+			var jqteStatus = true;
+			$(".status").click(function() {
+				jqteStatus = jqteStatus ? false : true;
+				$('.jqte-test').jqte({
+					"status": jqteStatus
+				})
+			});
+		</script>
 
 	</body>
-	 <!-- redirecting to dashboard    -->
+	<!-- redirecting to dashboard    -->
 
-</html>
+	</html>
 
-<?php 
+<?php
 
-}
-
-else
-
-{
+} else {
 
 	echo "<script>window.location.href = 'index.php';</script>";
-
 }
 
 ?>
-
-
-
