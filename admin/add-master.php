@@ -59,6 +59,16 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 			if($_GET['ty']=='pm'){
 				$sql=mysqli_query($dbConn,"INSERT INTO ".$tbl." VALUES (NULL,'$_POST[masters]','A','Branch')");
 			}
+			elseif($_GET['ty']=='pin'){
+				$pincode=$_POST['masters'];
+				if(strlen($pincode)==6){
+					$sql=mysqli_query($dbConn,"INSERT INTO ".$tbl." VALUES (NULL,'$_POST[masters]','A')");
+				}
+				else
+				{
+					echo "<script>alert('Not Inserted');window.location.href = 'add-master.php?ty=$_GET[ty]&ac=ins';</script>";
+				}
+			}
 			else{
 			$sql=mysqli_query($dbConn,"INSERT INTO ".$tbl." VALUES (NULL,'$_POST[masters]','A')");
 			}
@@ -73,8 +83,21 @@ if((isset($_SESSION)) && (isset($_SESSION['uid'])))
 		}	
 		if(isset($_POST['update']))
 		{
+			if($_GET['ty']=='pin'){
+				$pincode=$_POST['masters'];
+				if(strlen($pincode)!=6){
+					echo "<script>alert('Not Inserted');window.location.href = 'add-master.php?ty=$_GET[ty]&ac=ins';</script>";
+				}
+				else
+				{
+					$sql=mysqli_query($dbConn,"UPDATE ".$tbl." SET `bname`='$_POST[masters]' WHERE `b_id`=$_GET[editid] and `status`='A' ");
+				}
+			}
+			else
+			{
 			$sql=mysqli_query($dbConn,"UPDATE ".$tbl." SET `bname`='$_POST[masters]' WHERE `b_id`=$_GET[editid] and `status`='A'  $chid");
 			echo $sql;
+			}
 			if($sql)
 				{
 					echo "<script>alert('Updated Successfully');window.location.href = 'add-master.php?ty=$_GET[ty]&ac=ins';</script>";
