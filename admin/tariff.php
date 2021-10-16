@@ -31,7 +31,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			{
 				if($_GET['ac']=="ins")
 				{
-				$qry="INSERT INTO `tariff`(`branch_id`,`city_id`,`price_per_kg`,`price_per_box`,`Status`)VALUES('".$_POST['branch']."','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."','A')";
+				$qry="INSERT INTO `tariff`(`branch_id`,`Remarks`,`city_id`,`price_per_kg`,`price_per_box`,`Status`)VALUES('".$_POST['branch']."','NULL','".$_POST['destination']."','".$_POST['Kg']."','".$_POST['Box']."','A')";
 				$sql=mysqli_query($dbConn,$qry);
 				if($sql)
 				{
@@ -39,7 +39,6 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 				}
 				else
 				{
-					// echo $qry;
 					echo "<script>alert('Not Inserted');window.location.href = 'tariff.php?ty=add';</script>";
 				}
 			}
