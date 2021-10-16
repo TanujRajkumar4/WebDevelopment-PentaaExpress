@@ -246,30 +246,60 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 													$filters = "";
 													$number_of_page = 0;
 													$status = "bk_status";
-													if (isset($_POST['search']) and isset($_POST['gender'])) {
+													if ((isset($_POST['search']) and isset($_POST['gender'])) || (isset($_GET['bk_st']))) {
 														//pagination
 														if (!isset($_GET['page'])) {
 															$page = 1;
 														} else {
 															$page = $_GET['page'];
 														}
-														$i = 0;
-														$result_per_page = 10;
-														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, "select * from tbl_courier where status='A'"));
-														$page_first_result = ($page - 1) * $result_per_page;
-														if ($_POST['gender'] == 1) {
-															$filters = "Select * from tbl_courier where  tbl_courier.book_status=1 and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "' ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
-															$status = "book_status";
-														} elseif ($_POST['gender'] == 2) {
-															$filters = "Select * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=2 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
+														if ($_SESSION['uid'] == 10) {
+															$SQL_Condition = "";
+														} else {
+															$SQL_Condition = " and tbl_courier.org_off='" . $_SESSION['orgid'] . "'";
 														}
-														if ($_POST['gender'] == 3) {
-															$filters = "Select * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=3 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A' and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
-														} elseif ($_POST['gender'] == 4) {
-															$filters = "Select * from tbl_courier,tbl_courier_track where (tbl_courier_track.bk_time BETWEEN '" . $_POST['id-date-picker-1'] . "' AND '" . $_POST['id-date-picker-2'] . "')and tbl_courier_track.cons_no=tbl_courier.waybillno  and tbl_courier.status='A'  and tbl_courier.org_off='" . $_SESSION['orgid'] . "'ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
+														$book_Status = "";
+														$d1 = "";
+														$d2 = "";
+														if (isset($_POST['gender'])) {
+															$book_Status = $_POST['gender'];
+															if (isset($_POST['id-date-picker-1']) && isset($_POST['id-date-picker-2'])) {
+																$d1 = $_POST['id-date-picker-1'];
+																$d2 = $_POST['id-date-picker-2'];
+															}
+														} else if ($_GET['bk_st']) {
+															$book_Status = $_GET['bk_st'];
+															$d1 = $_GET['d1'];
+															$d2 = $_GET['d2'];
+														}
+														if ($book_Status == 1) {
+															$filters = "SELECT * from tbl_courier where  tbl_courier.book_status=1 and tbl_courier.status='A'" . $SQL_Condition . " ORDER BY cid DESC";
+															$status = "book_status";
+														} elseif ($book_Status == 2) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=2 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A'" . $SQL_Condition . "ORDER BY cid DESC";
+														}
+														if ($book_Status == 3) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=3 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A'" . $SQL_Condition . "ORDER BY cid DESC";
+														} elseif ($book_Status == 4) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where (tbl_courier_track.bk_time BETWEEN '" . $d1 . "' AND '" . $d2 . "')and tbl_courier_track.cons_no=tbl_courier.waybillno  and tbl_courier.status='A' " . $SQL_Condition . "ORDER BY cid DESC";
+														}
+														$i = 0;
+														$result_per_page = 1;
+														$Cust_Count = mysqli_num_rows(mysqli_query($dbConn, $filters));
+														$page_first_result = ($page - 1) * $result_per_page;
+														$number_of_page = ceil($Cust_Count / $result_per_page);
+														if ($book_Status == 1) {
+															$filters = "SELECT * from tbl_courier where  tbl_courier.book_status=1 and tbl_courier.status='A'" . $SQL_Condition . " ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
+															$status = "book_status";
+														} elseif ($book_Status == 2) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=2 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A'" . $SQL_Condition . "ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
+														}
+														if ($book_Status == 3) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where  tbl_courier_track.bk_status=3 and tbl_courier_track.cons_no=tbl_courier.waybillno and tbl_courier.status='A'" . $SQL_Condition . "ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
+														} elseif ($book_Status == 4) {
+															$filters = "SELECT * from tbl_courier,tbl_courier_track where (tbl_courier_track.bk_time BETWEEN '" . $d1 . "' AND '" . $d2 . "')and tbl_courier_track.cons_no=tbl_courier.waybillno  and tbl_courier.status='A' " . $SQL_Condition . "ORDER BY cid DESC LIMIT " . $page_first_result . ',' . $result_per_page;
 														}
 														$msql = mysqli_query($dbConn, $filters);
-														$number_of_page = ceil($Cust_Count / $result_per_page);
 													?>
 														<form id="book-report" action="report.php" method="POST">
 															<?php while ($row = mysqli_fetch_array($msql)) {
@@ -299,9 +329,21 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 														<i class="ace-icon fa fa-angle-double-left"></i>
 													</a>
 												</li>
-												<?php for ($page = 1; $page <= $number_of_page; $page++) { ?>
+												<?php
+
+												if (isset($_GET['bk_st'])) {
+													$bk_st = $_GET['bk_st'];
+													$d1 = $_GET['d1'];
+													$d2 = $_GET['d2'];
+												}
+												if (isset($_POST['search'])) {
+													$bk_st = $_POST['gender'];
+													$d1 = $_POST['id-date-picker-1'];
+													$d2 = $_POST['id-date-picker-2'];
+												}
+												for ($page = 1; $page <= $number_of_page; $page++) { ?>
 													<li id="<?php echo 'PageNo' . $page; ?>">
-														<?php echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "report.php?&page=' . $page . '">' . $page . ' </a>'; ?>
+														<?php echo '<a onclick="SetActivePage(' . $page . '); SetActivePage(' . $page . ');" href = "report.php?&page=' . $page . '&bk_st=' . $bk_st . '&d1=' . $d1 . '&d2=' . $d2 . '">' . $page . ' </a>'; ?>
 													</li>
 
 												<?php } ?>
