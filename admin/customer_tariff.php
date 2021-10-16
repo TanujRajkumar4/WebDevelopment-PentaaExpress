@@ -305,9 +305,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		</div>
 																	</div>
 																	<div style="padding-left: 30%;">
-																		<button class="btn btn-success btn-next" onclick="window.location.assign('add-customer.php?ty=add')">
+																		<a class="btn btn-success btn-next" href="add-customer.php?ty=add">
 																			Back
-																		</button>
+																				</a>
 																		<button class="btn btn-success btn-next" type="Submit">
 																			Add to Tariff
 																		</button>
