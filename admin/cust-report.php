@@ -13,7 +13,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 			$debit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Debit_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
 			$total = $credit['Credit_Total'] - $debit['Debit_Total'];
 		} elseif ($_POST['cus_type'] == 3) {
-			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Dr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
+			$credit = mysqli_fetch_array(mysqli_query($dbConn, "SELECT sum(`Tran_Amt`) AS Topay_Total from tbl_transactions where Tran_Type = 'Cr' and Pay_Meth_ID ='" . $_POST['cus_type'] . "' "));
 			$total = $credit['Topay_Total'];
 		}
 	}
