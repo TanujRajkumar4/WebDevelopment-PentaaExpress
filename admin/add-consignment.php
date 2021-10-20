@@ -409,16 +409,6 @@
 																		<div class="hr hr-dotted"></div>
 																		<div class="space-2"></div>
 
-
-																		<div class="form-group">
-																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="waybillno">Waybill No:</label>
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" requiredonloadstart="this.focus();" onmouseover="this.focus();" required />
-																				</div>
-																			</div>
-																		</div>
-
 																		<div class="form-group">
 																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="date-timepicker1">
 																				Pick Up Date/Time: </label>
@@ -442,7 +432,7 @@
 																							<--------Select-------->
 																						</option>
 																						<?php
-																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM city WHERE status= 'A' ORDER BY bname");
+																						$sqltoi = mysqli_query($dbConn, "SELECT * FROM city WHERE status= 'A'");
 																						while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																						?>
 																							<option value="<?php echo $rwtoi['b_id']; ?>"><?php echo $rwtoi['bname']; ?></option>
@@ -750,23 +740,22 @@
 																		</div>
 																		<div class="space-2"></div>
 																		<div class="form-group">
-																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sgst">GST(%):</label>
+																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sgst">SGST(%):</label>
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="hidden" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="0" requried />
-																					<input type="text" class="col-xs-12 col-sm-5 " value="RMC" disabled />
+																					<input type="number" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="9" requried />
 																				</div>
 																			</div>
 																		</div>
 
 																		<div class="space-2"></div>
+
 																		<div class="form-group">
-																			<!-- <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignno">CGST(%):</label> -->
+																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignno">CGST(%):</label>
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="hidden" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="0" requried />
-
+																					<input type="number" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="9" requried />
 																				</div>
 																			</div>
 																		</div>
@@ -791,8 +780,15 @@
 																				</div>
 																			</div>
 																		</div>
+																		<div class="form-group">
+																			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="waybillno">Waybill No:</label>
 
-
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<input type="text" name="waybillno" id="waybillno" class="col-xs-12 col-sm-6" requiredonloadstart="this.focus();" onmouseover="this.focus();" required />
+																				</div>
+																			</div>
+																		</div>
 																		<hr />
 																		<div>
 																			<button class="btn btn-success btn-next" type="Submit">
@@ -1044,7 +1040,7 @@
 																		<--------Select-------->
 																	</option>
 																	<?php
-																	$sqltoi = mysqli_query($dbConn, "SELECT * from city where status= 'A' ORDER BY bname");
+																	$sqltoi = mysqli_query($dbConn, "SELECT * from city where status= 'A'");
 																	while ($rwtoi = mysqli_fetch_array($sqltoi)) {
 																	?>
 																		<option value="<?php echo $rwtoi['b_id']; ?>" <?php if ($rwtoi['b_id'] == $rowms['dest_city']) {
@@ -1372,23 +1368,22 @@
 
 													<div class="space-2"></div>
 													<div class="form-group">
-														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sgst">GST (%):</label>
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="sgst">SGST(%):</label>
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="hidden" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['sgst']; ?>" readonly />
-																<input type="text" class="col-xs-12 col-sm-5 " value="RMC" readonly />
+																<input type="number" name="sgst" id="sgst" class="col-xs-12 col-sm-5 " value="<?php echo $rowms['sgst']; ?>" disabled />
 															</div>
 														</div>
 													</div>
 
 													<div class="space-2"></div>
 													<div class="form-group">
-														<!-- <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignno">CGST(%):</label> -->
+														<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="consignno">CGST(%):</label>
 
 														<div class="col-xs-12 col-sm-9">
 															<div class="clearfix">
-																<input type="hidden" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="<?php echo $rowms['cgst']; ?>" readonly />
+																<input type="number" name="consignno" id="consignno" class="col-xs-12 col-sm-5" value="<?php echo $rowms['cgst']; ?>" disabled />
 															</div>
 														</div>
 													</div>
