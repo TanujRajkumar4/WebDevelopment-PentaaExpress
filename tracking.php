@@ -132,28 +132,16 @@ include("./header1.php");
                                  </div> -->
                                  <?php if($stsql['bname']=="In Transit"){ ?>
                                  <div class="col-md-8 col-xs-8 col-sm-4 text-center">
-                                     <!-- <p class="fs-12 no-margin"> currently in  </p> -->
+                                     <p class="fs-12 no-margin"> currently in  </p>
                                      <h2 class="title-1 no-margin">
                                          <?php
-                                           
+                                            // if ($stsql['bname']=="Intransit"){
                                                 echo $stsql['bname'];
                                             
                                          ?>
                                      </h2>
                                  </div>
-                                 <?php } 
-                                 if($stsql['bname']=="Delivered"){ ?>
-                                    <div class="col-md-6 col-xs-8 col-sm-4 text-center">
-                                        <!-- <p class="fs-12 no-margin"> currently in  </p> -->
-                                        <h1 class="title-1 no-margin theme-clr" >
-                                            <?php
-                                               
-                                                   echo $stsql['bname'];
-                                               
-                                            ?>
-                                        </h1>
-                                    </div>
-                                     <?php }?>
+                                 <?php }?>
                                  <!-- <div class="col-md-1 col-xs-8 col-sm-1 no-pad">
                                      <p class="fs-12 no-margin"> [  <b class="black-clr"><?php 
 									 if($stsql['bk_status'] !='1')

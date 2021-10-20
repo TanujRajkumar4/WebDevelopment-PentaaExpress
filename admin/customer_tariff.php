@@ -305,9 +305,9 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 																		</div>
 																	</div>
 																	<div style="padding-left: 30%;">
-																		<a class="btn btn-success btn-next" href="add-customer.php?ty=add">
+																		<button class="btn btn-success btn-next" onclick="window.location.assign('add-customer.php?ty=add')">
 																			Back
-																				</a>
+																		</button>
 																		<button class="btn btn-success btn-next" type="Submit">
 																			Add to Tariff
 																		</button>
@@ -495,13 +495,7 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 						}
 						?>
 					</div>
-					
-
-					<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-						<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-					</a>
-				</div><!-- /.main-container -->
-				<div class="footer">
+					<div class="footer">
 						<div class="footer-inner">
 							<div class="footer-content">
 								<span class="bigger-120">
@@ -513,7 +507,12 @@ if ((isset($_SESSION)) && (isset($_SESSION['uid']))) {
 
 							</div>
 						</div>
-					</div>	
+					</div>
+
+					<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+						<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+					</a>
+				</div><!-- /.main-container -->
 
 				<!-- basic scripts -->
 

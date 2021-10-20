@@ -340,7 +340,7 @@ if($_GET['ty'] == "add")
 													Submit
 													
 												</button>
-												<button class="btn btn-prev" type="reset">
+												<button class="btn btn-prev">
 													
 													Clear
 												</button>
