@@ -7,7 +7,7 @@
 <?php
 if(isset($_POST['sendmail']))
 {
-	if($_POST['Con_name'] != "" && $_POST['Con_email'] !="" && $_POST['Con_ph'] != "")
+	if($_POST['Con_name'] != "" && $_POST['Con_maileremail'] !="" && $_POST['Con_ph'] != "")
 	{
 	$name=$_POST['Con_name'];
 	$email_id=$_POST['Con_email'];
